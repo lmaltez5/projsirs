@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login() throws NoSuchAlgorithmException{
+    public void login(){
         Log.d(TAG, "Login");
 
         if (!validate()) {
@@ -66,11 +66,14 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
+        try {
+            String email=Crypto.SHA256(_emailText.getText().toString());
+            String password= Crypto.SHA256(_passwordText.getText().toString());
+            String credentials = email + ":" + password;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
-        Crypto crypto=new Crypto();
-        String email=crypto.SHA256(_emailText.getText().toString());
-        String password= crypto.SHA256(_passwordText.getText().toString());
-        String credentials = email + ":" + password;
 
         // TODO: Implement your own authentication logic here.
 

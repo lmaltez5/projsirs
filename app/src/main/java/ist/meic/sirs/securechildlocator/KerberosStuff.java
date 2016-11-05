@@ -15,53 +15,34 @@ import javax.crypto.spec.SecretKeySpec;
 import java.util.Calendar;
 
 public class KerberosStuff {
-    public byte[] requestAuthentication(String userId, byte[] reserved){
-       /* SymKey symKey =new SymKey();
-        FirstRound firstRound = new FirstRound();
-        SymCrypto symCrypto = new SymCrypto();
-
+    private static final byte[] SALT = {(byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03};
+    public byte[] requestAuthentication(String userId, String password){
 
         Calendar c = Calendar.getInstance();
-
         final String XML = "<request>" +
                 "<C>" +userId+ "</C>"+
                 "<S>SD-STORE</S>" +
-                "<Pass>"+ new String(reserved) +"</Pass>"+
                 "<Nonce>"+ c.toString()  +"</Nonce>" +
                 "</request>";
-
         byte[] plainBytes = XML.getBytes();
-        //Sending first message
-        byte[] returnBytes= port.requestAuthentication(userId,plainBytes);
+        //ENVIAR OS PLAINBYTES
+        //1ºRONDA DO KERBEROS
 
-        Document xmlDocument=firstRound.getDocument(returnBytes);
+        // vERIFICAR SE O TEMPO E IGUAL??? INCREMENTAR ESSAS COISAS
 
-        //TicketNode
-        Node ticketNode= firstRound.getNode(xmlDocument,"cipherTicket");
-        if(ticketNode==null){
-            authException("Authentication failed Ticket not in message",reserved);
-        }
+        //RECEBER DO SERVIDOR O TICKET
+        //Desencriptar a mensagem com o mesmo que no server e ver a primeira se puder a pass esta certa
 
-        Node sessionNode=firstRound.getNode(xmlDocument,"cipherSession");
-        if(sessionNode==null){
-            authException("Authentication failed Session not in message",reserved);
-        }
-        byte[] sessionNodeText = parseBase64Binary(sessionNode.getTextContent());
-
-        byte[] hashPasswordBytes = null;
-        try {
-            hashPasswordBytes = symKey.generateDigest((hashMap.get(userId)).getBytes());
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        }
-        String hashPassword=new String(hashPasswordBytes);
-        SecretKey keyC = null;
+        /*PASSWORD->recebemos uma mensagem encriptada com a password, temos de desencriptar com a pass feita numa key
+            Temos o dCipher, depois tenho de comparar cenas
+        */
+        Key keyC = null;
         byte[] newPlainBytes = null;
         Cipher dCipher = null;
         try {
-            keyC = symKey.generatePBEKey(hashPassword.toCharArray(), SALT);
-            dCipher = symCrypto.getAESDecryptCipherwithIV(keyC);
-            newPlainBytes = symCrypto.decrypt(dCipher, sessionNodeText);
+            keyC = Crypto.generatePBEKey(password.toCharArray(), SALT);
+            dCipher = Crypto.getAESDecryptCipher(keyC,IV);
+            //DESENCRIPTAR AQUI Crypto.decrypt(dCipher,TEXTODO-S)
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
@@ -71,20 +52,8 @@ public class KerberosStuff {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
+        /*VERIFICAR O TEMPO, SE NAO TIVER COMO DEVE DE SER DIZER QUE NAO*/
 
-
-        Document xmlSession=firstRound.getDocument(newPlainBytes);
-        String keyClientServerText  = xmlSession.getDocumentElement().getFirstChild().getTextContent();
-        byte[] encodedKey = parseBase64Binary(keyClientServerText);
-        Key keyClientServer = new SecretKeySpec(encodedKey,0,encodedKey.length, "AES");
-        Node nonceserver=xmlSession.getDocumentElement().getFirstChild().getNextSibling();
-        if(!dateTime.toString().equals(nonceserver.getTextContent())){
-            AuthReqFailed faultInfo = new AuthReqFailed();
-            faultInfo.setReserved(reserved);
-            String message = "Chave de Sessao invalida";
-            throw new AuthReqFailed_Exception(message,faultInfo);
-        }
-        //sending to Bubbledocs
         final String xmlToBubble = "<message>" +
                 "<Ticket>"+ticketNode.getTextContent()+"</Ticket>" +
                 "<Kcs>"+ printBase64Binary(keyClientServer.getEncoded())+"</Kcs>" +
