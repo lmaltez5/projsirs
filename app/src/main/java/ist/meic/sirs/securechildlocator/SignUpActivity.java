@@ -3,6 +3,7 @@ package ist.meic.sirs.securechildlocator;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.security.NoSuchAlgorithmException;
 
 import butterknife.ButterKnife;
@@ -19,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
 
-    @InjectView(R.id.input_username) EditText _usernameText;
+    @InjectView(R.id.input_name) EditText _usernameText;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_signup) Button _signupButton;
@@ -65,10 +68,13 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         try {
-            String username=Crypto.SHA256(_usernameText.getText().toString());
+            String username= Crypto.encode(_usernameText.getText().toString());
             String email= Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
-            String credentials = username + ":" + email + ":" + password;
+            String publicKey= Crypto.getpublicKey().toString();
+            String credentials = username + ":" + email + ":" + password +":"+publicKey;
+            SSLClient ssl =new SSLClient();
+            BufferedWriter buffer=ssl.createSocket();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

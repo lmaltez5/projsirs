@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SecureChildLocator.iml" filepath="$PROJECT_DIR$/SecureChildLocator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projsirs.iml" filepath="$PROJECT_DIR$/projsirs.iml" />
     </modules>
   </component>
 </project>
