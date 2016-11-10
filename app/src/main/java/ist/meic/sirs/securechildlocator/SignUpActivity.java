@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 
 import butterknife.ButterKnife;
@@ -71,16 +75,32 @@ public class SignUpActivity extends AppCompatActivity {
             String username= Crypto.encode(_usernameText.getText().toString());
             String email= Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
-            String publicKey= Crypto.getpublicKey().toString();
-            String credentials = username + ":" + email + ":" + password +":"+publicKey;
+            //see if user is valid
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("request", "VERIFYEMAIL");
+            jsonObj.put("email", email);
             SSLClient ssl =new SSLClient();
-            BufferedWriter buffer=ssl.createSocket();
-        } catch (NoSuchAlgorithmException e) {
+            ssl.writeToServer(jsonObj.toString());
+
+            BufferedReader bufferedReader=ssl.readFromServer();
+            String read;
+            while ((read = bufferedReader.readLine()) != null) {
+                System.out.println(read);
+            }
+            Crypto.createNewKeys(password, getApplicationContext());
+            String publicKey= Crypto.getpKey(password).toString();
+            JSONObject jsonObj2 = new JSONObject();
+            jsonObj2.put("request", "REGISTER");
+            jsonObj2.put("username", username);
+            jsonObj2.put("email", email);
+            jsonObj2.put("password", password);
+            jsonObj2.put("publicKey", publicKey);
+            ssl.writeToServer(jsonObj2.toString());
+
+            ssl.closeSocket();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // TODO: Implement your own signup logic here.
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {

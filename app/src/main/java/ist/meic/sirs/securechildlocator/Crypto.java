@@ -1,15 +1,11 @@
 package ist.meic.sirs.securechildlocator;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 
-import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -17,24 +13,13 @@ import javax.crypto.Cipher;
 import javax.security.auth.x500.X500Principal;
 
 import java.security.MessageDigest;
-import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
-import java.security.cert.CertificateException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.Calendar;
 
 import android.content.Context;
 import android.security.KeyPairGeneratorSpec;
 import android.util.Base64;
-import android.util.Log;
-
-import static android.support.v7.widget.StaggeredGridLayoutManager.TAG;
-
-/**
- * Created by GuilhermeM on 05/11/2016.
- */
 
 public class Crypto {
     public static String SHA256 (String text) throws NoSuchAlgorithmException {
@@ -97,20 +82,15 @@ public class Crypto {
                 return null;
             }
             return (KeyStore.PrivateKeyEntry) entry;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableEntryException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
+        }  catch (Exception e) {
             e.printStackTrace();
         }
+
         return (KeyStore.PrivateKeyEntry)entry;
     }
-
+    public static PublicKey getpKey(String alias){
+        return getPrivateKeyEntry(alias).getCertificate().getPublicKey();
+    }
     public static String decrypt(byte[] text, String alias) {
         byte[] dectyptedText = null;
         try {
@@ -130,30 +110,31 @@ public class Crypto {
         return new String(dectyptedText);
     }
 
-    public void createNewKeys(String alias,Context context) throws InvalidAlgorithmParameterException {
-        Calendar start = Calendar.getInstance();
-        Calendar end = Calendar.getInstance();
-        // expires 1 year from today
-        end.add(Calendar.YEAR, 1);
-
-        KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(context)
-                .setAlias(alias)
-                .setSubject(new X500Principal("CN=" + alias))
-                .setSerialNumber(BigInteger.TEN)
-                .setStartDate(start.getTime())
-                .setEndDate(end.getTime())
-                .build();
-        KeyPairGenerator gen = null;
+    public static void createNewKeys(String alias,Context context) {
         try {
-            gen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (NoSuchProviderException e) {
-            e.printStackTrace();
-        }
+            Calendar start = Calendar.getInstance();
+            Calendar end = Calendar.getInstance();
+            // expires 1 year from today
+            end.add(Calendar.YEAR, 1);
+
+            KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(context)
+                    .setAlias(alias)
+                    .setSubject(new X500Principal("CN=" + alias))
+                    .setSerialNumber(BigInteger.TEN)
+                    .setStartDate(start.getTime())
+                    .setEndDate(end.getTime())
+                    .build();
+            KeyPairGenerator gen = null;
+
+                gen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
+
         gen.initialize(spec);
 
         // generates the keypair
         gen.generateKeyPair();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

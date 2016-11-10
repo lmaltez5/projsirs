@@ -5,22 +5,39 @@ import javax.net.ssl.SSLSocketFactory;
 import java.io.*;
 
 public class SSLClient {
-    SSLSocket sslsocket=null;
-   public BufferedWriter createSocket () {
-       BufferedWriter bufferedwriter=null;
-        try {
-            SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-            sslsocket = (SSLSocket) sslsocketfactory.createSocket("localhost", 9999);
+    private SSLSocket sslsocket=null;
+   public SSLClient() {
+       try {
+           SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+           sslsocket = (SSLSocket) sslsocketfactory.createSocket("localhost", 9999);
 
+       } catch (Exception exception) {
+           exception.printStackTrace();
+       }
+   }
+    public void writeToServer(String write){
+        try {
             OutputStream outputstream = sslsocket.getOutputStream();
             OutputStreamWriter outputstreamwriter = new OutputStreamWriter(outputstream);
-            bufferedwriter = new BufferedWriter(outputstreamwriter);
-            //  bufferedwriter.write(string + '\n');
-               // bufferedwriter.flush();
+            BufferedWriter  bufferedwriter = new BufferedWriter(outputstreamwriter);
+            bufferedwriter.write(write + '\n');
+            bufferedwriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public BufferedReader readFromServer () {
+        BufferedReader bufferedreader=null;
+        try {
+            InputStream inputstream = sslsocket.getInputStream();
+            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+            bufferedreader = new BufferedReader(inputstreamreader);
+
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-       return bufferedwriter;
+        return bufferedreader;
     }
     public void closeSocket(){
         if(sslsocket  != null){

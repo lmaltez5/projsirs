@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.security.NoSuchAlgorithmException;
 
 import butterknife.ButterKnife;
@@ -69,8 +71,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             String email=Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
-            String credentials = email + ":" + password;
-        } catch (NoSuchAlgorithmException e) {
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("request", "LOGIN");
+            jsonObj.put("email", email);
+            jsonObj.put("password", password);
+            SSLClient ssl =new SSLClient();
+            ssl.writeToServer(jsonObj.toString());
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
