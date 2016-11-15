@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS authentication (
+	name VARCHAR(30),
+	email VARCHAR(30) PRIMARY KEY,
+	password VARCHAR(30),
+  user_id INT PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE IF NOT EXISTS phonesIDParents (
+   user_id INT PRIMARY KEY,
+   phone_id INT PRIMARY KEY,
+   phone_name VARCHAR(30),
+);
+
+CREATE TABLE IF NOT EXISTS childIDParents (
+   user_id INT PRIMARY KEY,
+   phone_id INT PRIMARY KEY,
+   phone_name VARCHAR(30),
+);
+
+CREATE TABLE IF NOT EXISTS locationsPhones (
+   phone_id INT PRIMARY KEY,
+   latitude VARCHAR(30),
+   longitude VARCHAR(30),
+);
+
