@@ -16,10 +16,41 @@ CREATE TABLE IF NOT EXISTS childIDParents (
    phone_id INT PRIMARY KEY,
    phone_name VARCHAR(30),
 );
+ 
+ 
+Exemplo de ligação e query;
 
-CREATE TABLE IF NOT EXISTS locationsPhones (
-   phone_id INT PRIMARY KEY,
-   latitude VARCHAR(30),
-   longitude VARCHAR(30),
-);
+String url = "jdbc:msql://200.210.220.1:1114/Demo";
+Connection conn = DriverManager.getConnection(url,"","");
+Statement stmt = conn.createStatement();
+ResultSet rs;
+ 
+rs = stmt.executeQuery("SELECT Lname FROM Customers WHERE Snum = 2001");
+while ( rs.next() ) {
+	String lastName = rs.getString("Lname");
+        System.out.println(lastName);
+}
+conn.close();
 
+
+
+
+
+	public boolean emailAlreadyExists(){
+		try{
+		String url = "jdbc:msql://200.210.220.1:1114/Demo";
+		Connection conn = DriverManager.getConnection(url,"","");
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
+	 
+		rs = stmt.executeQuery("SELECT Lname FROM Customers WHERE Snum = 2001");
+		conn.close();
+		while ( rs.next() ) {
+			return true;
+		}
+		return false;
+		}
+		finally {
+			return true;
+		}
+}
