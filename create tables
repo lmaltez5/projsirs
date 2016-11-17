@@ -1,56 +1,29 @@
-CREATE TABLE IF NOT EXISTS authentication (
+CREATE TABLE IF NOT EXISTS usersList (
 	name VARCHAR(30),
 	email VARCHAR(30) PRIMARY KEY,
 	password VARCHAR(30),
-  user_id INT PRIMARY KEY AUTO_INCREMENT
+ 	user_id INT UNIQUE AUTO_INCREMENT
 );
 
 CREATE TABLE IF NOT EXISTS phonesIDParents (
-   user_id INT PRIMARY KEY,
+   user_id INT,
    phone_id INT PRIMARY KEY,
    phone_name VARCHAR(30),
 );
 
 CREATE TABLE IF NOT EXISTS childIDParents (
-   user_id INT PRIMARY KEY,
+   user_id INT,
    phone_id INT PRIMARY KEY,
    phone_name VARCHAR(30),
 );
- 
- 
-Exemplo de ligação e query;
-
-String url = "jdbc:msql://200.210.220.1:1114/Demo";
-Connection conn = DriverManager.getConnection(url,"","");
-Statement stmt = conn.createStatement();
-ResultSet rs;
- 
-rs = stmt.executeQuery("SELECT Lname FROM Customers WHERE Snum = 2001");
-while ( rs.next() ) {
-	String lastName = rs.getString("Lname");
-        System.out.println(lastName);
-}
-conn.close();
 
 
+CREATE TRIGGER checkParentPhoneID BEFORE INSERT ON phoneIDParents
+BEGIN
 
+END
 
+CREATE TRIGGER checkChildPhoneID BEFORE INSERT ON childIDParents
+BEGIN
 
-	public boolean emailAlreadyExists(){
-		try{
-		String url = "jdbc:msql://200.210.220.1:1114/Demo";
-		Connection conn = DriverManager.getConnection(url,"","");
-		Statement stmt = conn.createStatement();
-		ResultSet rs;
-	 
-		rs = stmt.executeQuery("SELECT Lname FROM Customers WHERE Snum = 2001");
-		conn.close();
-		while ( rs.next() ) {
-			return true;
-		}
-		return false;
-		}
-		finally {
-			return true;
-		}
-}
+END
