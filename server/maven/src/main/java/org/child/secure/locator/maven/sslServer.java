@@ -1,45 +1,67 @@
-package org.child.secure.locator.maven;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import org.json.JSONObject;
- 
-public class sslServer {
+import java.security.Security;
+import com.sun.net.ssl.internal.ssl.Provider;
+
+
+public
+class sslServer {
     public static void  main(String[] arstring) {
         try {
-            SSLServerSocketFactory sslserversocketfactory =
-                    (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-            SSLServerSocket sslserversocket =
-                    (SSLServerSocket) sslserversocketfactory.createServerSocket(9999);
-            SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
- 
-            InputStream inputstream = sslsocket.getInputStream();
-            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-            BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
- 
-            String read = null;
-            while ((read = bufferedreader.readLine()) != null) {
-                    JSONObject jObj = new JSONObject(read);
-                        String request = jObj.getString("request");
-                       if(request.equals("VERIFYEMAIL")){
-                           jObj.getString("email");
-                       }
-                       else if(request.equals("REGISTER")){
-                           jObj.getString("username");
-                           jObj.getString("email");
-                           jObj.getString("password");
-                           jObj.getString("publicKey");
-                       }
-                       else if(request.equals("LOGIN")){
- 
-                       }
- 
+        	 String current = new java.io.File( "." ).getCanonicalPath();
+             System.out.println("Current dir:"+current);
+      String currentDir = System.getProperty("user.dir");
+             System.out.println("Current dir using System:" +currentDir);
+             Security.addProvider(new Provider());
+
+        				//Specifying the Keystore details
+        				System.setProperty("javax.net.ssl.keyStore","serverKey.keystore");
+        				System.setProperty("javax.net.ssl.keyStorePassword","EpW5eE[bxwHu");
+
+        				// Enable debugging to view the handshake and communication which happens between the SSLClient and the SSLServer
+        				//System.setProperty("javax.net.debug","all");
+
+        				
+            SSLServerSocketFactory factory=(SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            SSLServerSocket sslserversocket=(SSLServerSocket) factory.createServerSocket(9999);
+            SSLSocket sslSocket=(SSLSocket) sslserversocket.accept();
+
+            BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(
+							sslSocket.getInputStream()));
+
+            String string = null;
+            /*0: verify email
+             * 1: register user
+             * 2: login
+             * */
+            while ((string = bufferedreader.readLine()) != null) { 
+            	String username,email,password;
+            	 String delims = "[;]";
+            	 String[] tokens = string.split(delims);
+            	 int option = Integer.parseInt(tokens[0]);
+            	 switch(option){
+            	 case 0:
+            	     email=tokens[1];
+            	     System.out.println(email);
+                     System.out.flush();
+            		 break;
+            	 case 1:
+            		 username = tokens[1];
+            	     email=tokens[2];
+            	     password = tokens[3];
+            	     System.out.println(username+email+password);
+                     System.out.flush();
+                     break;
+
+            	 }
             }
+                    
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 }
+      
