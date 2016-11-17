@@ -76,11 +76,9 @@ public class SignUpActivity extends AppCompatActivity {
             String email= Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
             //see if user is valid
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.put("request", "VERIFYEMAIL");
-            jsonObj.put("email", email);
+            String result="0;" +email ;
             SSLClient ssl =new SSLClient();
-            ssl.writeToServer(jsonObj.toString());
+            ssl.writeToServer(result);
 
             BufferedReader bufferedReader=ssl.readFromServer();
             String read;
@@ -89,15 +87,11 @@ public class SignUpActivity extends AppCompatActivity {
             }
             Crypto.createNewKeys(password, getApplicationContext());
             String publicKey= Crypto.getpKey(password).toString();
-            JSONObject jsonObj2 = new JSONObject();
-            jsonObj2.put("request", "REGISTER");
-            jsonObj2.put("username", username);
-            jsonObj2.put("email", email);
-            jsonObj2.put("password", password);
-            jsonObj2.put("publicKey", publicKey);
-            ssl.writeToServer(jsonObj2.toString());
+            result="1;" + username + ";" + email + ";" + password;
 
+            ssl.writeToServer(result);
             ssl.closeSocket();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
