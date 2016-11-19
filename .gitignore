@@ -6,4 +6,4 @@ app_client/.idea
 .DS_Store
 /build
 /captures
-
+server/maven/target/
