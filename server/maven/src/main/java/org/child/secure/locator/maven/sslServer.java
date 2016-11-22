@@ -1,3 +1,5 @@
+package org.child.secure.locator.maven;
+
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
@@ -7,13 +9,24 @@ import java.security.Security;
 import com.sun.net.ssl.internal.ssl.Provider;
 
 
-public
-class sslServer {
+public class sslServer {
+	
+	static DBConnector dbconnector;
+	
+	sslServer(){
+		dbconnector = new DBConnector();
+		
+	}
+	
     public static void  main(String[] arstring) {
         try {
+        	
+    		dbconnector = new DBConnector();
+    		dbconnector.connect();
+    		
         	 String current = new java.io.File( "." ).getCanonicalPath();
              System.out.println("Current dir:"+current);
-      String currentDir = System.getProperty("user.dir");
+             String currentDir = System.getProperty("user.dir");
              System.out.println("Current dir using System:" +currentDir);
              Security.addProvider(new Provider());
 
@@ -45,6 +58,7 @@ class sslServer {
             	 switch(option){
             	 case 0:
             	     email=tokens[1];
+            	     dbconnector.uniqueEmail(email);
             	     System.out.println(email);
                      System.out.flush();
             		 break;
@@ -52,10 +66,17 @@ class sslServer {
             		 username = tokens[1];
             	     email=tokens[2];
             	     password = tokens[3];
-            	     System.out.println(username+email+password);
+            	     dbconnector.insertSignup(username,email,password);
+            	     System.out.println(username +" "+ email +" "+ password);
                      System.out.flush();
                      break;
-
+            	 case 2:
+            	     email=tokens[1];
+            	     password = tokens[2];
+            	     dbconnector.login(email,password);
+            	     System.out.println(email +" "+ password);
+                     System.out.flush();
+                     break;
             	 }
             }
                     
@@ -64,4 +85,3 @@ class sslServer {
         }
     }
 }
-      
