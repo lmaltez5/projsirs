@@ -1,7 +1,9 @@
 *.iml
 app_client/.gradle
+app_client/gradle/
 app_client/local.properties
 app_client/.idea
+app_client/app/build.gradle
 .idea/
 .DS_Store
 /build
