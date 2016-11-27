@@ -11,13 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,11 +66,12 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         try {
+
             String username= Crypto.encode(_usernameText.getText().toString());
             String email= Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
             //see if user is valid
-            String result="0;" +email ;
+            String result="0;" +email+";"+TimeStamp.getTime();
             SSLClient ssl =new SSLClient();
             ssl.writeToServer(result);
 
@@ -87,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
             Crypto.createNewKeys(password, getApplicationContext());
             String publicKey= Crypto.getpKey(password).toString();
-            result="1;" + username + ";" + email + ";" + password;
+            result="1;" + username + ";" + email + ";" + password+";"+TimeStamp.getTime();
 
             ssl.writeToServer(result);
             ssl.closeSocket();
@@ -127,8 +122,8 @@ public class SignUpActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
-            _usernameText.setError("at least 3 characters");
+        if (name.isEmpty() || name.length() < 3 || !name.matches("[a-zA-Z]+")){
+            _usernameText.setError("at least 3 characters, only a-z caractheres are allowed");
             valid = false;
         } else {
             _usernameText.setError(null);

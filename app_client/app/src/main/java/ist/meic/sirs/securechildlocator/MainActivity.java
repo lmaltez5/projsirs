@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             String email=Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
-            String result="2;" + email + ";" + password;
+            String result="2;" + email + ";" + password+TimeStamp.getTime();
             SSLClient ssl =new SSLClient();
             ssl.writeToServer(result);
 
