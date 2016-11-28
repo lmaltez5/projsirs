@@ -112,10 +112,9 @@ public class DBConnector {
 
 	public boolean login(String email, String password) {
 		try {
-			ResultSet rs = query("SELECT password FROM userList WHERE email='"+ email + "' AND password='"+password"';");
+			ResultSet rs = query("SELECT * FROM userList WHERE email='"+ email + "' AND password='"+password+"';");
 			return !rs.next();
-		}
-		catch (SQLException e) {
+		}catch (SQLException e) {
 			System.err.print("No Query");
 			return false;
 		}
