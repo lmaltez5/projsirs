@@ -76,7 +76,6 @@ public class DBConnector {
 
 	public ResultSet query(String query){
 		try {
-			System.out.println("OLAA"+query);
 			Statement st = con.createStatement();
 			return st.executeQuery(query);
 		} catch (SQLException e) {
@@ -107,20 +106,17 @@ public class DBConnector {
     }
 
     public boolean insertSignup(String username, String email, String password){
-		String updadeString= "INSERT INTO userList (name, email, password) VALUES (" + username + "," + email + "," + password + ");";
+		String updadeString= "INSERT INTO userList (name, email, password) VALUES ('" + username + "','" + email + "','" + password + "');";
 		return update(updadeString);
     }
 
 	public boolean login(String email, String password) {
-		ResultSet rs = query("SELECT password FROM userList WHERE email= "+ email + ");");
 		try {
-			while (rs.next()){
-				return rs.getString("password").equals(password);
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-					return false;
-				}
-				return false;
+			ResultSet rs = query("SELECT password FROM userList WHERE email='"+ email + "' AND password='"+password"';");
+			return !rs.next();
+		catch (SQLException e) {
+			System.err.print("No Query");
+			return false;
+		}
 	}
 }
