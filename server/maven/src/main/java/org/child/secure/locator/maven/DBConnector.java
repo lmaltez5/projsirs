@@ -70,7 +70,7 @@ public class DBConnector {
 
 	private void disconnectSSH() {
 		if (session != null && session.isConnected()) {
-			session.disconnect();			
+			session.disconnect();
 		}
 	}
 
@@ -96,7 +96,7 @@ public class DBConnector {
     }
 	    public boolean uniqueEmail(String email){
 		try {
-			ResultSet rs = query("SELECT email FROM usersList");
+			ResultSet rs = query("SELECT email FROM userList WHERE email="+email";");
 			//next false se nao tiver rows
 			return !rs.next();
 		} catch (SQLException e) {
@@ -111,7 +111,7 @@ public class DBConnector {
     }
 
 	public boolean login(String email, String password) {
-		ResultSet rs = query("SELECT password FROM usersList WHERE email= "+ email + ");");
+		ResultSet rs = query("SELECT password FROM userList WHERE email= "+ email + ");");
 		try {
 			while (rs.next()){
 				return rs.getString("password").equals(password);

@@ -49,6 +49,7 @@ public class ClientHandlerThread extends Thread{
 				 int option = Integer.parseInt(tokens[0]);
 				 switch(option){
 				 case 0:
+				     System.out.println(tokens);
 				     email=tokens[1];
 				     timeStamp=tokens[2];
 				     if(verifyDate(timeStamp)){
@@ -57,7 +58,7 @@ public class ClientHandlerThread extends Thread{
 				         System.out.flush();
 				     }
 				     else{
-				    	 
+				    	 //TODO
 				     }
 					 break;
 				 case 1:
