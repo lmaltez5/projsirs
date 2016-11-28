@@ -114,6 +114,7 @@ public class DBConnector {
 		try {
 			ResultSet rs = query("SELECT password FROM userList WHERE email='"+ email + "' AND password='"+password"';");
 			return !rs.next();
+		}
 		catch (SQLException e) {
 			System.err.print("No Query");
 			return false;
