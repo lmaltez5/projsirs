@@ -76,7 +76,7 @@ public class DBConnector {
 
 	public ResultSet query(String query){
 		try {
-			System.out.println("OLAA"+con);
+			System.out.println("OLAA"+query);
 			Statement st = con.createStatement();
 			return st.executeQuery(query);
 		} catch (SQLException e) {
@@ -97,7 +97,7 @@ public class DBConnector {
     }
 	    public boolean uniqueEmail(String email){
 		try {
-			ResultSet rs = query("SELECT email FROM userList where email="+email+");");
+			ResultSet rs = query("SELECT email FROM userList where email='"+email+"';");
 			//next false se nao tiver rows
 			return !rs.next();
 		} catch (SQLException e) {
