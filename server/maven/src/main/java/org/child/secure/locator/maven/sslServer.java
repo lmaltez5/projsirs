@@ -3,71 +3,78 @@ package org.child.secure.locator.maven;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.security.Security;
 import com.sun.net.ssl.internal.ssl.Provider;
+import java.io.IOException;
+import java.security.Security;
+import java.util.Vector;
 
 
-public
-class sslServer {
-	static DBConnector dbconnector= new DBConnector();
-	
+public class sslServer extends Thread
+{
+    private static Vector<ClientHandlerThread> connectedClients = new Vector<ClientHandlerThread>(20, 5);
+    private static int dataPort=9999;
+    private static boolean running=true;
     public static void  main(String[] arstring) {
-        try {
-			dbconnector = new DBConnector();
-			dbconnector.connect();
-			 Security.addProvider(new Provider());
+	    SSLServerSocket sslDataTraffic = null;
+	    SSLServerSocketFactory sslFac = null;
+	
+	    try
+	    {
+	    	 Security.addProvider(new Provider());
 			//Specifying the Keystore details
 			 
 			System.setProperty("javax.net.ssl.keyStore","serverKey.keystore");
 			System.setProperty("javax.net.ssl.keyStorePassword","EpW5eE[bxwHu");
 			
-			SSLServerSocketFactory factory=(SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
-			SSLServerSocket sslserversocket=(SSLServerSocket) factory.createServerSocket(9999);
-			SSLSocket sslSocket=(SSLSocket) sslserversocket.accept();
-			
-			BufferedReader bufferedreader = new BufferedReader(new InputStreamReader(
-							sslSocket.getInputStream()));
-			
-			String string = null;
-			/*0: verify email
-			 * 1: register user
-			 * 2: login
-			 * */
-			while ((string = bufferedreader.readLine()) != null) { 
-				String username,email,password;
-				 String delims = "[;]";
-				 String[] tokens = string.split(delims);
-				 int option = Integer.parseInt(tokens[0]);
-				 switch(option){
-				 case 0:
-				     email=tokens[1];
-				     dbconnector.uniqueEmail(email);
-				     System.out.println(email);
-			         System.out.flush();
-					 break;
-				 case 1:
-					 username = tokens[1];
-				     email=tokens[2];
-				     password = tokens[3];
-				     dbconnector.insertSignup(username,email,password);
-				     System.out.println(username +" "+ email +" "+ password);
-			         System.out.flush();
-			         break;
-				 case 2:
-				     email=tokens[1];
-				     password = tokens[2];
-				     dbconnector.login(email,password);
-				     System.out.println(email +" "+ password);
-			         System.out.flush();
-			         break;
-				 }
-            }
-                    
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
+			sslFac=(SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+	       /* System.out.print("Validating SSL certificate... ");
+	        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+	        keyStore.load(new FileInputStream(certificateDir), password);
+	        System.out.println("DONE.");
+	
+	        System.out.print("Creating trust engine........ ");
+	        TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+	        tmf.init(keyStore);
+	        System.out.println("DONE.");
+	
+	        System.out.print("Creating key engine.......... ");
+	        KeyManagerFactory kmf = KeyManagerFactory.getInstance((KeyManagerFactory.getDefaultAlgorithm()));
+	        kmf.init(keyStore, password);
+	        System.out.println("DONE.");
+	
+	        System.out.print("Creating SSL context......... ");
+	        System.setProperty("https.protocols", "SSL");
+	        SSLContext  ctx = SSLContext.getInstance("SSL");
+	        ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+	        sslFac = ctx.getServerSocketFactory();
+	        System.out.println("DONE.");*/
+	    }
+	    catch (Exception e) {
+	    	System.out.println(e.toString() + " ::: " + e.getCause());
+	    }
+	
+	    try
+	    {
+	        System.out.print("Creating data socket......... ");
+	        sslDataTraffic = (SSLServerSocket) sslFac.createServerSocket(dataPort);
+	        System.out.println("DONE. Est. on:" + dataPort);
+	    }
+	    catch (IOException e)
+	    {
+	        System.out.println("FAILED.");
+	        System.out.println(e.toString() + " ::: " + e.getCause());
+	        System.exit(-1);
+	    }
+	    while (running) {
+				try {
+					SSLSocket sslDataTrafficSocketInstance = (SSLSocket) sslDataTraffic.accept();
+					ClientHandlerThread c = new ClientHandlerThread(sslDataTrafficSocketInstance);
+		            c.start();
+		            connectedClients.add(c);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+	            
+	        }
+   }
 }
-      
