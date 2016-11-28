@@ -55,7 +55,8 @@ public class ClientHandlerThread extends Thread{
 				    	 verifyDbResult(dbconnector.uniqueEmail(email),"Email");
 				 	}
 				    else{
-				    	 writer.write("Error in TimeStamp,please try again\n");
+				    	 writer.println("Error in TimeStamp,please try again\n");
+				    	 writer.flush();
 				     }
 				    break;
 				 case 1:
@@ -67,7 +68,8 @@ public class ClientHandlerThread extends Thread{
 				    	 verifyDbResult(dbconnector.insertSignup(username,email,password),"Signup");
 				     }
 				     else{
-				    	 writer.write("Error in TimeStamp,please try again\n");
+				    	 writer.println("Error in TimeStamp,please try again\n");
+				    	 writer.flush();
 				     }
 			         break;
 				 case 2:
@@ -78,7 +80,8 @@ public class ClientHandlerThread extends Thread{
 				    	 verifyDbResult(dbconnector.login(email,password),"Login");
 				     }
 				     else{
-				    	writer.write("Error in TimeStamp,please try again\n");
+				    	writer.println("Error in TimeStamp,please try again\n");
+				    	writer.flush();
 				     }
 			         break;
 				 }
@@ -95,10 +98,13 @@ public class ClientHandlerThread extends Thread{
 	    return ip;
 	}
 	private void verifyDbResult(boolean result, String errorString){
-		if(result)
-			writer.write("Sucess");
+		if(result){
+			writer.println("Sucess");
+			writer.flush();
+		}
 		else{
-			writer.write("Error in "+errorString+", please try again\n");
+			writer.println("Error in "+errorString+", please try again\n");
+			writer.flush();
 		}
 	}
 	public boolean isRunning(){
