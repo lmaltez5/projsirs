@@ -484,7 +484,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
-        sha1="da4355113042069e10a7f92fe669353d3e6f4c48">
+        sha1="bba777022271070bfddcb9ba679f3db6ead9e8cf">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_46a232455dd8a4c48be59b5ff5b8f4487a310654/classes.dex" />
     </item>
     <item
@@ -565,7 +565,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
-        sha1="9fe7e9a0375f014ab4b6a759bd255a1b7ee52431">
+        sha1="95ecaf11beb3f1a07cd151197b9a7929c310ab42">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_5a0f6c3984666e2104d8a0d0394fea263af530cc/classes.dex" />
     </item>
     <item

@@ -1,6 +1,7 @@
 package ist.meic.sirs.securechildlocator;
 
 import android.content.Intent;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
 
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             String email=Crypto.SHA256(_emailText.getText().toString());
             String password= Crypto.SHA256(_passwordText.getText().toString());
             String result="2;" + email + ";" + password+";"+TimeStamp.getTime();
-            SSLClient ssl =new SSLClient();
+            SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             ssl.closeSocket();
         } catch (Exception e) {

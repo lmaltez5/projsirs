@@ -69,8 +69,7 @@ public class Crypto {
     private static KeyStore.PrivateKeyEntry getPrivateKeyEntry(String alias) {
         KeyStore.Entry entry=null;
         try {
-            KeyStore ks = KeyStore
-                    .getInstance("AndroidKeyStore");
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
             entry = ks.getEntry(alias, null);
 
@@ -92,7 +91,7 @@ public class Crypto {
         return getPrivateKeyEntry(alias).getCertificate().getPublicKey();
     }
     public static String decrypt(byte[] text, String alias) {
-        byte[] dectyptedText = null;
+        byte[] decryptedText = null;
         try {
             // get an RSA cipher object and print the provider
             PrivateKey privateKey = getPrivateKeyEntry(alias).getPrivateKey();
@@ -101,13 +100,13 @@ public class Crypto {
 
             // decrypt the text using the private key
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            dectyptedText = cipher.doFinal(text);
+            decryptedText = cipher.doFinal(text);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
-        return new String(dectyptedText);
+        return new String(decryptedText);
     }
 
     public static void createNewKeys(String alias,Context context) {
@@ -126,12 +125,12 @@ public class Crypto {
                     .build();
             KeyPairGenerator gen = null;
 
-                gen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
+            gen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
 
-        gen.initialize(spec);
+            gen.initialize(spec);
 
-        // generates the keypair
-        gen.generateKeyPair();
+            // generates the keypair
+            gen.generateKeyPair();
         }
         catch (Exception e) {
             e.printStackTrace();

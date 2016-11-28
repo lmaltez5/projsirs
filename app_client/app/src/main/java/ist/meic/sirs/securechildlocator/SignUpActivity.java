@@ -67,21 +67,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
 
-            String username= Crypto.encode(_usernameText.getText().toString());
-            String email= Crypto.SHA256(_emailText.getText().toString());
-            String password= Crypto.SHA256(_passwordText.getText().toString());
+            String username= Crypto.encode(_usernameText.getText().toString()).replace( "\n", "" );
+            String email= Crypto.SHA256(_emailText.getText().toString()).replace( "\n", "" );
+            String password= Crypto.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
             //see if user is valid
             String result="0;" +email+";"+TimeStamp.getTime();
-            SSLClient ssl =new SSLClient();
+            System.err.println(result);
+            SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
-
             BufferedReader bufferedReader=ssl.readFromServer();
             String read;
-            while ((read = bufferedReader.readLine()) != null) {
+            /*while ((read = bufferedReader.readLine()) != null) {
                 System.out.println(read);
-            }
-            Crypto.createNewKeys(password, getApplicationContext());
-            String publicKey= Crypto.getpKey(password).toString();
+            }*/
+            //String publicKey= Crypto.getpKey(password).toString();
             result="1;" + username + ";" + email + ";" + password+";"+TimeStamp.getTime();
 
             ssl.writeToServer(result);
