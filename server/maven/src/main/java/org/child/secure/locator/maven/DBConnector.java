@@ -85,7 +85,7 @@ public class DBConnector {
     }
     
     public boolean update(String update){
-		try {
+		try {System.err.println("\n"+update+"\n");
 			Statement st = con.createStatement();
 			int i = st.executeUpdate(update);
 			return i >= 0;

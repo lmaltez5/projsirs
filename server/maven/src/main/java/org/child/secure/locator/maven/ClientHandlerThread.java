@@ -67,7 +67,7 @@ public class ClientHandlerThread extends Thread{
 				     password = tokens[3];
 				     timeStamp=tokens[4];
 				     if(verifyDate(timeStamp)){
-					     //dbconnector.insertSignup(username,email,password);
+					     dbconnector.insertSignup(username,email,password);
 					     System.out.println(username +" "+ email +" "+ password+timeStamp);
 				         System.out.flush();
 				     }
