@@ -11,9 +11,9 @@ import com.jcraft.jsch.Session;
 
 public class DBConnector {
 	
-    static String rhost;
-    static Connection con;
-    static Session session; 
+    private String rhost;
+    private Connection con;
+    private Session session; 
     
     public void connect(){
     	connectSSH();
@@ -70,12 +70,13 @@ public class DBConnector {
 
 	private void disconnectSSH() {
 		if (session != null && session.isConnected()) {
-			session.disconnect();
+			session.disconnect();			
 		}
 	}
 
 	public ResultSet query(String query){
 		try {
+			System.out.println("OLAA"+con);
 			Statement st = con.createStatement();
 			return st.executeQuery(query);
 		} catch (SQLException e) {
@@ -96,7 +97,7 @@ public class DBConnector {
     }
 	    public boolean uniqueEmail(String email){
 		try {
-			ResultSet rs = query("SELECT email FROM userList WHERE email="+email";");
+			ResultSet rs = query("SELECT email FROM userList where email="+email+");");
 			//next false se nao tiver rows
 			return !rs.next();
 		} catch (SQLException e) {
