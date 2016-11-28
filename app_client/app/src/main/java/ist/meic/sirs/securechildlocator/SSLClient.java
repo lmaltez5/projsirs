@@ -9,7 +9,8 @@ public class SSLClient {
    public SSLClient() {
        try {
            SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-           sslsocket = (SSLSocket) sslsocketfactory.createSocket("localhost", 9999);
+           sslsocket = (SSLSocket) sslsocketfactory.createSocket("46.101.3.38", 9999);
+           sslsocket.setEnabledCipherSuites(new String[] {"TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"});
 
        } catch (Exception exception) {
            exception.printStackTrace();
