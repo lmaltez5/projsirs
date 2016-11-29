@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.app.ProgressDialog;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.UUID;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -113,7 +116,49 @@ public class MainActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        finish();
+        try {
+
+            //get android unique id
+            final TelephonyManager tm = (TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE);
+
+            final String tmDevice, tmSerial, androidId;
+            tmDevice = "" + tm.getDeviceId();
+            tmSerial = "" + tm.getSimSerialNumber();
+            androidId = "" + android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+            UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
+            final String deviceId = deviceUuid.toString();
+
+            String email = Crypto.SHA256(_emailText.getText().toString());
+
+            String result = "5;" + deviceId + ";" + email + ";" + TimeStamp.getTime();
+            SSLClient ssl = new SSLClient(getApplicationContext());
+            ssl.writeToServer(result);
+            ssl.closeSocket();
+
+            /*
+            String belong = RESPOSTA SERVER
+            if (belong.equals("new")) {
+
+                Intent intent = new Intent(getBaseContext(), SetupActivity.class);
+                //send session varables
+                intent.putExtra("EMAIL", _emailText.getText().toString());
+                startActivity(intent);
+            } else if (belong.equals("legal")) {
+                Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+                //send session varables
+                intent.putExtra("EMAIL", _emailText.getText().toString());
+                startActivity(intent);
+            } else if (belong.equals("child")) {
+                //MANDA PARA HOME PUTO
+                //Intent intent = new Intent(getBaseContext(), SetupActivity.class);
+                //send session varables
+                //intent.putExtra("EMAIL", _emailText.getText().toString());
+                // startActivity(intent);
+            }*/
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     public void onLoginFailed() {

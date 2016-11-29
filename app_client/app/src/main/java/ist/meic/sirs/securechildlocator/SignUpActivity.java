@@ -1,9 +1,9 @@
 package ist.meic.sirs.securechildlocator;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.StreamCorruptedException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -105,12 +106,20 @@ public class SignUpActivity extends AppCompatActivity {
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        finish();
+
+        String email = _emailText.getText().toString().replace( "\n", "");
+        String user = _usernameText.getText().toString().replace( "\n", "" );
+
+        Intent intent = new Intent(getBaseContext(), SetupActivity.class);
+        //send session variables
+        intent.putExtra("EMAIL", email);
+        intent.putExtra("USER", user);
+
+        startActivity(intent);
     }
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _signupButton.setEnabled(true);
     }
 
