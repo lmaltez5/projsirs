@@ -37,9 +37,7 @@ public class ClientHandlerThread extends Thread{
 	{
 	    try
 	    {
-	        writer.println("SERVER_HANDSHAKE_INIT");
-	        writer.flush();
-	        String fromClient,username,email,password,timeStamp;
+	        String fromClient,username,email,password,timeStamp,phoneId;
 	        dbconnector = new DBConnector();
 			dbconnector.connect();
 	        while (running && (fromClient = reader.readLine()) != null)
@@ -48,42 +46,54 @@ public class ClientHandlerThread extends Thread{
 				 String[] tokens = fromClient.split(delims);
 				 int option = Integer.parseInt(tokens[0]);
 				 switch(option){
-				 case 0:
-				     email=tokens[1];
-				     timeStamp=tokens[2];
-				     if(verifyDate(timeStamp)){
-				    	 verifyDbResult(dbconnector.uniqueEmail(email),"Email");
-				 	}
-				    else{
-				    	 writer.println("Error in TimeStamp,please try again\n");
-				    	 writer.flush();
-				     }
+					 case 0:
+					     email=tokens[1];
+					     timeStamp=tokens[2];
+					     if(verifyDate(timeStamp)){
+					    	 verifyDbResult(dbconnector.uniqueEmail(email),"Email");
+					 	}
 				    break;
-				 case 1:
-					 username = tokens[1];
-				     email=tokens[2];
-				     password = tokens[3];
-				     timeStamp=tokens[4];
-				     if(verifyDate(timeStamp)){
-				    	 verifyDbResult(dbconnector.insertSignup(username,email,password),"Signup");
-				     }
-				     else{
-				    	 writer.println("Error in TimeStamp,please try again\n");
-				    	 writer.flush();
-				     }
+					case 1:
+						 username = tokens[1];
+					     email=tokens[2];
+					     password = tokens[3];
+					     timeStamp=tokens[4];
+					     if(verifyDate(timeStamp)){
+					    	 verifyDbResult(dbconnector.insertSignup(username,email,password),"Signup");
+					     }
 			         break;
-				 case 2:
-				     email=tokens[1];
-				     password = tokens[2];
-				     timeStamp=tokens[3];
-				     if(verifyDate(timeStamp)){
-				    	 verifyDbResult(dbconnector.login(email,password),"Login");
-				     }
-				     else{
-				    	writer.println("Error in TimeStamp,please try again\n");
-				    	writer.flush();
-				     }
+					 case 2:
+					     email=tokens[1];
+					     password = tokens[2];
+					     timeStamp=tokens[3];
+					     if(verifyDate(timeStamp)){
+					    	 verifyDbResult(dbconnector.login(email,password),"Login");
+					     }
 			         break;
+					 case 3:
+						 phoneId=tokens[1];
+						 email=tokens[2];
+						 timeStamp=tokens[3];
+						 if(verifyDate(timeStamp)){
+					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+					     }
+					 break;
+					 case 4:
+						 phoneId=tokens[1];
+						 email=tokens[2];
+						 timeStamp=tokens[3];
+						 if(verifyDate(timeStamp)){
+					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+					     }
+					 break;
+					 case 5:
+						 phoneId=tokens[1];
+						 email=tokens[2];
+						 timeStamp=tokens[3];
+						 if(verifyDate(timeStamp)){
+					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+					     }
+					 break;
 				 }
 	        }
 	    }
@@ -103,7 +113,7 @@ public class ClientHandlerThread extends Thread{
 			writer.flush();
 		}
 		else{
-			writer.println("Error in "+errorString+", please try again\n");
+			writer.println("Error in "+errorString+", please try again");
 			writer.flush();
 		}
 	}
@@ -114,7 +124,7 @@ public class ClientHandlerThread extends Thread{
 	public void setRunning(boolean running){
 	    this.running = running;
 	}
-	private static boolean verifyDate(String date1){
+	private boolean verifyDate(String date1){
 		try {
 			Calendar c = Calendar.getInstance();  
 	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
@@ -126,6 +136,8 @@ public class ClientHandlerThread extends Thread{
 			long ld = sDt.getTime() /1000;  
 	        long ld2 = sDt2.getTime() /1000;
 	        if(ld2>ld){
+	        	 writer.println("Error in TimeStamp,please try again");
+		    	 writer.flush();
 	        	return false;
 	        }
 		} catch (ParseException e) {
