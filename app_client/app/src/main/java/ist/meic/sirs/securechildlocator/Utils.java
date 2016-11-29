@@ -1,25 +1,12 @@
 package ist.meic.sirs.securechildlocator;
 
-import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 
-import java.security.PrivateKey;
-import java.security.PublicKey;
-
-import javax.crypto.Cipher;
-import javax.security.auth.x500.X500Principal;
-
 import java.security.MessageDigest;
-import java.security.cert.Certificate;
-import java.security.cert.CertificateEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.content.Context;
-import android.security.KeyPairGeneratorSpec;
 import android.util.Base64;
 import android.widget.Toast;
 

@@ -74,15 +74,21 @@ public class SignUpActivity extends AppCompatActivity {
             SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             String read=ssl.readFromServer();
-            if(read.contains("Error"))
-                Utils.errorHandling(read,getApplicationContext());
+            if(read.contains("Error")) {
+                Utils.errorHandling(read, getApplicationContext());
+                onSignupFailed();
+                return;
+            }
+
             else{
                 result = "1;" + username + ";" + email + ";" + password + ";" + Utils.getTime();
                 ssl.writeToServer(result);
                 read=ssl.readFromServer();
-                if(read.contains("Error"))
-                    Utils.errorHandling(read,getApplicationContext());
-
+                if(read.contains("Error")) {
+                    Utils.errorHandling(read, getApplicationContext());
+                    onSignupFailed();
+                    return;
+                }
             }
             ssl.closeSocket();
         } catch (Exception e) {
