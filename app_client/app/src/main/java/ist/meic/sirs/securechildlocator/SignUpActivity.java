@@ -1,6 +1,7 @@
 package ist.meic.sirs.securechildlocator;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.StreamCorruptedException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -68,25 +66,25 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
 
-            String username= Crypto.encode(_usernameText.getText().toString()).replace( "\n", "" );
-            String email= Crypto.SHA256(_emailText.getText().toString()).replace( "\n", "" );
-            String password= Crypto.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
-            //see if user is valid
-            String result="0;" +email+";"+TimeStamp.getTime();
-            System.err.println(result);
+            String username= Utils.encode(_usernameText.getText().toString()).replace( "\n", "" );
+            String email= Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
+            String password= Utils.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
+            //check if email is unique
+            String result="0;" +email+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
-            BufferedReader bufferedReader=ssl.readFromServer();
-            String read;
-            /*while ((read = bufferedReader.readLine()) != null) {
-                System.out.println(read);
-            }*/
-            //String publicKey= Crypto.getpKey(password).toString();
-            result="1;" + username + ";" + email + ";" + password+";"+TimeStamp.getTime();
+            String read=ssl.readFromServer();
+            if(read.contains("Error"))
+                Utils.errorHandling(read,getApplicationContext());
+            else{
+                result = "1;" + username + ";" + email + ";" + password + ";" + Utils.getTime();
+                ssl.writeToServer(result);
+                read=ssl.readFromServer();
+                if(read.contains("Error"))
+                    Utils.errorHandling(read,getApplicationContext());
 
-            ssl.writeToServer(result);
+            }
             ssl.closeSocket();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

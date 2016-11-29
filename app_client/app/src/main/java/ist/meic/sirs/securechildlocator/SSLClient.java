@@ -14,6 +14,8 @@ import java.security.KeyStore;
 
 public class SSLClient {
     private SSLSocket sslsocket=null;
+    private BufferedWriter  bufferedwriter=null;
+    private BufferedReader bufferedReader=null;
    public SSLClient(Context context) {
        try {
            KeyStore tsTrust = KeyStore.getInstance("BKS");
@@ -36,6 +38,12 @@ public class SSLClient {
 
            sslsocket = (SSLSocket) sslsocketfactory.createSocket("46.101.3.38", 9999);
            sslsocket.setEnabledCipherSuites(new String[] {"TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"});
+           OutputStream outputstream = sslsocket.getOutputStream();
+           OutputStreamWriter outputstreamwriter = new OutputStreamWriter(outputstream);
+           bufferedwriter = new BufferedWriter(outputstreamwriter);
+           InputStream inputstream = sslsocket.getInputStream();
+           InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+           bufferedReader = new BufferedReader(inputstreamreader);
 
        } catch (Exception exception) {
            exception.printStackTrace();
@@ -43,9 +51,6 @@ public class SSLClient {
    }
     public void writeToServer(String write){
         try {
-            OutputStream outputstream = sslsocket.getOutputStream();
-            OutputStreamWriter outputstreamwriter = new OutputStreamWriter(outputstream);
-            BufferedWriter  bufferedwriter = new BufferedWriter(outputstreamwriter);
             bufferedwriter.write(write + '\n');
             bufferedwriter.flush();
         } catch (IOException e) {
@@ -53,17 +58,14 @@ public class SSLClient {
         }
 
     }
-    public BufferedReader readFromServer () {
-        BufferedReader bufferedreader=null;
+    public String readFromServer () {
+        String read=null;
         try {
-            InputStream inputstream = sslsocket.getInputStream();
-            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-            bufferedreader = new BufferedReader(inputstreamreader);
-
+            read= bufferedReader.readLine();
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        return bufferedreader;
+        return read;
     }
     public void closeSocket(){
         if(sslsocket  != null){

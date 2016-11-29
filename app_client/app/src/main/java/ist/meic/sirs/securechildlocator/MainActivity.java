@@ -71,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
         try {
-            String email=Crypto.SHA256(_emailText.getText().toString());
-            String password= Crypto.SHA256(_passwordText.getText().toString());
-            String result="2;" + email + ";" + password+";"+TimeStamp.getTime();
+            String email= Utils.SHA256(_emailText.getText().toString());
+            String password= Utils.SHA256(_passwordText.getText().toString());
+            String result="2;" + email + ";" + password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
+            String read=ssl.readFromServer();
+            if(read.contains("Error"))
+                Utils.errorHandling(read,getApplicationContext());
             ssl.closeSocket();
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
             UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
             final String deviceId = deviceUuid.toString();
 
-            String email = Crypto.SHA256(_emailText.getText().toString());
+            String email = Utils.SHA256(_emailText.getText().toString());
 
-            String result = "5;" + deviceId + ";" + email + ";" + TimeStamp.getTime();
+            String result = "5;" + deviceId + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             ssl.closeSocket();

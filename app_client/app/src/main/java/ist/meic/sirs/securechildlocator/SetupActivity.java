@@ -1,14 +1,12 @@
 package ist.meic.sirs.securechildlocator;
 
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.BufferedReader;
 import java.util.UUID;
 
 import butterknife.ButterKnife;
@@ -49,11 +47,11 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String email = Crypto.SHA256(sessionEmail).replace("\n", "");
-                    String phoneID = Crypto.SHA256(deviceId);
+                    String email = Utils.SHA256(sessionEmail).replace("\n", "");
+                    String phoneID = Utils.SHA256(deviceId);
 
                     //send to server
-                    String result = "4;"+ phoneID +";" + email + ";" + TimeStamp.getTime();
+                    String result = "4;"+ phoneID +";" + email + ";" + Utils.getTime();
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
@@ -81,11 +79,11 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String email = Crypto.SHA256(sessionEmail).replace("\n", "");
-                    String phoneID = Crypto.SHA256(deviceId);
+                    String email = Utils.SHA256(sessionEmail).replace("\n", "");
+                    String phoneID = Utils.SHA256(deviceId);
 
                     //send to server
-                    String result = "3;"+ phoneID +";" + email + ";" + TimeStamp.getTime();
+                    String result = "3;"+ phoneID +";" + email + ";" + Utils.getTime();
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
