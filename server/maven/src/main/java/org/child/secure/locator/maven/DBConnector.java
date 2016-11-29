@@ -75,7 +75,7 @@ public class DBConnector {
 	}
 
 	public ResultSet query(String query){
-		try {
+		try {System.err.println("\n"+query+"\n");
 			Statement st = con.createStatement();
 			return st.executeQuery(query);
 		} catch (SQLException e) {

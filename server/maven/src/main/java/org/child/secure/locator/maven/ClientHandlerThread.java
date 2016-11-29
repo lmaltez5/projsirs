@@ -49,30 +49,27 @@ public class ClientHandlerThread extends Thread{
 				 int option = Integer.parseInt(tokens[0]);
 				 switch(option){
 				 case 0:
-				     System.out.println(tokens);
 				     email=tokens[1];
 				     timeStamp=tokens[2];
 				     if(verifyDate(timeStamp)){
-					     dbconnector.uniqueEmail(email);
-					     System.out.println(email);
-				         System.out.flush();
+				    	 verifyDbResult(dbconnector.uniqueEmail(email),"Email");
+				 	}
+				    else{
+				    	 writer.println("Error in TimeStamp,please try again\n");
+				    	 writer.flush();
 				     }
-				     else{
-				    	 //TODO
-				     }
-					 break;
+				    break;
 				 case 1:
 					 username = tokens[1];
 				     email=tokens[2];
 				     password = tokens[3];
 				     timeStamp=tokens[4];
 				     if(verifyDate(timeStamp)){
-					     dbconnector.insertSignup(username,email,password);
-					     System.out.println(username +" "+ email +" "+ password+timeStamp);
-				         System.out.flush();
+				    	 verifyDbResult(dbconnector.insertSignup(username,email,password),"Signup");
 				     }
 				     else{
-				    	 
+				    	 writer.println("Error in TimeStamp,please try again\n");
+				    	 writer.flush();
 				     }
 			         break;
 				 case 2:
@@ -80,12 +77,11 @@ public class ClientHandlerThread extends Thread{
 				     password = tokens[2];
 				     timeStamp=tokens[3];
 				     if(verifyDate(timeStamp)){
-					     dbconnector.login(email,password);
-					     System.out.println(email +" "+ password);
-				         System.out.flush();
+				    	 verifyDbResult(dbconnector.login(email,password),"Login");
 				     }
 				     else{
-				    	 
+				    	writer.println("Error in TimeStamp,please try again\n");
+				    	writer.flush();
 				     }
 			         break;
 				 }
@@ -101,7 +97,16 @@ public class ClientHandlerThread extends Thread{
 	public String getIP(){
 	    return ip;
 	}
-	
+	private void verifyDbResult(boolean result, String errorString){
+		if(result){
+			writer.println("Sucess");
+			writer.flush();
+		}
+		else{
+			writer.println("Error in "+errorString+", please try again\n");
+			writer.flush();
+		}
+	}
 	public boolean isRunning(){
 	    return running;
 	}
