@@ -145,17 +145,23 @@ public class MainActivity extends AppCompatActivity {
                 //send session varables
                 intent.putExtra("EMAIL", _emailText.getText().toString());
                 startActivity(intent);
+                finish();
+
             } else if (read.equals("legal")) {
                 Intent intent = new Intent(getBaseContext(), HomeActivity.class);
                 //send session varables
                 intent.putExtra("EMAIL", _emailText.getText().toString());
                 startActivity(intent);
+                finish();
+
             } else if (read.equals("child")) {
                 //MANDA PARA HOME PUTO
                 //Intent intent = new Intent(getBaseContext(), SetupActivity.class);
                 //send session varables
                 //intent.putExtra("EMAIL", _emailText.getText().toString());
                 // startActivity(intent);
+                // finish();
+
             }
             ssl.closeSocket();
             } catch (Exception e) {

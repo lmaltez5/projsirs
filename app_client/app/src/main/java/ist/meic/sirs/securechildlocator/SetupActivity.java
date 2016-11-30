@@ -63,6 +63,7 @@ public class SetupActivity extends AppCompatActivity {
                     intent.putExtra("EMAIL", sessionEmail);
                     intent.putExtra("USER", sessionUser);
                     startActivity(intent);
+                    finish();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -94,8 +95,9 @@ public class SetupActivity extends AppCompatActivity {
                     //send session varables
                     intent.putExtra("EMAIL", sessionEmail);
                     startActivity(intent);
+                    finish();
 
-            } catch (Exception e) {
+                } catch (Exception e) {
                 e.printStackTrace();
             }
             }

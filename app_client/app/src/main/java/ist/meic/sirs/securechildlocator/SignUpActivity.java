@@ -118,8 +118,9 @@ public class SignUpActivity extends AppCompatActivity {
         //send session variables
         intent.putExtra("EMAIL", email);
         intent.putExtra("USER", user);
-
         startActivity(intent);
+        finish();
+
     }
 
     public void onSignupFailed() {

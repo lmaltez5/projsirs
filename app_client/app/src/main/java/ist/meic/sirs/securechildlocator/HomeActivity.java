@@ -20,6 +20,8 @@ public class HomeActivity extends AppCompatActivity {
     @InjectView(R.id.button_manage) Button _buttonManage;
     @InjectView(R.id.button_logout) Button _buttonLogout;
 
+    String sessionEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +30,24 @@ public class HomeActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        _greetingText.setText("Hello "); //add username
+        sessionEmail = getIntent().getStringExtra("EMAIL");
 
+        String result="6;" + sessionEmail +Utils.getTime();
+        SSLClient ssl =new SSLClient(getApplicationContext());
+        ssl.writeToServer(result);
+        String read=ssl.readFromServer();
+        if(read.contains("Error")){
+            ssl.closeSocket();
+            return;
+        }
+        ssl.closeSocket();
+
+        /*
+        String name =
+
+        _greetingText.setText("Hello" + name ); //add username
+
+        */
         _buttonFind.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -50,9 +68,10 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //logout;
+                finish();
             }
         });
     }
+
 
 }
