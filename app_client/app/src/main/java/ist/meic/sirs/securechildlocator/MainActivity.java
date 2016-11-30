@@ -135,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
             SSLClient ssl = new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             String read=ssl.readFromServer();
+            ssl.closeSocket();
             if(read.contains("Error")){
                 Utils.errorHandling(read,getApplicationContext(),_loginButton);
-                ssl.closeSocket();
                 return;
             }
             else if (read.equals("new")) {
@@ -155,15 +155,12 @@ public class MainActivity extends AppCompatActivity {
                 finish();
 
             } else if (read.equals("child")) {
-                //MANDA PARA HOME PUTO
-                //Intent intent = new Intent(getBaseContext(), SetupActivity.class);
-                //send session varables
-                //intent.putExtra("EMAIL", _emailText.getText().toString());
-                // startActivity(intent);
-                // finish();
+                Intent intent = new Intent(getBaseContext(), HomeKidActivity.class);
+                intent.putExtra("EMAIL", _emailText.getText().toString());
+                startActivity(intent);
+                finish();
 
             }
-            ssl.closeSocket();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -171,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
     }
 
