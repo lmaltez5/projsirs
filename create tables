@@ -1,20 +1,19 @@
 CREATE TABLE IF NOT EXISTS usersList (
-	name VARCHAR(30),
-	email VARCHAR(30) PRIMARY KEY,
-	password VARCHAR(30),
- 	user_id INT UNIQUE AUTO_INCREMENT
+	name VARCHAR(100),
+	email VARCHAR(100) PRIMARY KEY,
+	password VARCHAR(100),
 );
 
-CREATE TABLE IF NOT EXISTS phonesIDParents (
-   user_id INT,
-   phone_id INT PRIMARY KEY,
-   phone_name VARCHAR(30),
+CREATE TABLE IF NOT EXISTS phonesIDParent (
+   email VARCHAR(100),
+   phone_id VARCHAR(100) PRIMARY KEY,
+   phone_name VARCHAR(100),
 );
 
-CREATE TABLE IF NOT EXISTS childIDParents (
-   user_id INT,
-   phone_id INT PRIMARY KEY,
-   phone_name VARCHAR(30),
+CREATE TABLE IF NOT EXISTS phonesIDChild (
+   email VARCHAR(100),
+   phone_id VARCHAR(100) PRIMARY KEY,
+   phone_name VARCHAR(100),
 );
 
 
