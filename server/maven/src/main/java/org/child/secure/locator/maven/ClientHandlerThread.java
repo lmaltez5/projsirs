@@ -37,7 +37,7 @@ public class ClientHandlerThread extends Thread{
 	{
 	    try
 	    {
-	        String fromClient,username,email,password,timeStamp,phoneId;
+	        String fromClient,username,email,password,timeStamp,phoneID;
 	        dbconnector = new DBConnector();
 			dbconnector.connect();
 	        while (running && (fromClient = reader.readLine()) != null)
@@ -71,27 +71,28 @@ public class ClientHandlerThread extends Thread{
 					     }
 			         break;
 					 case 3:
-						 phoneId=tokens[1];
+						 phoneID=tokens[1];
 						 email=tokens[2];
 						 timeStamp=tokens[3];
 						 if(verifyDate(timeStamp)){
-					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+							 verifyDbResult(dbconnector.insertIDChild(email, phoneID , timeStamp),"Child ID");
 					     }
 					 break;
 					 case 4:
-						 phoneId=tokens[1];
+						 phoneID=tokens[1];
 						 email=tokens[2];
 						 timeStamp=tokens[3];
 						 if(verifyDate(timeStamp)){
-					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+							 verifyDbResult(dbconnector.insertIDParent(email, phoneID , timeStamp),"Parent ID");
 					     }
 					 break;
 					 case 5:
-						 phoneId=tokens[1];
+						 phoneID=tokens[1];
 						 email=tokens[2];
 						 timeStamp=tokens[3];
 						 if(verifyDate(timeStamp)){
-					    	 //verifyDbResult(dbconnector.login(email,password),"Login");
+							 writer.println(dbconnector.queryPhoneId(email, phoneID));
+							 writer.flush();
 					     }
 					 break;
 				 }

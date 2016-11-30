@@ -133,17 +133,17 @@ public class DBConnector {
 			
 		} catch (SQLException e) {
 			System.err.print("No Query");
-			return false;
+			return "Error, something went wrong";
 		}
 	}
 
-	public boolean insertIDParent(String email, String phone_id , String phone_name ){
-		String updadeString= "INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phone_id + "','" + phone_name + "');";
+	public boolean insertIDParent(String email, String phoneID , String phone_name ){
+		String updadeString= "INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phoneID + "','" + phone_name + "');";
 		return update(updadeString);
 	}
 
-	public boolean insertIDChild(String email, String phone_id , String phone_name ){
-		String updadeString= "INSERT INTO phonesIDChild (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phone_id + "','" + phone_name + "');";
+	public boolean insertIDChild(String email, String phoneID , String phone_name ){
+		String updadeString= "INSERT INTO phonesIDChild (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phoneID + "','" + phone_name + "');";
 		return update(updadeString);
 	}
 }
