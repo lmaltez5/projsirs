@@ -5,8 +5,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.UUID;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.widget.Button;
 import android.widget.Toast;
@@ -36,5 +39,17 @@ public class Utils {
         Toast toast = Toast.makeText(context, error, duration);
         toast.show();
         button.setEnabled(true);
+    }
+
+    public static String getPhoneID(TelephonyManager tm, ContentResolver contentResolver){
+        //get android unique id
+
+        final String tmDevice, tmSerial, androidId;
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(contentResolver, android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        return deviceUuid.toString();
     }
 }
