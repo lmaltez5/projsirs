@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ public class SetupActivity extends AppCompatActivity {
 
     @InjectView(R.id.button_legalguardian) Button _legalguardianbutton;
     @InjectView(R.id.button_child) Button _childbutton;
+    @InjectView(R.id.phone_name)  TextView _phone_name;
 
     String sessionEmail;
     String sessionUser;
@@ -42,10 +44,11 @@ public class SetupActivity extends AppCompatActivity {
                     System.err.println(deviceId);
                     String email = Utils.SHA256(sessionEmail).replace("\n", "");
                     String phoneID = Utils.SHA256(deviceId).replace("\n", "");
-
+                    String phone_name =  _phone_name.getText().toString().replace( "\n", "" );
 
                     //send to server
-                    String result = "4;"+ phoneID +";" + email + ";" + Utils.getTime();
+                    String result = "4;"+ phoneID +";" + email + ";"+ phone_name +";"+ Utils.getTime();
+
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
 
@@ -74,18 +77,23 @@ public class SetupActivity extends AppCompatActivity {
                 try {
                     String email = Utils.SHA256(sessionEmail).replace("\n", "");
                     String phoneID = Utils.SHA256(deviceId);
+                   String phone_name =  _phone_name.getText().toString().replace( "\n", "" );
 
                     //send to server
-                    String result = "3;"+ phoneID +";" + email + ";" + Utils.getTime();
+                    String result = "3;"+ phoneID +";" + email + ";"+ phone_name +";"+ Utils.getTime();
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
 
-                    // FALTA RECEBER O OK DO SERVER
+
 
                     ssl.closeSocket();
 
-                    finish();
+                    // Goto Home
+                    Intent intent = new Intent(getBaseContext(), HomeKidActivity.class);
+                    //send session varables
+                    intent.putExtra("EMAIL", sessionEmail);
+                    startActivity(intent);
 
             } catch (Exception e) {
                 e.printStackTrace();
