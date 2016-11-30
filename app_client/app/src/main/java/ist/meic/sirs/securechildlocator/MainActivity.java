@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
-        progressDialog.show();
+
         try {
             String email= Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
             String password= Utils.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
@@ -77,9 +77,14 @@ public class MainActivity extends AppCompatActivity {
             SSLClient ssl =new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             String read=ssl.readFromServer();
-            if(read.contains("Error"))
-                Utils.errorHandling(read,getApplicationContext());
+            if(read.contains("Error")){
+                Utils.errorHandling(read,getApplicationContext(),_loginButton);
+                ssl.closeSocket();
+                return;
+            }
             ssl.closeSocket();
+            progressDialog.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -137,28 +142,30 @@ public class MainActivity extends AppCompatActivity {
             String result = "5;" + deviceId + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
-            ssl.closeSocket();
-
-            /*
-            String belong = RESPOSTA SERVER
-            if (belong.equals("new")) {
-
+            String read=ssl.readFromServer();
+            if(read.contains("Error")){
+                Utils.errorHandling(read,getApplicationContext(),_loginButton);
+                ssl.closeSocket();
+                return;
+            }
+            else if (read.equals("new")) {
                 Intent intent = new Intent(getBaseContext(), SetupActivity.class);
                 //send session varables
                 intent.putExtra("EMAIL", _emailText.getText().toString());
                 startActivity(intent);
-            } else if (belong.equals("legal")) {
+            } else if (read.equals("legal")) {
                 Intent intent = new Intent(getBaseContext(), HomeActivity.class);
                 //send session varables
                 intent.putExtra("EMAIL", _emailText.getText().toString());
                 startActivity(intent);
-            } else if (belong.equals("child")) {
+            } else if (read.equals("child")) {
                 //MANDA PARA HOME PUTO
                 //Intent intent = new Intent(getBaseContext(), SetupActivity.class);
                 //send session varables
                 //intent.putExtra("EMAIL", _emailText.getText().toString());
                 // startActivity(intent);
-            }*/
+            }
+            ssl.closeSocket();
             } catch (Exception e) {
                 e.printStackTrace();
             }

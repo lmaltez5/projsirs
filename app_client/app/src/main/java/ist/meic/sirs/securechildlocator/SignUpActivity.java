@@ -73,8 +73,7 @@ public class SignUpActivity extends AppCompatActivity {
             ssl.writeToServer(result);
             String read=ssl.readFromServer();
             if(read.contains("Error")) {
-                Utils.errorHandling(read, getApplicationContext());
-                onSignupFailed();
+                Utils.errorHandling(read, getApplicationContext(),_signupButton);
                 ssl.closeSocket();
                 return;
             }
@@ -84,8 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
                 ssl.writeToServer(result);
                 read=ssl.readFromServer();
                 if(read.contains("Error")) {
-                    Utils.errorHandling(read, getApplicationContext());
-                    onSignupFailed();
+                    Utils.errorHandling(read, getApplicationContext(),_signupButton);
                     ssl.closeSocket();
                     return;
                 }

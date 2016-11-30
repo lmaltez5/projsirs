@@ -8,6 +8,7 @@ import java.util.Calendar;
 
 import android.content.Context;
 import android.util.Base64;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class Utils {
@@ -30,9 +31,10 @@ public class Utils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return df.format(c.getTime());
     }
-    public static void errorHandling(String error,Context context) {
+    public static void errorHandling(String error, Context context, Button button) {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, error, duration);
         toast.show();
+        button.setEnabled(true);
     }
 }
