@@ -119,4 +119,31 @@ public class DBConnector {
 			return false;
 		}
 	}
+	public String queryPhoneId(String email, String phoneID) {
+		try {
+			ResultSet rs = query("SELECT * FROM phonesIDParent WHERE email='"+ email + "' AND phone_id='"+phoneID+"';");
+			if (rs.next()){
+				return "legal";
+			}
+			rs = query("SELECT * FROM phonesIDChild WHERE email='"+ email + "' AND phone_id='"+phoneID+"';");
+			if (rs.next()){
+				return "child";
+			}
+			return "new";
+			
+		} catch (SQLException e) {
+			System.err.print("No Query");
+			return false;
+		}
+	}
+
+	public boolean insertIDParent(String email, String phone_id , String phone_name ){
+		String updadeString= "INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phone_id + "','" + phone_name + "');";
+		return update(updadeString);
+	}
+
+	public boolean insertIDChild(String email, String phone_id , String phone_name ){
+		String updadeString= "INSERT INTO phonesIDChild (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phone_id + "','" + phone_name + "');";
+		return update(updadeString);
+	}
 }
