@@ -82,14 +82,12 @@ public class SignUpActivity extends AppCompatActivity {
                 result = "1;" + username + ";" + email + ";" + password + ";" + Utils.getTime();
                 ssl.writeToServer(result);
                 read=ssl.readFromServer();
+                ssl.closeSocket();
                 if(read.contains("Error")) {
                     Utils.errorHandling(read, getApplicationContext(),_signupButton);
-                    ssl.closeSocket();
                     return;
                 }
             }
-            ssl.closeSocket();
-
             progressDialog.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Signup failed", Toast.LENGTH_LONG).show();
         _signupButton.setEnabled(true);
     }
 
