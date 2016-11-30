@@ -47,12 +47,13 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
+                    System.err.println(deviceId);
                     String email = Utils.SHA256(sessionEmail).replace("\n", "");
-                    String phoneID = Utils.SHA256(deviceId);
+                    String phoneID = Utils.SHA256(deviceId).replace("\n", "");
+
 
                     //send to server
                     String result = "4;"+ phoneID +";" + email + ";" + Utils.getTime();
-
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
 

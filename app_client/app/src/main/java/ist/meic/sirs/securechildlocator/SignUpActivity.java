@@ -61,8 +61,6 @@ public class SignUpActivity extends AppCompatActivity {
                 R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
-        progressDialog.show();
-
 
         try {
 
@@ -77,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
             if(read.contains("Error")) {
                 Utils.errorHandling(read, getApplicationContext());
                 onSignupFailed();
+                ssl.closeSocket();
                 return;
             }
 
@@ -87,10 +86,13 @@ public class SignUpActivity extends AppCompatActivity {
                 if(read.contains("Error")) {
                     Utils.errorHandling(read, getApplicationContext());
                     onSignupFailed();
+                    ssl.closeSocket();
                     return;
                 }
             }
             ssl.closeSocket();
+
+            progressDialog.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
