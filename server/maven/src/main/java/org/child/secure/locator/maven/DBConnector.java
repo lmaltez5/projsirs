@@ -74,35 +74,35 @@ public class DBConnector {
 		}
 	}
 
-	public ResultSet query(String query){
-		try {System.err.println("\n"+query+"\n");
-			Statement st = con.createStatement();
-			return st.executeQuery(query);
-		} catch (SQLException e) {
-			System.err.print("No Query");
-			return null;
-		}
+    public ResultSet query(String query){
+	try {System.err.println("\n"+query+"\n");
+		Statement st = con.createStatement();
+		return st.executeQuery(query);
+	} catch (SQLException e) {
+		System.err.print("No Query");
+		return null;
+	}
     }
     
     public boolean update(String update){
-		try {System.err.println("\n"+update+"\n");
-			Statement st = con.createStatement();
-			int i = st.executeUpdate(update);
-			return i >= 0;
-		} catch (SQLException e) {
-			System.err.print("No Query");
-			return false;
-		}
+	try {System.err.println("\n"+update+"\n");
+		Statement st = con.createStatement();
+		int i = st.executeUpdate(update);
+		return i >= 0;
+	} catch (SQLException e) {
+		System.err.print("No Query");
+		return false;
+	}
     }
-	    public boolean uniqueEmail(String email){
-		try {
-			ResultSet rs = query("SELECT email FROM userList where email='"+email+"';");
-			//next false se nao tiver rows
-			return !rs.next();
-		} catch (SQLException e) {
-			System.err.print("No Query");
-			return false;
-		}
+    public boolean uniqueEmail(String email){
+	try {
+		ResultSet rs = query("SELECT email FROM userList where email='"+email+"';");
+		//next false se nao tiver rows
+		return !rs.next();
+	} catch (SQLException e) {
+		System.err.print("No Query");
+		return false;
+	}
     }
 
     public boolean insertSignup(String username, String email, String password){
@@ -117,6 +117,16 @@ public class DBConnector {
 		}catch (SQLException e) {
 			System.err.print("No Query");
 			return false;
+		}
+	}
+	
+	public String searchUser(String email) {
+		try {
+			ResultSet rs = query("SELECT name FROM userList WHERE password='"+password+"';");
+			return rs.toString();
+		}catch (SQLException e) {
+			System.err.print("No Query");
+			return "Error, something went wrong";
 		}
 	}
 	public String queryPhoneId(String email, String phoneID) {
