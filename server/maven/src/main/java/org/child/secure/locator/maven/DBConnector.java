@@ -123,7 +123,11 @@ public class DBConnector {
 	public String searchUser(String email) {
 		try {
 			ResultSet rs = query("SELECT name FROM userList WHERE password='"+password+"';");
-			return rs.toString();
+			if (rs.next()){
+				return rs.toString();
+			}
+			else
+				return "Error, something went wrong";
 		}catch (SQLException e) {
 			System.err.print("No Query");
 			return "Error, something went wrong";
