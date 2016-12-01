@@ -122,7 +122,7 @@ public class DBConnector {
 	
 	public String searchUser(String email) {
 		try {
-			ResultSet rs = query("SELECT name FROM userList WHERE password='"+password+"';");
+			ResultSet rs = query("SELECT name FROM userList WHERE email='"+email+"';");
 			if (rs.next()){
 				return rs.toString();
 			}
