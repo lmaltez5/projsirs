@@ -51,10 +51,12 @@ public class SetupActivity extends AppCompatActivity {
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
-
-                    // FALTA RECEBER O OK DO SERVER
-
-
+                    String read=ssl.readFromServer();
+                    if(read.contains("Error")) {
+                        Utils.errorHandling(read, getApplicationContext(),_legalguardianbutton);
+                        ssl.closeSocket();
+                        return;
+                    }
                     ssl.closeSocket();
 
                     // Goto Home
@@ -85,9 +87,12 @@ public class SetupActivity extends AppCompatActivity {
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     ssl.writeToServer(result);
-
-
-
+                    String read=ssl.readFromServer();
+                    if(read.contains("Error")) {
+                        Utils.errorHandling(read, getApplicationContext(),_childbutton);
+                        ssl.closeSocket();
+                        return;
+                    }
                     ssl.closeSocket();
 
                     // Goto Home

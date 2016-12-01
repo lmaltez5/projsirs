@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             ssl.writeToServer(result);
             String read=ssl.readFromServer();
             ssl.closeSocket();
-            if(read.contains("Error")){
+            if(read.contains("error")){
                 Utils.errorHandling(read,getApplicationContext(),_loginButton);
                 return;
             }
