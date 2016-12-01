@@ -124,7 +124,7 @@ public class DBConnector {
 		try {
 			ResultSet rs = query("SELECT name FROM userList WHERE email='"+email+"';");
 			if (rs.next()){
-				return rs.getString("name");;
+				return rs.getString("name");
 			}
 			else
 				return "Error, something went wrong";
