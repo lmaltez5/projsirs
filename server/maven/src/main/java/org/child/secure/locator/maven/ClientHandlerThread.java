@@ -99,7 +99,7 @@ public class ClientHandlerThread extends Thread{
 						 email=tokens[1];
 						 timeStamp=tokens[2];
 						 if(verifyDate(timeStamp)){
-							 writer.println(dbconnector.queryPhoneId(email));
+							 writer.println(dbconnector.searchUser(email));
 							 writer.flush();
 					     }
 					 break;
