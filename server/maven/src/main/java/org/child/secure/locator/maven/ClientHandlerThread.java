@@ -95,6 +95,14 @@ public class ClientHandlerThread extends Thread{
 							 writer.flush();
 					     }
 					 break;
+					case 6:
+						 email=tokens[1];
+						 timeStamp=tokens[2];
+						 if(verifyDate(timeStamp)){
+							 writer.println(dbconnector.queryPhoneId(email));
+							 writer.flush();
+					     }
+					 break;
 				 }
 	        }
 	    }
