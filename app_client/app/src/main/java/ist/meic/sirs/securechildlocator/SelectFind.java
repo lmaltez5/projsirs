@@ -14,16 +14,32 @@ public class SelectFind extends Activity {
 
     // Array of strings...
     String[] phonesNames;
-
+    String sessionEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
-
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
+        String email = Utils.SHA256(sessionEmail).replace( "\n", "" );
+        
         //FAZ GET DOS NOMES
-
+        String result="7;" + email +";"+Utils.getTime();
+        SSLClient ssl =new SSLClient(getApplicationContext());
+        ssl.writeToServer(result);
+        String read=ssl.readFromServer();
+        if(read.contains("Error")){
+            Utils.errorHandling(read,getApplicationContext(),_button_logout);
+            ssl.closeSocket();
+            return;
+        }
+        ssl.closeSocket();
+        
+       
         //CONSTROI ARRAY DE STRINGS
+        
+
+
 
         if (phonesNames != null) {
 
