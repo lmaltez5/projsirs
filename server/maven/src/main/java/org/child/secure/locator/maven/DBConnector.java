@@ -139,7 +139,7 @@ public class DBConnector {
 			String names;
 			ResultSet rs = query("SELECT phone_name FROM phonesIDChild WHERE email='"+email+"';");
 			while (rs.next()){
-				names = names + "," + rs.getString("phone_name");
+				names =  rs.getString("phone_name")+","+names;
 			}
 			return names;
 		}catch (SQLException e) {
