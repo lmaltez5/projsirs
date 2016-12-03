@@ -133,6 +133,24 @@ public class DBConnector {
 			return "Error, something went wrong";
 		}
 	}
+	
+	public String searchPhoneNames(String email) {
+		try {
+			String names;
+			ResultSet rs = query("SELECT phone_name FROM phonesIDChild WHERE email='"+email+"';");
+			while (rs.next()){
+				names = names + "," + rs.getString("phone_name");
+			}
+			return names;
+		}catch (SQLException e) {
+			System.err.print("No Query");
+			return "Error, something went wrong";
+		}
+
+	}
+	
+	
+	
 	public String queryPhoneId(String email, String phoneID) {
 		try {
 			ResultSet rs = query("SELECT * FROM phonesIDParent WHERE email='"+ email + "' AND phone_id='"+phoneID+"';");
