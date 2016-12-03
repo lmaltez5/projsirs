@@ -31,8 +31,10 @@ public class HomeActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
-
-        String result="6;" + sessionEmail + ";" +Utils.getTime();
+        String email= Utils.SHA256(sessionEmail).replace( "\n", "" );
+        
+        
+        String result="6;" + email + ";" +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
         String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
