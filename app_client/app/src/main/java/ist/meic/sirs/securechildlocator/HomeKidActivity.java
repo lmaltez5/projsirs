@@ -12,7 +12,7 @@ public class HomeKidActivity extends AppCompatActivity {
     @InjectView(R.id.button_logout) Button _button_logout;
     @InjectView(R.id.input_password) TextView _input_password;
 
-    String sessionEmail = getIntent().getStringExtra("EMAIL");
+    String sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class HomeKidActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String input_password = _input_password.getText().toString();
+        String input_password = _input_password.getText().toString().replace( "\n", "" );;
 
         if (input_password.isEmpty() || input_password.length() < 4 || input_password.length() > 10) {
             _input_password.setError("between 4 and 10 alphanumeric characters");
@@ -44,7 +44,7 @@ public class HomeKidActivity extends AppCompatActivity {
     }
 
     public void logout(){
-        String input_password = _input_password.getText().toString();
+        String input_password = _input_password.getText().toString().replace( "\n", "" );;
         if (!validate()) {
             return;
         }
