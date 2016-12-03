@@ -105,6 +105,14 @@ public class ClientHandlerThread extends Thread{
 							 writer.flush();
 					     }
 					 break;
+					case 7:
+						 email=tokens[1];
+						 timeStamp=tokens[2];
+						 if(verifyDate(timeStamp)){
+							// writer.println(dbconnector.getChids(email));
+							 writer.flush();
+					     }
+					 break;
 				 }
 	        }
 	    }
