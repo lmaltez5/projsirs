@@ -136,7 +136,7 @@ public class DBConnector {
 	
 	public String searchPhoneNames(String email) {
 		try {
-			String names;
+			String names = "";
 			ResultSet rs = query("SELECT phone_name FROM phonesIDChild WHERE email='"+email+"';");
 			while (rs.next()){
 				names =  rs.getString("phone_name")+","+names;
