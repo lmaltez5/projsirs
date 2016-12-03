@@ -33,13 +33,9 @@ public class SelectFind extends Activity {
         String[] phonesNames = read.split(",");
 
         if (phonesNames != null) {
-
-                final ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                        R.layout.activity_listview, phonesNames);
-
+                final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, phonesNames);
                 ListView listView = (ListView) findViewById(R.id.mobile_list);
                 listView.setAdapter(adapter);
-
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -49,7 +45,7 @@ public class SelectFind extends Activity {
             }
         else {
             // got to Home
-            Toast.makeText(getBaseContext(), "Don have any kid", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Don't have any kid", Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
