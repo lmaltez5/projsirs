@@ -1,13 +1,12 @@
 package ist.meic.sirs.securechildlocator;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
@@ -34,14 +33,8 @@ public class HomeActivity extends AppCompatActivity {
 
         String result="6;" + sessionEmail + ";" +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        ssl.writeToServer(result);
-        String read=ssl.readFromServer();
-        if(read.contains("Error")){
-            ssl.closeSocket();
-            return;
-        }
+        Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-
         /*
         String name =
 

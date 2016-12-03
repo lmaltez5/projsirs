@@ -55,13 +55,7 @@ public class HomeKidActivity extends AppCompatActivity {
             }
             String result="2;" + email + ";" + input_password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            ssl.writeToServer(result);
-            String read=ssl.readFromServer();
-            if(read.contains("Error")){
-                Utils.errorHandling(read,getApplicationContext(),_button_logout);
-                ssl.closeSocket();
-                return;
-            }
+            Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
             ssl.closeSocket();
             finish();
         } catch (Exception e) {

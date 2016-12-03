@@ -70,23 +70,11 @@ public class SignUpActivity extends AppCompatActivity {
             //check if email is unique
             String result="0;" +email+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            ssl.writeToServer(result);
-            String read=ssl.readFromServer();
-            if(read.contains("Error")) {
-                Utils.errorHandling(read, getApplicationContext(),_signupButton);
-                ssl.closeSocket();
-                return;
-            }
-
-            else{
+            String read= Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
+            if(!read.equals("ERROR")){
                 result = "1;" + username + ";" + email + ";" + password + ";" + Utils.getTime();
-                ssl.writeToServer(result);
-                read=ssl.readFromServer();
+                Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
                 ssl.closeSocket();
-                if(read.contains("Error")) {
-                    Utils.errorHandling(read, getApplicationContext(),_signupButton);
-                    return;
-                }
             }
             progressDialog.show();
         } catch (Exception e) {

@@ -75,13 +75,7 @@ public class MainActivity extends AppCompatActivity {
             String password= Utils.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
             String result="2;" + email + ";" + password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            ssl.writeToServer(result);
-            String read=ssl.readFromServer();
-            if(read.contains("Error")){
-                Utils.errorHandling(read,getApplicationContext(),_loginButton);
-                ssl.closeSocket();
-                return;
-            }
+            Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
             ssl.closeSocket();
             progressDialog.show();
 
@@ -133,11 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
             String result = "5;" + phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
-            ssl.writeToServer(result);
-            String read=ssl.readFromServer();
+            String read=Utils.connectSSL(getApplicationContext(), result, ssl, _loginButton);
             ssl.closeSocket();
-            if(read.contains("error")){
-                Utils.errorHandling(read,getApplicationContext(),_loginButton);
+            if(read.contains("ERROR")){
                 return;
             }
             else if (read.equals("new")) {

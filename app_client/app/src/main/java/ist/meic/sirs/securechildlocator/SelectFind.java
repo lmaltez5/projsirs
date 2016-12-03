@@ -1,4 +1,4 @@
-package ist.meic.sirs.securechildlocator
+package ist.meic.sirs.securechildlocator;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,20 +26,11 @@ public class SelectFind extends Activity {
         //FAZ GET DOS NOMES
         String result="7;" + email +";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        ssl.writeToServer(result);
-        String read=ssl.readFromServer();
-        if(read.contains("Error")){
-            Utils.errorHandling(read,getApplicationContext(),_button_logout);
-            ssl.closeSocket();
-            return;
-        }
+        //TODO: arranjar null
+        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-        
-       
-        //CONSTROI ARRAY DE STRINGS
-        
 
-
+        String[] phonesNames = read.split(",");
 
         if (phonesNames != null) {
 

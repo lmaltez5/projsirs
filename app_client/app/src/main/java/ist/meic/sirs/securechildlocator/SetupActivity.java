@@ -50,13 +50,7 @@ public class SetupActivity extends AppCompatActivity {
                     String result = "4;"+ phoneID +";" + email + ";"+ phone_name +";"+ Utils.getTime();
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
-                    ssl.writeToServer(result);
-                    String read=ssl.readFromServer();
-                    if(read.contains("Error")) {
-                        Utils.errorHandling(read, getApplicationContext(),_legalguardianbutton);
-                        ssl.closeSocket();
-                        return;
-                    }
+                    Utils.connectSSL(getApplicationContext(),result,ssl,_legalguardianbutton);
                     ssl.closeSocket();
 
                     // Goto Home
@@ -84,17 +78,9 @@ public class SetupActivity extends AppCompatActivity {
 
                     //send to server
                     String result = "3;"+ phoneID +";" + email + ";"+ phone_name +";"+ Utils.getTime();
-
                     SSLClient ssl = new SSLClient(getApplicationContext());
-                    ssl.writeToServer(result);
-                    String read=ssl.readFromServer();
-                    if(read.contains("Error")) {
-                        Utils.errorHandling(read, getApplicationContext(),_childbutton);
-                        ssl.closeSocket();
-                        return;
-                    }
+                    Utils.connectSSL(getApplicationContext(),result,ssl,_childbutton);
                     ssl.closeSocket();
-
                     // Goto Home
                     Intent intent = new Intent(getBaseContext(), HomeKidActivity.class);
                     //send session varables
