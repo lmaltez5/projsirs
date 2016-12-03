@@ -52,6 +52,12 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                
+                Intent intent = new Intent(getBaseContext(), SelectFind.class);
+                //send session varables
+                intent.putExtra("EMAIL",sessionEmail);
+                startActivity(intent);
+                finish();
 
             }
         });
