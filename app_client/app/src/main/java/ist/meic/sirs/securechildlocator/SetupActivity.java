@@ -79,7 +79,7 @@ public class SetupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     String email = Utils.SHA256(sessionEmail).replace("\n", "");
-                    String phoneID = Utils.SHA256(deviceId);
+                    String phoneID = Utils.SHA256(deviceId).replace("\n", "");
                    String phone_name =  _phone_name.getText().toString().replace( "\n", "" );
 
                     //send to server
