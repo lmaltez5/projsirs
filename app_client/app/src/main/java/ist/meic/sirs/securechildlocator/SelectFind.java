@@ -21,7 +21,7 @@ public class SelectFind extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
-        String email = Utils.SHA256(sessionEmail).replace( "\n", "" );
+        String email = Utils.SHA256(sessionEmail);
         
         //FAZ GET DOS NOMES
         String result="7;" + email +";"+Utils.getTime();

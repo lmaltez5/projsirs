@@ -10,7 +10,6 @@ import java.util.UUID;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -20,7 +19,7 @@ public class Utils {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(text.getBytes());
             byte[] digest = md.digest();
-            return Base64.encodeToString(digest, Base64.DEFAULT);
+            return digest.toString().replace("\n", "");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             System.exit(1);
@@ -28,9 +27,6 @@ public class Utils {
         return null;
     }
 
-    public static String encode (String text){
-        return Base64.encodeToString(text.getBytes(), Base64.DEFAULT);
-    }
     public static String getTime() {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MINUTE, +2);

@@ -48,8 +48,8 @@ public class HomeKidActivity extends AppCompatActivity {
 
     public void logout(){
         try{
-            String email = Utils.SHA256(sessionEmail).replace("\n", "");
-            String input_password = Utils.SHA256(_input_password.getText().toString()).replace( "\n", "" );
+            String email = Utils.SHA256(sessionEmail);
+            String input_password = Utils.SHA256(_input_password.getText().toString());
             if (!validate()) {
                 return;
             }

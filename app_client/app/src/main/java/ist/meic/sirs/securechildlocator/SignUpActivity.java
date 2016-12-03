@@ -64,9 +64,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
 
-            String username= Utils.encode(_usernameText.getText().toString()).replace( "\n", "" );
-            String email= Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
-            String password= Utils.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
+            String username= _usernameText.getText().toString().replace( "\n", "" );
+            String email= Utils.SHA256(_emailText.getText().toString());
+            String password= Utils.SHA256(_passwordText.getText().toString());
             //check if email is unique
             String result="0;" +email+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());

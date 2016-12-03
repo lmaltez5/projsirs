@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
 
         try {
-            String email= Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
-            String password= Utils.SHA256(_passwordText.getText().toString()).replace( "\n", "" );
+            String email= Utils.SHA256(_emailText.getText().toString());
+            String password= Utils.SHA256(_passwordText.getText().toString());
             String result="2;" + email + ";" + password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
             final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
             //get android unique id
 
-            String phoneID = Utils.SHA256(deviceId).replace("\n", "");
-            String email = Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
+            String phoneID = Utils.SHA256(deviceId);
+            String email = Utils.SHA256(_emailText.getText().toString());
 
             String result = "5;" + phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
