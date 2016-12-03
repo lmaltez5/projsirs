@@ -12,12 +12,13 @@ public class HomeKidActivity extends AppCompatActivity {
     @InjectView(R.id.button_logout) Button _button_logout;
     @InjectView(R.id.input_password) TextView _input_password;
 
-    String sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
+    String sessionEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_kid);
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
 
         _button_logout.setOnClickListener(new View.OnClickListener() {
 
