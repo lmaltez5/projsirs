@@ -1,19 +1,21 @@
 CREATE TABLE IF NOT EXISTS usersList (
 	name VARCHAR(100),
 	email VARCHAR(100) PRIMARY KEY,
-	password VARCHAR(100),
+	password VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS phonesIDParent (
    email VARCHAR(100),
-   phone_id VARCHAR(100) PRIMARY KEY,
+   phone_id VARCHAR(100),
    phone_name VARCHAR(100),
+    primary key (email, phone_id)
 );
 
 CREATE TABLE IF NOT EXISTS phonesIDChild (
-   email VARCHAR(100),
-   phone_id VARCHAR(100) PRIMARY KEY,
-   phone_name VARCHAR(100),
+email VARCHAR(100),
+phone_id VARCHAR(100), 
+phone_name VARCHAR(100),
+primary key (email, phone_id)
 );
 
 
