@@ -109,8 +109,8 @@ public class ClientHandlerThread extends Thread{
 						 email=tokens[1];
 						 timeStamp=tokens[2];
 						 if(verifyDate(timeStamp)){
-							// writer.println(dbconnector.getChids(email));
-							 writer.flush();
+							writer.println(dbconnector.searchPhoneNames(email));
+							writer.flush();
 					     }
 					 break;
 				 }
