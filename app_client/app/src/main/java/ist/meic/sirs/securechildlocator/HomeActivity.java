@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,14 +34,12 @@ public class HomeActivity extends AppCompatActivity {
 
         String result="6;" + sessionEmail + ";" +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        Utils.connectSSL(getApplicationContext(), result, ssl, null);
+        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-        /*
-        String name =
+        byte[] decodedBytes = Base64.decode(read.getBytes(),Base64.DEFAULT);
+        _greetingText.setText("Hello" + decodedBytes.toString() ); //add username
 
-        _greetingText.setText("Hello" + name ); //add username
 
-        */
         _buttonFind.setOnClickListener(new View.OnClickListener() {
 
             @Override
