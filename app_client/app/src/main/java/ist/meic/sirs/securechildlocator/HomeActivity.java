@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         //setSupportActionBar(toolbar);
 
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
-        String email= Utils.SHA256(sessionEmail).replace( "\n", "" );
+        String email= Utils.SHA256(sessionEmail);
         
         
         String result="6;" + email + ";" +Utils.getTime();
