@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        sessionEmail = getIntent().getStringExtra("EMAIL");
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
 
         String result="6;" + sessionEmail +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
