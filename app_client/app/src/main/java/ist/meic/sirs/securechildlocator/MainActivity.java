@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
             final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
             //get android unique id
 
-
+            String phoneID = Utils.SHA256(deviceId).replace("\n", "");
             String email = Utils.SHA256(_emailText.getText().toString()).replace( "\n", "" );
 
-            String result = "5;" + deviceId + ";" + email + ";" + Utils.getTime();
+            String result = "5;" + phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             ssl.writeToServer(result);
             String read=ssl.readFromServer();

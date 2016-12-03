@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity {
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
 
         String result="6;" + sessionEmail + ";" +Utils.getTime();
-        System.err.println(result);
         SSLClient ssl =new SSLClient(getApplicationContext());
         ssl.writeToServer(result);
         String read=ssl.readFromServer();

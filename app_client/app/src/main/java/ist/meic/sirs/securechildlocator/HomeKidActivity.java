@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class HomeKidActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class HomeKidActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_kid);
+        ButterKnife.inject(this);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
 
         _button_logout.setOnClickListener(new View.OnClickListener() {
@@ -32,7 +34,7 @@ public class HomeKidActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String input_password = _input_password.getText().toString().replace( "\n", "" );;
+        String input_password = _input_password.getText().toString().replace( "\n", "" );
 
         if (input_password.isEmpty() || input_password.length() < 4 || input_password.length() > 10) {
             _input_password.setError("between 4 and 10 alphanumeric characters");
@@ -45,20 +47,26 @@ public class HomeKidActivity extends AppCompatActivity {
     }
 
     public void logout(){
-        String input_password = _input_password.getText().toString().replace( "\n", "" );;
-        if (!validate()) {
-            return;
-        }
-        String result="2;" + sessionEmail + ";" + input_password+";"+Utils.getTime();
-        SSLClient ssl =new SSLClient(getApplicationContext());
-        ssl.writeToServer(result);
-        String read=ssl.readFromServer();
-        if(read.contains("Error")){
-            Utils.errorHandling(read,getApplicationContext(),_button_logout);
+        try{
+            String email = Utils.SHA256(sessionEmail).replace("\n", "");
+            String input_password = Utils.SHA256(_input_password.getText().toString()).replace( "\n", "" );
+            if (!validate()) {
+                return;
+            }
+            String result="2;" + email + ";" + input_password+";"+Utils.getTime();
+            SSLClient ssl =new SSLClient(getApplicationContext());
+            ssl.writeToServer(result);
+            String read=ssl.readFromServer();
+            if(read.contains("Error")){
+                Utils.errorHandling(read,getApplicationContext(),_button_logout);
+                ssl.closeSocket();
+                return;
+            }
             ssl.closeSocket();
-            return;
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        ssl.closeSocket();
-        finish();
+
     }
 }
