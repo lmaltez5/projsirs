@@ -155,7 +155,7 @@ public class DBConnector {
 			String names = "";
 			PreparedStatement stmt = con.prepareStatement("SELECT phone_name FROM phonesIDChild WHERE email= ? ;");
 			stmt.setString(1, email);
-			ResultSet rs = stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				names =  rs.getString("phone_name")+","+names;
 			}
@@ -174,14 +174,14 @@ public class DBConnector {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM phonesIDParent WHERE email= ? AND phone_id= ? ;");
 			stmt.setString(1, email);
 			stmt.setString(2, phoneID);
-			ResultSet rs = stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery();
 			if (rs.next()){
 				return "legal";
 			}
 			PreparedStatement stmt1 = con.prepareStatement("SELECT * FROM phonesIDChild WHERE email= ? AND phone_id= ? ;");
 			stmt1.setString(1, email);
 			stmt1.setString(2, phoneID);
-			ResultSet rs1 = stmt1.executeQuery(query);
+			ResultSet rs1 = stmt1.executeQuery();
 			if (rs.next()){
 				return "child";
 			}
