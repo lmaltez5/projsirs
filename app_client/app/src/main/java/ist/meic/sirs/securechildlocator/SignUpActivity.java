@@ -18,7 +18,8 @@ import butterknife.InjectView;
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String TAG = "SignupActivity";
-
+    private String sessionKey;
+    private String sessionEmail;
     @InjectView(R.id.input_name) EditText _usernameText;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
@@ -65,15 +66,16 @@ public class SignUpActivity extends AppCompatActivity {
         try {
 
             String username= _usernameText.getText().toString().replace( "\n", "" );
-            String email= Utils.SHA256(_emailText.getText().toString());
+            sessionEmail= Utils.SHA256(_emailText.getText().toString());
             String password= Utils.SHA256(_passwordText.getText().toString());
             //check if email is unique
-            String result="0;" +email+";"+Utils.getTime();
+            String result="0;" +sessionEmail+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             String read= Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
             if(!read.equals("ERROR")){
-                result = "1;" + username + ";" + email + ";" + password + ";" + Utils.getTime();
+                result = "1;" + username + ";" + sessionEmail + ";" + password + ";" + Utils.getTime();
                 Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
+                sessionKey=ssl.readFromServer();
                 ssl.closeSocket();
             }
             progressDialog.show();
@@ -97,13 +99,10 @@ public class SignUpActivity extends AppCompatActivity {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
 
-        String email = _emailText.getText().toString().replace( "\n", "");
-        String user = _usernameText.getText().toString().replace( "\n", "" );
-
         Intent intent = new Intent(getBaseContext(), SetupActivity.class);
         //send session variables
-        intent.putExtra("EMAIL", email);
-        intent.putExtra("USER", user);
+        intent.putExtra("EMAIL", sessionEmail);
+        intent.putExtra("SESSIONKEY", sessionKey);
         startActivity(intent);
         finish();
 

@@ -20,8 +20,9 @@ public class HomeActivity extends AppCompatActivity {
     @InjectView(R.id.button_manage) Button _buttonManage;
     @InjectView(R.id.button_logout) Button _buttonLogout;
 
-    String sessionEmail;
-
+    private String sessionEmail;
+    private String sessionKey;
+    private String sessionPhoneID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,16 +31,15 @@ public class HomeActivity extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );;
-        String email= Utils.SHA256(sessionEmail);
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
+        sessionKey = getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
+        sessionPhoneID=getIntent().getStringExtra("ID").replace( "\n", "" );
         
-        
-        String result="6;" + email + ";" +Utils.getTime();
+        String result="6;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
         String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-        byte[] decodedBytes = Base64.decode(read.getBytes(),Base64.DEFAULT);
-        _greetingText.setText("Hello" + decodedBytes.toString() ); //add username
+        _greetingText.setText("Hello" + read ); //add username
 
 
         _buttonFind.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), SelectFind.class);
                 //send session varables
                 intent.putExtra("EMAIL",sessionEmail);
+                intent.putExtra("SESSIONKEY", sessionKey);
+                intent.putExtra("ID", sessionPhoneID);
                 startActivity(intent);
                 finish();
 

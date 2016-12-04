@@ -22,7 +22,7 @@ import butterknife.InjectView;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-
+    private String sessionKey;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_login) Button _loginButton;
@@ -76,16 +76,13 @@ public class MainActivity extends AppCompatActivity {
             String result="2;" + email + ";" + password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
+            sessionKey=ssl.readFromServer();
             ssl.closeSocket();
             progressDialog.show();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        // TODO: Implement your own authentication logic here.
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -124,34 +121,28 @@ public class MainActivity extends AppCompatActivity {
 
             String phoneID = Utils.SHA256(deviceId);
             String email = Utils.SHA256(_emailText.getText().toString());
-
-            String result = "5;" + phoneID + ";" + email + ";" + Utils.getTime();
+            String result = "5;" +sessionKey +";"+ phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             String read=Utils.connectSSL(getApplicationContext(), result, ssl, _loginButton);
             ssl.closeSocket();
+            Intent intent=null;
             if(read.contains("ERROR")){
                 return;
             }
             else if (read.equals("new")) {
-                Intent intent = new Intent(getBaseContext(), SetupActivity.class);
-                //send session varables
-                intent.putExtra("EMAIL", _emailText.getText().toString());
-                startActivity(intent);
-                finish();
-
+                intent = new Intent(getBaseContext(), SetupActivity.class);
             } else if (read.equals("legal")) {
-                Intent intent = new Intent(getBaseContext(), HomeActivity.class);
-                //send session varables
-                intent.putExtra("EMAIL", _emailText.getText().toString());
-                startActivity(intent);
-                finish();
-
+                intent = new Intent(getBaseContext(), HomeActivity.class);
             } else if (read.equals("child")) {
-                Intent intent = new Intent(getBaseContext(), HomeKidActivity.class);
-                intent.putExtra("EMAIL", _emailText.getText().toString());
+                intent = new Intent(getBaseContext(), HomeKidActivity.class);
+            }
+            //send session varables
+            if(intent!=null) {
+                intent.putExtra("EMAIL", email);
+                intent.putExtra("SESSIONKEY", sessionKey);
+                intent.putExtra("ID",phoneID);
                 startActivity(intent);
                 finish();
-
             }
             } catch (Exception e) {
                 e.printStackTrace();

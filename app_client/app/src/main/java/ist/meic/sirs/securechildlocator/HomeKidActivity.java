@@ -14,14 +14,14 @@ public class HomeKidActivity extends AppCompatActivity {
     @InjectView(R.id.input_password) TextView _input_password;
 
     String sessionEmail;
-
+    String sessionkey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_kid);
         ButterKnife.inject(this);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
-
+        sessionkey= getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
         _button_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,12 +48,12 @@ public class HomeKidActivity extends AppCompatActivity {
 
     public void logout(){
         try{
-            String email = Utils.SHA256(sessionEmail);
+
             String input_password = Utils.SHA256(_input_password.getText().toString());
             if (!validate()) {
                 return;
             }
-            String result="2;" + email + ";" + input_password+";"+Utils.getTime();
+            String result="2;" + sessionEmail + ";" + input_password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
             ssl.closeSocket();

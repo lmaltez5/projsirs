@@ -13,23 +13,23 @@ import android.widget.Toast;
 public class SelectFind extends Activity {
 
     // Array of strings...
-    String[] phonesNames;
-    String sessionEmail;
+    private String[] phonesNames;
+    private String sessionEmail;
+    private String sessionKey;
+    private String sessionPhoneID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
-        String email = Utils.SHA256(sessionEmail);
-        
+        sessionKey=getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
+        sessionPhoneID=getIntent().getStringExtra("ID").replace( "\n", "" );
         //FAZ GET DOS NOMES
-        String result="7;" + email +";"+Utils.getTime();
+        String result="7;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        //TODO: arranjar null
         String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-
         String[] phonesNames = read.split(",");
 
         if (phonesNames != null) {
