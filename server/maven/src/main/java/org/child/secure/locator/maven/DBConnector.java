@@ -96,8 +96,9 @@ public class DBConnector {
     }
     public boolean uniqueEmail(String email){
 	try {
-		ResultSet rs = query("SELECT email FROM userList where email='"+email+"';");
-		//next false se nao tiver rows
+		PreparedStatement stmt = con.prepareStatement("SELECT email FROM userList where email = ? ;");
+		stmt.setString(1, email);
+		ResultSet rs = stmt.executeQuery();
 		return !rs.next();
 	} catch (SQLException e) {
 		System.err.print("No Query");
@@ -106,14 +107,27 @@ public class DBConnector {
     }
 
     public boolean insertSignup(String username, String email, String password){
-		String updadeString= "INSERT INTO userList (name, email, password) VALUES ('" + username + "','" + email + "','" + password + "');";
-		return update(updadeString);
+	    try {
+		String updadeString= ";
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO userList (name, email, password) VALUES ( ? , ? , ? );");
+		stmt.setString(1, username);
+	    	stmt.setString(2, email);
+	    	stmt.setString(3, password);
+		int i = = stmt.executeUpdate();
+		return i >= 0;
+	    }  catch (SQLException e) {
+		System.err.print("No Query");
+		return false;
+	}
     }
 
 	public boolean login(String email, String password) {
 		try {
-			ResultSet rs = query("SELECT * FROM userList WHERE email='"+ email + "' AND password='"+password+"';");
-			return rs.next();
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM userList WHERE email= ? AND password= ? ; ");
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+			return !rs.next();
 		}catch (SQLException e) {
 			System.err.print("No Query");
 			return false;
@@ -122,7 +136,9 @@ public class DBConnector {
 	
 	public String searchUser(String email) {
 		try {
-			ResultSet rs = query("SELECT name FROM userList WHERE email='"+email+"';");
+			PreparedStatement stmt = con.prepareStatement("SELECT name FROM userList WHERE email= ? ;");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
 			if (rs.next()){
 				return rs.getString("name");
 			}
@@ -137,7 +153,9 @@ public class DBConnector {
 	public String searchPhoneNames(String email) {
 		try {
 			String names = "";
-			ResultSet rs = query("SELECT phone_name FROM phonesIDChild WHERE email='"+email+"';");
+			PreparedStatement stmt = con.prepareStatement("SELECT phone_name FROM phonesIDChild WHERE email= ? ;");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery(query);
 			while (rs.next()){
 				names =  rs.getString("phone_name")+","+names;
 			}
@@ -153,11 +171,17 @@ public class DBConnector {
 	
 	public String queryPhoneId(String email, String phoneID) {
 		try {
-			ResultSet rs = query("SELECT * FROM phonesIDParent WHERE email='"+ email + "' AND phone_id='"+phoneID+"';");
+			PreparedStatement stmt = con.prepareStatement("SELECT * FROM phonesIDParent WHERE email= ? AND phone_id= ? ;");
+			stmt.setString(1, email);
+			stmt.setString(2, phoneID);
+			ResultSet rs = stmt.executeQuery(query);
 			if (rs.next()){
 				return "legal";
 			}
-			rs = query("SELECT * FROM phonesIDChild WHERE email='"+ email + "' AND phone_id='"+phoneID+"';");
+			PreparedStatement stmt1 = con.prepareStatement("SELECT * FROM phonesIDChild WHERE email= ? AND phone_id= ? ;");
+			stmt1.setString(1, email);
+			stmt1.setString(2, phoneID);
+			ResultSet rs1 = stmt1.executeQuery(query);
 			if (rs.next()){
 				return "child";
 			}
@@ -170,12 +194,34 @@ public class DBConnector {
 	}
 
 	public boolean insertIDParent(String email, String phoneID , String phone_name ){
-		String updadeString= "INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phoneID + "','" + phone_name + "');";
-		return update(updadeString);
+		try {
+		String updadeString= ;
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES (?,?,?);");
+		stmt.setString(1, email);
+	    	stmt.setString(2, phoneID);
+	    	stmt.setString(3, phone_name);
+		int i = = stmt.executeUpdate();
+		return i >= 0;
+		}
+		catch (SQLException e) {
+			System.err.print("No Query");
+			return "Error, something went wrong";
+		}
 	}
 
 	public boolean insertIDChild(String email, String phoneID , String phone_name ){
-		String updadeString= "INSERT INTO phonesIDChild (email, phone_id , phone_name ) VALUES ('" + email+ "','" + phoneID + "','" + phone_name + "');";
-		return update(updadeString);
+		try {
+		String updadeString= ;
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name ) VALUES (?,?,?);");
+		stmt.setString(1, email);
+	    	stmt.setString(2, phoneID);
+	    	stmt.setString(3, phone_name);
+		int i = = stmt.executeUpdate();
+		return i >= 0;
+		}
+		catch (SQLException e) {
+			System.err.print("No Query");
+			return "Error, something went wrong";
+		}
 	}
 }
