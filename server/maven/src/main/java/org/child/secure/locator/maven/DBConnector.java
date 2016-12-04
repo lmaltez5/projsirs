@@ -202,7 +202,7 @@ public class DBConnector {
 			table="phonesIDChild";
 		
 		try {
-			PreparedStatement stmt = con.prepareStatement("INSERT INTO '"+ table +"' (email, phone_id , phone_name ) VALUES (?,?,?);");
+			PreparedStatement stmt = con.prepareStatement("INSERT INTO "+ table +" (email, phone_id , phone_name ) VALUES (?,?,?);");
 			stmt.setString(1, email);
 		    stmt.setString(2, phoneID);
 		    stmt.setString(3, phone_name);
