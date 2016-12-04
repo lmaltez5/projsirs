@@ -19,6 +19,7 @@ public class Utils {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(text.getBytes());
             byte[] digest = md.digest();
+
             return digest.toString().replace("\n", "");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

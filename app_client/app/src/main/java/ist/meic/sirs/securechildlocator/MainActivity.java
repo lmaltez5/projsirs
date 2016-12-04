@@ -75,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
             String password= Utils.SHA256(_passwordText.getText().toString());
             String result="2;" + email + ";" + password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
-            sessionKey=ssl.readFromServer();
-            ssl.closeSocket();
-            progressDialog.show();
+            String read=Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
+            if(!read.equals("ERROR")){
+                sessionKey=ssl.readFromServer();
+                ssl.closeSocket();
+                progressDialog.show();
+            }
+            else
+                return;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
             String result = "5;" +sessionKey +";"+ phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             String read=Utils.connectSSL(getApplicationContext(), result, ssl, _loginButton);
-            ssl.closeSocket();
             Intent intent=null;
             if(read.contains("ERROR")){
                 return;
@@ -138,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //send session varables
             if(intent!=null) {
+                ssl.closeSocket();
                 intent.putExtra("EMAIL", email);
                 intent.putExtra("SESSIONKEY", sessionKey);
                 intent.putExtra("ID",phoneID);

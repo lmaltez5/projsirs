@@ -77,8 +77,11 @@ public class SignUpActivity extends AppCompatActivity {
                 Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
                 sessionKey=ssl.readFromServer();
                 ssl.closeSocket();
+                progressDialog.show();
             }
-            progressDialog.show();
+            else
+                return;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
