@@ -77,7 +77,7 @@ public class DBConnector {
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT email FROM userList where email = ? ;");
 			stmt.setString(1, email);
-			
+			System.err.print(stmt);
 			ResultSet rs = stmt.executeQuery();
 			return !rs.next();
 			
@@ -93,6 +93,7 @@ public class DBConnector {
 			stmt.setString(1, username);
 		    stmt.setString(2, email);
 		    stmt.setString(3, password);
+			System.err.print(stmt);
 			int i = stmt.executeUpdate();
 			return i >= 0;
 	    }  catch (SQLException e) {
@@ -120,6 +121,7 @@ public class DBConnector {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM userList WHERE email= ? AND password= ? ; ");
 			stmt.setString(1, email);
 			stmt.setString(2, password);
+			System.err.print(stmt);
 			ResultSet rs = stmt.executeQuery();
 			return !rs.next();
 		}catch (SQLException e) {
@@ -132,6 +134,8 @@ public class DBConnector {
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT name FROM userList WHERE email= ? ;");
 			stmt.setString(1, email);
+			System.err.print(stmt);
+
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()){
 				return rs.getString("name");
@@ -149,6 +153,8 @@ public class DBConnector {
 			String names = "";
 			PreparedStatement stmt = con.prepareStatement("SELECT phone_name FROM phonesIDChild WHERE email= ? ;");
 			stmt.setString(1, email);
+			System.err.print(stmt);
+
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				names =  rs.getString("phone_name")+","+names;
@@ -168,6 +174,8 @@ public class DBConnector {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM phonesIDParent WHERE email= ? AND phone_id= ? ;");
 			stmt.setString(1, email);
 			stmt.setString(2, phoneID);
+			System.err.print(stmt);
+
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()){
 				return "legal";
@@ -199,6 +207,8 @@ public class DBConnector {
 			stmt.setString(1, email);
 		    stmt.setString(2, phoneID);
 		    stmt.setString(3, phone_name);
+			System.err.print(stmt);
+
 			int i = stmt.executeUpdate();
 			return i >= 0;
 		}
