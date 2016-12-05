@@ -104,12 +104,12 @@ public class DBConnector {
     
     public boolean verifyKey(String clientKey,String email,String phoneID){
 	   try {
-			PreparedStatement stmt =con.prepareStatement("Select * from sessionTable WHERE email= ? AND ckey= ? AND phone_id = ? );");
+			PreparedStatement stmt =con.prepareStatement("SELECT * FROM sessionTable WHERE email = ? AND ckey = ? AND phone_id = ? );");
 			stmt.setString(1, email);
 			stmt.setString(2, clientKey);
 			stmt.setString(3, phoneID);
+		   	System.err.println(stmt.toString());
 			ResultSet rs = stmt.executeQuery();
-		 	System.err.println(stmt.toString());
 			return rs.next();
 	    }  catch (SQLException e) {
 			System.err.print("No Query verifyKey");
