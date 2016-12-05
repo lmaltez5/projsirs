@@ -102,20 +102,34 @@ public class DBConnector {
 	    }
     }
     
-    public boolean verifyKey(String clientKey,String email,String phoneID){
+    public boolean verifyKey(String clientKey,String email,String phoneID, boolean mode){
 	   try {
-			PreparedStatement stmt =con.prepareStatement("SELECT * FROM sessionTable WHERE email = ? AND ckey = ? AND phone_id = ? ;");
+		   PreparedStatement stmt=null:
+		   if (mode){
+			stmt =con.prepareStatement("SELECT * FROM sessionTable WHERE email = ? AND ckey = ? AND phone_id = ? ;");
 			stmt.setString(1, email);
 			stmt.setString(2, clientKey);
 			stmt.setString(3, phoneID);
-		   	System.err.println(stmt.toString());
-			ResultSet rs = stmt.executeQuery();
-			return rs.next();
+		   }
+		   else {
+		   	stmt =con.prepareStatement("update sessionTable set ckey = ? where email = ? AND phone_id = ?;");
+			stmt.setString(1 clientKey);
+		   	stmt.setString(2 email);
+			stmt.setString(3 phoneID);
+		   }
+		   System.err.println(stmt.toString());
+		   int i = stmt.executeUpdate();
+		   return i >= 0;
 	    }  catch (SQLException e) {
 			System.err.print("No Query verifyKey");
 			return false;
 	    }
     }
+	
+	update test set name='john' where id=3012
+
+	
+	
 
 	public boolean insertKey(String clientKey,String email,String phoneID){
 	   try {
