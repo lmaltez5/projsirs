@@ -60,10 +60,11 @@ public class ClientHandlerThread extends Thread{
 					 	}
 				    break;
 					case 1:
-						 username = tokens[1];
+					     username = tokens[1];
 					     email=tokens[2];
 					     password = tokens[3];
-					     timeStamp=tokens[4];
+					     phoneID=tokens[4];
+					     timeStamp=tokens[5];
 					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.insertSignup(username,email,password);
 					    	 if (temp){
@@ -78,7 +79,8 @@ public class ClientHandlerThread extends Thread{
 					 case 2:
 					     email=tokens[1];
 					     password = tokens[2];
-					     timeStamp=tokens[3];
+					     phoneID=tokens[3];
+					     timeStamp=tokens[4];
 					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.login(email,password);
 					    	 if (temp){
