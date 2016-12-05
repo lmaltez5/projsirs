@@ -69,8 +69,11 @@ public class ClientHandlerThread extends Thread{
 					    	 temp=dbconnector.insertSignup(username,email,password);
 					    	 if (temp){
 							String serverKey=generateRandomSecret();
-							dbconnector.insertKey(serverKey,email,phoneID);
-							verifyDbResult(temp,serverKey);
+							temp=dbconnector.insertKey(serverKey,email,phoneID);
+							 if(temp)
+								verifyDbResult(temp,serverKey);
+							 else
+								verifyDbResult(temp,"Creating key");
 						 }
 						 else
 							verifyDbResult(temp,"Signup");
@@ -85,8 +88,11 @@ public class ClientHandlerThread extends Thread{
 					    	 temp=dbconnector.login(email,password);
 					    	 if (temp){
 						 	String serverKey=generateRandomSecret();
-						        dbconnector.insertKey(serverKey,email,phoneID);
-							verifyDbResult(temp,serverKey);
+						        temp=dbconnector.insertKey(serverKey,email,phoneID);
+							 if(temp)
+								verifyDbResult(temp,serverKey);
+							 else
+								 verifyDbResult(temp,"Creating key");
 						 }
 						 else
 							verifyDbResult(temp,"Login"); 
