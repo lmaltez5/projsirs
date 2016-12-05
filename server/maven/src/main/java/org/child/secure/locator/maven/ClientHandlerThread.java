@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.crypto.*;
 import java.util.Base64;
 
 public class ClientHandlerThread extends Thread{
