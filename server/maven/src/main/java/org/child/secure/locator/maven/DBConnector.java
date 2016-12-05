@@ -102,11 +102,26 @@ public class DBConnector {
 	    }
     }
     
-    public boolean verifyKey(String clientKey,String email,String phoneID, boolean mode){
+    public boolean verifyKey(String clientKey,String email,String phoneID){
+	   try {
+		PreparedStatement stmt =con.prepareStatement("SELECT * FROM sessionTable WHERE email = ? AND ckey = ? AND phone_id = ? ;");
+		stmt.setString(1, email);
+		stmt.setString(2, clientKey);
+		stmt.setString(3, phoneID);
+		System.err.println(stmt.toString());
+		ResultSet rs = stmt.executeQuery();
+		return rs.next();
+	    }  catch (SQLException e) {
+			System.err.print("No Query verifyKey");
+			return false;
+	    }
+    }	
+
+	public boolean insertKey(String clientKey,String email,String phoneID, boolean mode){
 	   try {
 		   PreparedStatement stmt=null:
 		   if (mode){
-			stmt =con.prepareStatement("SELECT * FROM sessionTable WHERE email = ? AND ckey = ? AND phone_id = ? ;");
+			stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
 			stmt.setString(1, email);
 			stmt.setString(2, clientKey);
 			stmt.setString(3, phoneID);
@@ -117,29 +132,9 @@ public class DBConnector {
 		   	stmt.setString(2 email);
 			stmt.setString(3 phoneID);
 		   }
-		   System.err.println(stmt.toString());
-		   int i = stmt.executeUpdate();
-		   return i >= 0;
-	    }  catch (SQLException e) {
-			System.err.print("No Query verifyKey");
-			return false;
-	    }
-    }
-	
-	update test set name='john' where id=3012
-
-	
-	
-
-	public boolean insertKey(String clientKey,String email,String phoneID){
-	   try {
-			PreparedStatement stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
-			stmt.setString(1, email);
-			stmt.setString(2, phoneID);
-			stmt.setString(3, clientKey);
-			System.err.println(stmt.toString());
-			int i = stmt.executeUpdate();
-			return i >= 0;
+		System.err.println(stmt.toString());
+		int i = stmt.executeUpdate();
+		return i >= 0;
 	    }  catch (SQLException e) {
 			System.err.print("No Query insertKey");
 			return false;
