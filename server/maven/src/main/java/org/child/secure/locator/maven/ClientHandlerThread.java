@@ -173,7 +173,7 @@ public class ClientHandlerThread extends Thread{
 	}
 	private void verifyDbResult(boolean result, String errorString){
 		if(result){
-			writer.println("Sucess, "+errorString);
+			writer.println("Sucess,"+errorString);
 			writer.flush();
 		}
 		else{
