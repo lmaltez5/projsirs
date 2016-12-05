@@ -82,7 +82,7 @@ public class DBConnector {
 			return !rs.next();
 			
 		} catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query uniqueEmail");
 			return false;
 		}
     }
@@ -97,7 +97,7 @@ public class DBConnector {
 			int i = stmt.executeUpdate();
 			return i >= 0;
 	    }  catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query insertSignup");
 			return false;
 	    }
     }
@@ -112,7 +112,7 @@ public class DBConnector {
 		 	System.err.println(stmt.toString());
 			return rs.next();
 	    }  catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query verifyKey");
 			return false;
 	    }
     }
@@ -127,7 +127,7 @@ public class DBConnector {
 			int i = stmt.executeUpdate();
 			return i >= 0;
 	    }  catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query insertKey");
 			return false;
 	    }
     }
@@ -142,7 +142,7 @@ public class DBConnector {
 			ResultSet rs = stmt.executeQuery();
 			return rs.next();
 		}catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query login");
 			return false;
 		}
 	}
@@ -159,7 +159,7 @@ public class DBConnector {
 			else
 				return "Error, something went wrong";
 		}catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query searchUser");
 			return "Error, something went wrong";
 		}
 	}
@@ -176,7 +176,7 @@ public class DBConnector {
 			}
 			return names;
 		}catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query searchPhoneNames");
 			return "Error, something went wrong";
 		}
 
@@ -206,7 +206,7 @@ public class DBConnector {
 			return "new";
 			
 		} catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query queryPhoneId");
 			return "Error, something went wrong";
 		}
 	}
@@ -228,7 +228,7 @@ public class DBConnector {
 			return i >= 0;
 		}
 		catch (SQLException e) {
-			System.err.print("No Query");
+			System.err.print("No Query insertID");
 			return false;
 		}
 	}
