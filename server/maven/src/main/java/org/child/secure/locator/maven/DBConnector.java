@@ -128,9 +128,9 @@ public class DBConnector {
 		   }
 		   else {
 		   	stmt =con.prepareStatement("update sessionTable set ckey = ? where email = ? AND phone_id = ?;");
-			stmt.setString(1 clientKey);
-		   	stmt.setString(2 email);
-			stmt.setString(3 phoneID);
+			stmt.setString(1,clientKey);
+		   	stmt.setString(2,email);
+			stmt.setString(3,phoneID);
 		   }
 		System.err.println(stmt.toString());
 		int i = stmt.executeUpdate();
