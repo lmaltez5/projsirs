@@ -65,23 +65,39 @@ public class SignUpActivity extends AppCompatActivity {
 
         try {
 
+
             String username= _usernameText.getText().toString().replace( "\n", "" );
             sessionEmail= Utils.SHA256(_emailText.getText().toString());
             String password= Utils.SHA256(_passwordText.getText().toString());
             //check if email is unique
             String result="0;" +sessionEmail+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            String read= Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
-            if(!read.equals("ERROR")){
-                result = "1;" + username + ";" + sessionEmail + ";" + password + ";" + Utils.getTime();
-                Utils.connectSSL(getApplicationContext(), result, ssl, _signupButton);
-                sessionKey=ssl.readFromServer();
+            ssl.writeToServer(result);
+            String read=ssl.readFromServer();
+            if(read.contains("Error")) {
+                Utils.errorHandling(read, getApplicationContext(),_signupButton);
                 ssl.closeSocket();
-                progressDialog.show();
-            }
-            else
                 return;
+            }
 
+            else{
+                result = "1;" + username + ";" + sessionEmail + ";" + password + ";" + Utils.getTime();
+                ssl.writeToServer(result);
+                read=ssl.readFromServer();
+                if(read.contains("Error")) {
+                    Utils.errorHandling(read, getApplicationContext(),_signupButton);
+                    ssl.closeSocket();
+                    return;
+                }
+                sessionKey= ssl.readFromServer();
+                if(sessionKey == null){
+                    Utils.errorHandling("", getApplicationContext(),_signupButton);
+                    ssl.closeSocket();
+                    return;
+                }
+                ssl.closeSocket();
+            }
+            progressDialog.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
