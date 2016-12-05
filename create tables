@@ -5,17 +5,24 @@ CREATE TABLE IF NOT EXISTS userList (
 );
 
 CREATE TABLE IF NOT EXISTS phonesIDParent (
-   email VARCHAR(100),
-   phone_id VARCHAR(100),
-   phone_name VARCHAR(100),
-    primary key (email, phone_id)
+	email VARCHAR(100),
+   	phone_id VARCHAR(100),
+   	phone_name VARCHAR(100),
+    	primary key (email, phone_id)
 );
 
 CREATE TABLE IF NOT EXISTS phonesIDChild (
-email VARCHAR(100),
-phone_id VARCHAR(100), 
-phone_name VARCHAR(100),
-primary key (email, phone_id)
+	email VARCHAR(100),
+	phone_id VARCHAR(100), 
+	phone_name VARCHAR(100),
+	primary key (email, phone_id)
+);
+
+
+CREATE TABLE IF NOT EXISTS seesionTable (
+	email VARCHAR(100),
+	phone_id VARCHAR(100), 
+	key VARCHAR(100)
 );
 
 
