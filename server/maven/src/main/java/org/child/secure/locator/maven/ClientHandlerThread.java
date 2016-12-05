@@ -148,7 +148,7 @@ public class ClientHandlerThread extends Thread{
 						email=tokens[3];
 						timeStamp=tokens[4];
 						if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
-							dbconnector.insertKey(null,email,phoneID);
+							verifyDbResult(dbconnector.insertKey(null,email,phoneID), "logout");
 							
 					        }
 					 break;
@@ -166,9 +166,7 @@ public class ClientHandlerThread extends Thread{
 	    return ip;
 	}
 	private void verifyDbResult(boolean result, String errorString){
-		System.out.println(errorString);
 		if(result){
-			System.out.println(errorString);
 			writer.println("Sucess, "+errorString);
 			writer.flush();
 		}
