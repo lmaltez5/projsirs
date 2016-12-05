@@ -103,19 +103,36 @@ public class DBConnector {
     }
     
     public boolean verifyKey(String clientKey,String email,String phoneID){
-    	return true;
-	   /* try {
-			PreparedStatement stmt =null; //con.prepareStatement("Select * from WHERE email= ? AND key= ? AND ID= ? );");
-			stmt.setString(1, clientKey);
-			stmt.setString(2, email);
+	   try {
+			PreparedStatement stmt =con.prepareStatement("Select * from sessionTable WHERE email= ? AND key= ? AND phone_id = ? );");
+			stmt.setString(1, email);
+			stmt.setString(2, clientKey);
 			stmt.setString(3, phoneID);
 			ResultSet rs = stmt.executeQuery();
+		 	System.err.print(stmt.toString());
 			return rs.next();
 	    }  catch (SQLException e) {
 			System.err.print("No Query");
 			return false;
-	    }*/
+	    }
     }
+
+	public boolean insertKey(String clientKey,String email,String phoneID){
+	   try {
+			PreparedStatement stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, key) VALUES (?,?,?);");
+			stmt.setString(1, email);
+			stmt.setString(2, phoneID);
+			stmt.setString(3, clientKey);
+			System.err.print(stmt.toString());
+			int i = stmt.executeUpdate();
+			return i >= 0;
+	    }  catch (SQLException e) {
+			System.err.print("No Query");
+			return false;
+	    }
+    }
+	
+	
 	public boolean login(String email, String password) {
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM userList WHERE email= ? AND password= ? ; ");
