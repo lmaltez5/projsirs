@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private String sessionKey;
     private String sessionEmail;
+    private String  phoneID;
     @InjectView(R.id.input_name) EditText _usernameText;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
@@ -31,6 +33,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
+
+        final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
+
+         phoneID = Utils.SHA256(deviceId).replace("\n","");
+
+
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +75,8 @@ public class SignUpActivity extends AppCompatActivity {
 
 
             String username= _usernameText.getText().toString().replace( "\n", "" );
-            sessionEmail= Utils.SHA256(_emailText.getText().toString());
-            String password= Utils.SHA256(_passwordText.getText().toString());
+            sessionEmail= Utils.SHA256(_emailText.getText().toString()).replace("\n","");
+            String password= Utils.SHA256(_passwordText.getText().toString()).replace("\n","");
             //check if email is unique
             String result="0;" +sessionEmail+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
@@ -81,9 +89,10 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             else{
-                result = "1;" + username + ";" + sessionEmail + ";" + password + ";" + Utils.getTime();
+                result = "1;" + username + ";" + sessionEmail + ";" + password +";"+ phoneID + ";" + Utils.getTime();
                 ssl.writeToServer(result);
                 read=ssl.readFromServer();
+                System.err.println(read);
                 if(read.contains("Error")) {
                     Utils.errorHandling(read, getApplicationContext(),_signupButton);
                     ssl.closeSocket();
@@ -91,7 +100,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 String tokens[]=read.split(",");
                 sessionKey= tokens[1];
-                System.out.println(sessionKey);
+                System.err.println(sessionKey);
                 if(sessionKey == null){
                     Utils.errorHandling("Something went wrong, plase try again", getApplicationContext(),_signupButton);
                     ssl.closeSocket();
@@ -124,6 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
         //send session variables
         intent.putExtra("EMAIL", sessionEmail);
         intent.putExtra("SESSIONKEY", sessionKey);
+        intent.putExtra("ID", phoneID);
         startActivity(intent);
         finish();
 

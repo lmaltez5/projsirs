@@ -1,5 +1,10 @@
 package ist.meic.sirs.securechildlocator;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,14 +19,17 @@ public class HomeKidActivity extends AppCompatActivity {
     @InjectView(R.id.input_password) TextView _input_password;
 
     String sessionEmail;
-    String sessionkey;
+    String sessionKey;
+    String sessionPhoneID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_kid);
         ButterKnife.inject(this);
-        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
-        sessionkey= getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace("\n", "");
+        sessionKey = getIntent().getStringExtra("SESSIONKEY").replace("\n", "");
+        sessionPhoneID = getIntent().getStringExtra("ID").replace("\n", "");
         _button_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -29,8 +37,17 @@ public class HomeKidActivity extends AppCompatActivity {
                 logout();
             }
         });
-    }
 
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+
+        }
+    }
     public boolean validate() {
         boolean valid = true;
 
@@ -49,14 +66,18 @@ public class HomeKidActivity extends AppCompatActivity {
     public void logout(){
         try{
 
-            String input_password = Utils.SHA256(_input_password.getText().toString());
+            String input_password = Utils.SHA256(_input_password.getText().toString()).replace("\n","");
             if (!validate()) {
                 return;
             }
             String result="2;" + sessionEmail + ";" + input_password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
+
+            result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
+            Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
             ssl.closeSocket();
+
             finish();
         } catch (Exception e) {
             e.printStackTrace();

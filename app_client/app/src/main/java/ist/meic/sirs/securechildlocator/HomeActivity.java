@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         SSLClient ssl =new SSLClient(getApplicationContext());
         String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
-        _greetingText.setText("Hello" + read ); //add username
+        _greetingText.setText("Hello " + read ); //add username
 
 
         _buttonFind.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +70,11 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                SSLClient ssl =new SSLClient(getApplicationContext());
+                String result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
+                Utils.connectSSL(getApplicationContext(),result,ssl,_buttonLogout);
+                ssl.closeSocket();
+
                 finish();
             }
         });

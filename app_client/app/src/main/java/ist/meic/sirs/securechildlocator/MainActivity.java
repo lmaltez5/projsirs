@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
     private String sessionKey;
+    private String phoneID;
     @InjectView(R.id.input_email) EditText _emailText;
     @InjectView(R.id.input_password) EditText _passwordText;
     @InjectView(R.id.btn_login) Button _loginButton;
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+
+        final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
+        //get android unique id
+
+        phoneID = Utils.SHA256(deviceId).replace("\n","");
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -71,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
 
         try {
-            String email= Utils.SHA256(_emailText.getText().toString());
-            String password= Utils.SHA256(_passwordText.getText().toString());
-            String result="2;" + email + ";" + password+";"+Utils.getTime();
+            String email= Utils.SHA256(_emailText.getText().toString()).replace("\n","");
+            String password= Utils.SHA256(_passwordText.getText().toString()).replace("\n","");
+            String result="2;" + email + ";" + password+";"+ phoneID + ";" + Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             String read=Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
             if(!read.equals("ERROR")){
-                sessionKey=ssl.readFromServer();
+                String tokens[]=read.split(",");
+                sessionKey= tokens[1];
                 ssl.closeSocket();
                 progressDialog.show();
             }
@@ -120,11 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
         try {
-            final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
-            //get android unique id
-
-            String phoneID = Utils.SHA256(deviceId);
-            String email = Utils.SHA256(_emailText.getText().toString());
+            String email = Utils.SHA256(_emailText.getText().toString()).replace("\n","");
             String result = "5;" +sessionKey +";"+ phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
             String read=Utils.connectSSL(getApplicationContext(), result, ssl, _loginButton);

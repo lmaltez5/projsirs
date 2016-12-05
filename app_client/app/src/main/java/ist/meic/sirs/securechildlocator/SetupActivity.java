@@ -21,6 +21,7 @@ public class SetupActivity extends AppCompatActivity {
 
     private String sessionEmail;
     private String sessionKey;
+    private String sessionPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +32,18 @@ public class SetupActivity extends AppCompatActivity {
         //get sessions variables
         sessionEmail = getIntent().getStringExtra("EMAIL");
         sessionKey=getIntent().getStringExtra("SESSIONKEY");
-
+        sessionPhone= getIntent().getStringExtra("ID");
         //get android unique id
-        final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
 
        _legalguardianbutton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 try {
-                    System.err.println(deviceId);
-                    String phoneID = Utils.SHA256(deviceId);
                     String phone_name =  _phone_name.getText().toString().replace( "\n", "" );
+
                     //send to server
-                    String result = "4;"+ sessionKey+";"+ phoneID +";" + sessionEmail + ";"+ phone_name +";"+ Utils.getTime();
+                    String result = "4;"+ sessionKey+";"+ sessionPhone +";" + sessionEmail + ";"+ phone_name +";"+ Utils.getTime();
 
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     Utils.connectSSL(getApplicationContext(),result,ssl,_legalguardianbutton);
@@ -55,7 +54,7 @@ public class SetupActivity extends AppCompatActivity {
                     //send session varables
                     intent.putExtra("EMAIL", sessionEmail);
                     intent.putExtra("SESSIONKEY", sessionKey);
-                    intent.putExtra("ID", phoneID);
+                    intent.putExtra("ID", sessionPhone);
                     startActivity(intent);
                     finish();
 
@@ -70,11 +69,9 @@ public class SetupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String phoneID = Utils.SHA256(deviceId);
                     String phone_name =  _phone_name.getText().toString().replace( "\n", "" );
-
                     //send to server
-                    String result = "3;"+ sessionKey+";"+ phoneID +";" + sessionEmail + ";"+ phone_name +";"+ Utils.getTime();
+                    String result = "3;"+ sessionKey+";"+ sessionPhone +";" + sessionEmail + ";"+ phone_name +";"+ Utils.getTime();
                     SSLClient ssl = new SSLClient(getApplicationContext());
                     Utils.connectSSL(getApplicationContext(),result,ssl,_childbutton);
                     ssl.closeSocket();
@@ -83,7 +80,7 @@ public class SetupActivity extends AppCompatActivity {
                     //send session varables
                     intent.putExtra("EMAIL", sessionEmail);
                     intent.putExtra("SESSIONKEY", sessionKey);
-                    intent.putExtra("ID", phoneID);
+                    intent.putExtra("ID", sessionPhone);
                     startActivity(intent);
                     finish();
 

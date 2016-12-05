@@ -24,7 +24,7 @@ public class SelectFind extends Activity {
         setContentView(R.layout.activity_select);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
         sessionKey=getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
-        sessionPhoneID=getIntent().getStringExtra("ID").replace( "\n", "" );
+        sessionPhoneID = getIntent().getStringExtra("ID").replace( "\n", "" );
         //FAZ GET DOS NOMES
         String result="7;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
@@ -32,7 +32,8 @@ public class SelectFind extends Activity {
         ssl.closeSocket();
         String[] phonesNames = read.split(",");
 
-        if (phonesNames != null) {
+
+        if (!read.isEmpty()) {
                 final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, phonesNames);
                 ListView listView = (ListView) findViewById(R.id.mobile_list);
                 listView.setAdapter(adapter);
@@ -47,6 +48,9 @@ public class SelectFind extends Activity {
             // got to Home
             Toast.makeText(getBaseContext(), "Don't have any kid", Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, HomeActivity.class);
+            intent.putExtra("EMAIL", sessionEmail);
+            intent.putExtra("SESSIONKEY", sessionKey);
+            intent.putExtra("ID", sessionPhoneID);
             startActivity(intent);
             finish();
         }
