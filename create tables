@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS phonesIDChild (
 );
 
 
-CREATE TABLE IF NOT EXISTS seesionTable (
+CREATE TABLE IF NOT EXISTS sessionTable (
 	email VARCHAR(100),
 	phone_id VARCHAR(100), 
 	key VARCHAR(100)
