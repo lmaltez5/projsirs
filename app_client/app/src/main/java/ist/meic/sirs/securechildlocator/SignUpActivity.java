@@ -89,9 +89,11 @@ public class SignUpActivity extends AppCompatActivity {
                     ssl.closeSocket();
                     return;
                 }
-                sessionKey= ssl.readFromServer();
+                String tokens[]=read.split(",");
+                sessionKey= tokens[1];
+                System.out.println(sessionKey);
                 if(sessionKey == null){
-                    Utils.errorHandling("", getApplicationContext(),_signupButton);
+                    Utils.errorHandling("Something went wrong, plase try again", getApplicationContext(),_signupButton);
                     ssl.closeSocket();
                     return;
                 }
