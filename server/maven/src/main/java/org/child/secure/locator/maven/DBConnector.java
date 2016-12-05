@@ -119,7 +119,7 @@ public class DBConnector {
 
 	public boolean insertKey(String clientKey,String email,String phoneID, boolean mode){
 	   try {
-		   PreparedStatement stmt=null:
+		   PreparedStatement stmt=null;
 		   if (mode){
 			stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
 			stmt.setString(1, email);
