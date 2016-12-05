@@ -64,15 +64,15 @@ public class ClientHandlerThread extends Thread{
 					     timeStamp=tokens[4];
 					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.insertSignup(username,email,password);
-					    	 verifyDbResult(temp,"Signup");
 					    	 if (temp){
-						    		String serverKey=generateRandomSecret();
-						    		writer.println(serverKey);
-						 			writer.flush();
+							String serverKey=generateRandomSecret();
 						    		/*INSERT IN BD
 						    		dbconnector.uniqueEmail(email);
-						 			writer.flush();*/
-						 		}
+						 		writer.flush();*/
+							 verifyDbResult(temp,serverKey);
+						 }
+						 else
+							verifyDbResult(temp,"Signup");
 					    }
 			         break;
 					 case 2:
@@ -81,15 +81,15 @@ public class ClientHandlerThread extends Thread{
 					     timeStamp=tokens[3];
 					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.login(email,password);
-					    	 verifyDbResult(temp,"Login");
 					    	 if (temp){
 						    		String serverKey=generateRandomSecret();
-						    		writer.println(serverKey);
-						 			writer.flush();
 						    		/*INSERT IN BD
 						    		dbconnector.uniqueEmail(email);
 						 			writer.flush();*/
+							  verifyDbResult(temp,serverKey);
 						 		}
+						 else
+							 verifyDbResult(temp,"Login"); 
 					     }
 			         break;
 					 case 3:
@@ -157,7 +157,7 @@ public class ClientHandlerThread extends Thread{
 	}
 	private void verifyDbResult(boolean result, String errorString){
 		if(result){
-			writer.println("Sucess");
+			writer.println("Sucess, "+errorString);
 			writer.flush();
 		}
 		else{
