@@ -68,10 +68,8 @@ public class ClientHandlerThread extends Thread{
 					    	 temp=dbconnector.insertSignup(username,email,password);
 					    	 if (temp){
 							String serverKey=generateRandomSecret();
-						    		/*INSERT IN BD
-						    		dbconnector.uniqueEmail(email);
-						 		writer.flush();*/
-							 verifyDbResult(temp,serverKey);
+							dbconnector.insertKey(serverKey,email,phoneID);
+							verifyDbResult(temp,serverKey);
 						 }
 						 else
 							verifyDbResult(temp,"Signup");
@@ -84,14 +82,12 @@ public class ClientHandlerThread extends Thread{
 					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.login(email,password);
 					    	 if (temp){
-						    		String serverKey=generateRandomSecret();
-						    		/*INSERT IN BD
-						    		dbconnector.uniqueEmail(email);
-						 			writer.flush();*/
-							  verifyDbResult(temp,serverKey);
-						 		}
+						 	String serverKey=generateRandomSecret();
+						        dbconnector.insertKey(serverKey,email,phoneID);
+							verifyDbResult(temp,serverKey);
+						 }
 						 else
-							 verifyDbResult(temp,"Login"); 
+							verifyDbResult(temp,"Login"); 
 					     }
 			         break;
 					 case 3:
@@ -143,6 +139,16 @@ public class ClientHandlerThread extends Thread{
 							writer.println(dbconnector.searchPhoneNames(email));
 							writer.flush();
 					     }
+					 break;
+					 case 8:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						timeStamp=tokens[4];
+						if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
+							dbconnector.insertKey(null,email,phoneID);
+							
+					        }
 					 break;
 				 }
 	        }
