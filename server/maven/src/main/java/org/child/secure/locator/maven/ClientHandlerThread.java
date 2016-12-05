@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Base64;
 
 public class ClientHandlerThread extends Thread{
 	private boolean running = true;
@@ -156,6 +157,7 @@ public class ClientHandlerThread extends Thread{
 	    return ip;
 	}
 	private void verifyDbResult(boolean result, String errorString){
+		System.out.println(errorString);
 		if(result){
 			System.out.println(errorString);
 			writer.println("Sucess, "+errorString);
@@ -175,18 +177,15 @@ public class ClientHandlerThread extends Thread{
 	}
 	private String generateRandomSecret(){
 		try {
-			 SecureRandom random = new SecureRandom();
-			 byte seed[] = random.generateSeed(256);
-			 MessageDigest md=MessageDigest.getInstance("SHA-256");
-			 md.update(seed);
-	         byte[] digest = md.digest();
-	         return digest.toString().replace("\n", "");
-		} catch (NoSuchAlgorithmException e) {
+			KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+    			keyGen.init(256); // for example
+    			SecretKey secretKey = keyGen.generateKey();
+    			return Base64.getEncoder().encodeToString(secretKey.getEncoded());
+   		 }catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			System.exit(1);
 			return null;
 		}
-        
 	}
 	
 	private boolean verifyDate(String date1){
