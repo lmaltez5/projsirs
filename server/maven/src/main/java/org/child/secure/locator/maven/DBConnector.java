@@ -104,7 +104,7 @@ public class DBConnector {
     
     public boolean verifyKey(String clientKey,String email,String phoneID){
 	   try {
-			PreparedStatement stmt =con.prepareStatement("Select * from sessionTable WHERE email= ? AND key= ? AND phone_id = ? );");
+			PreparedStatement stmt =con.prepareStatement("Select * from sessionTable WHERE email= ? AND ckey= ? AND phone_id = ? );");
 			stmt.setString(1, email);
 			stmt.setString(2, clientKey);
 			stmt.setString(3, phoneID);
@@ -119,7 +119,7 @@ public class DBConnector {
 
 	public boolean insertKey(String clientKey,String email,String phoneID){
 	   try {
-			PreparedStatement stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, key) VALUES (?,?,?);");
+			PreparedStatement stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
 			stmt.setString(1, email);
 			stmt.setString(2, phoneID);
 			stmt.setString(3, clientKey);
