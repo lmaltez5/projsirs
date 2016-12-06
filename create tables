@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS phonesIDChild (
 	email VARCHAR(100),
 	phone_id VARCHAR(100), 
 	phone_name VARCHAR(100),
+	thread_index VARCHAR(100),
 	primary key (email, phone_id)
 );
 
