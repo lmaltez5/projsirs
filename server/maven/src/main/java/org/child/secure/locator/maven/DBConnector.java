@@ -123,8 +123,8 @@ public class DBConnector {
 		   if (mode){
 			stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
 			stmt.setString(1, email);
-			stmt.setString(2, clientKey);
-			stmt.setString(3, phoneID);
+			stmt.setString(2, phoneID);
+			stmt.setString(3, clientKey);
 		   }
 		   else {
 		   	stmt =con.prepareStatement("update sessionTable set ckey = ? where email = ? AND phone_id = ?;");
