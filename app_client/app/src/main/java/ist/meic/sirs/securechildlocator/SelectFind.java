@@ -54,7 +54,7 @@ public class SelectFind extends Activity {
             }
         else {
             // got to Home
-            Toast.makeText(getBaseContext(), "Don't have any kid", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "No child added", Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("EMAIL", sessionEmail);
             intent.putExtra("SESSIONKEY", sessionKey);

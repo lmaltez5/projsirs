@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -21,6 +26,9 @@ public class HomeKidActivity extends AppCompatActivity {
     String sessionEmail;
     String sessionKey;
     String sessionPhoneID;
+    GPSTracker gps;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +46,34 @@ public class HomeKidActivity extends AppCompatActivity {
             }
         });
 
-        waitForRequest();
+        sendLocation();
+    }
+
+    private void sendLocation(){
+        gps = new GPSTracker(this);
+        while(true){
+            waitForRequest();
+        }
     }
 
     private void waitForRequest() {
+        try {
+            String read = null;
+            SSLClient ssl =new SSLClient(getApplicationContext());
+            InputStream inputstream = ssl.getInputStream();
+            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+            BufferedReader bufferedReader = new BufferedReader(inputstreamreader);
+            while((read= bufferedReader.readLine()) == null){
 
+            }
+            if(gps.canGetLocation()) {
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
+            }
+            String result = "6;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" +Utils.getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean validate() {

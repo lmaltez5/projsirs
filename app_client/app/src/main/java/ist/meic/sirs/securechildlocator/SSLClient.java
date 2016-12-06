@@ -76,4 +76,14 @@ public class SSLClient {
             }
         }
     }
+
+    public InputStream getInputStream() {
+        try {
+            if (sslsocket != null )
+                return sslsocket.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
