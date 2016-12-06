@@ -9,7 +9,7 @@ import java.security.Security;
 import java.util.Vector;
 
 
-public class sslServer extends Thread
+public static class sslServer extends Thread
 {
     private static Vector<ClientHandlerThread> connectedClients = new Vector<ClientHandlerThread>(20, 5);
     private static int dataPort=9999;
