@@ -186,6 +186,7 @@ public class ClientHandlerThread extends Thread{
 	    return ip;
 	}
 	private void verifyDbResult(boolean result, String errorString){
+		Sytem.err.println(result);
 		if(result){
 			writer.println("Sucess,"+errorString);
 			writer.flush();
