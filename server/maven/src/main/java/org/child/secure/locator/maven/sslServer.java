@@ -46,7 +46,7 @@ public class sslServer extends Thread
 		try {
 			SSLSocket sslDataTrafficSocketInstance = (SSLSocket) sslDataTraffic.accept();
 			sslDataTrafficSocketInstance.setEnabledCipherSuites(new String[] {"TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"});
-			ClientHandlerThread c = new ClientHandlerThread(sslDataTrafficSocketInstance,this,c.size());
+			ClientHandlerThread c = new ClientHandlerThread(sslDataTrafficSocketInstance,this,connectedClients.size());
 			c.start();
 			connectedClients.add(c);
 		} catch (IOException e) {
