@@ -158,6 +158,17 @@ public class ClientHandlerThread extends Thread{
 							
 					        }
 					 break;
+					 case 9:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						phoneKidName=tokens[4];
+						timeStamp=tokens[5];
+						if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
+							//verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
+							
+					        }
+					 break;
 				 }
 	        }
 	    }
