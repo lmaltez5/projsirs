@@ -26,22 +26,21 @@ public class ClientHandlerThread extends Thread{
 	private sslServer server;
 
 	public ClientHandlerThread(SSLSocket dataSocket, sslServer server,int index){
-	    this.dataSocket = dataSocket;
-	    try
-	    {
-		this.vectorIndex=index;
-		this.server=server;
-	        this.reader = new BufferedReader(new InputStreamReader(this.dataSocket.getInputStream()));
-	        this.writer = new PrintWriter(this.dataSocket.getOutputStream());
-	    }
+		this.dataSocket = dataSocket;
+	  try {
+			this.vectorIndex=index;
+			this.server=server;
+	    this.reader = new BufferedReader(new InputStreamReader(this.dataSocket.getInputStream()));
+	    this.writer = new PrintWriter(this.dataSocket.getOutputStream());
+		}
 	    catch (IOException e)
 	    {
 	        e.printStackTrace();
 	    }
-	
+
 	    this.ip = this.dataSocket.getInetAddress().getHostAddress();
 	}
-	
+
 	public void run()
 	{
 	    try
@@ -49,7 +48,7 @@ public class ClientHandlerThread extends Thread{
 	        String fromClient,username,email,password,timeStamp,phoneID,phoneName,clientKey,phoneKidName;
 	        boolean temp;
 	        dbconnector = new DBConnector();
-			dbconnector.connect();
+					dbconnector.connect();
 	        while (running && (fromClient = reader.readLine()) != null)
 	        {
 				 String delims = "[;]";
@@ -99,7 +98,7 @@ public class ClientHandlerThread extends Thread{
 								 verifyDbResult(temp,"Creating key");
 						 }
 						 else
-							verifyDbResult(temp,"Login"); 
+							verifyDbResult(temp,"Login");
 					     }
 			         break;
 					 case 3:
@@ -159,7 +158,7 @@ public class ClientHandlerThread extends Thread{
 						timeStamp=tokens[4];
 						if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
 							verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
-							
+
 					        }
 					 break;
 					 case 9:
@@ -170,7 +169,7 @@ public class ClientHandlerThread extends Thread{
 						timeStamp=tokens[5];
 						if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
 							//verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
-							
+
 					        }
 					 break;
 				 }
@@ -179,10 +178,10 @@ public class ClientHandlerThread extends Thread{
 	    catch (IOException e)
 	    {
 	        e.getCause();
-	
+
 	    }
 	}
-	
+
 	public String getIP(){
 	    return ip;
 	}
@@ -199,7 +198,7 @@ public class ClientHandlerThread extends Thread{
 	public boolean isRunning(){
 	    return running;
 	}
-	
+
 	public void setRunning(boolean running){
 	    this.running = running;
 	}
@@ -215,19 +214,19 @@ public class ClientHandlerThread extends Thread{
 			return null;
 		}
 	}
-	
+
 	public PrintWriter getWriter(){return this.writer;}
-	
+
 	public BufferedReader getReader(){return this.reader;}
-	
+
 	private boolean verifyDate(String date1){
 		try {
-			Calendar c = Calendar.getInstance();  
-	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+			Calendar c = Calendar.getInstance();
+	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	        String formattedDate = df.format(c.getTime());;
 	        Date sDt = df.parse(date1);
 			Date sDt2 = df.parse(formattedDate);
-			long ld = sDt.getTime() /1000;  
+			long ld = sDt.getTime() /1000;
 	        long ld2 = sDt2.getTime() /1000;
 	        if(ld2>ld){
 	        	 writer.println("Error in TimeStamp,please try again");
@@ -236,7 +235,7 @@ public class ClientHandlerThread extends Thread{
 	        }
 		} catch (ParseException e) {
 			e.printStackTrace();
-		} 
+		}
 		return true;
 	}
 }
