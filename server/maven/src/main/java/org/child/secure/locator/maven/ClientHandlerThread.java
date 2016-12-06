@@ -17,6 +17,7 @@ import java.util.Base64;
 
 public class ClientHandlerThread extends Thread{
 	private boolean running = true;
+	private int vectorIndex;
 	private SSLSocket dataSocket;
 	private PrintWriter writer;
 	private BufferedReader reader;
@@ -24,10 +25,11 @@ public class ClientHandlerThread extends Thread{
 	private DBConnector dbconnector;
 	private sslServer server;
 
-	public ClientHandlerThread(SSLSocket dataSocket, sslServer server){
+	public ClientHandlerThread(SSLSocket dataSocket, sslServer server,int index){
 	    this.dataSocket = dataSocket;
 	    try
 	    {
+		this.vectorIndex=index;
 		this.server=server;
 	        this.reader = new BufferedReader(new InputStreamReader(this.dataSocket.getInputStream()));
 	        this.writer = new PrintWriter(this.dataSocket.getOutputStream());
@@ -107,7 +109,7 @@ public class ClientHandlerThread extends Thread{
 						 phoneName=tokens[4];
 						 timeStamp=tokens[5];
 						 if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
-							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,"child"),"Child ID");
+							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,vectorIndex,"child"),"Child ID");
 					     }
 					 break;
 					 case 4:
