@@ -55,4 +55,5 @@ public class sslServer extends Thread
 	            
           }
    }
+   public Vector<ClientHandlerThread> getThread() {return connectedClients;}
 }
