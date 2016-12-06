@@ -46,7 +46,7 @@ public class HomeKidActivity extends AppCompatActivity {
             }
         });
 
-        sendLocation();
+        // sendLocation();
     }
 
     private void sendLocation(){
@@ -98,7 +98,7 @@ public class HomeKidActivity extends AppCompatActivity {
             if (!validate()) {
                 return;
             }
-            String result="2;" + sessionEmail + ";" + input_password+";"+Utils.getTime();
+            String result="2;" + sessionEmail + ";" + sessionPhoneID + ";" + input_password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
 
