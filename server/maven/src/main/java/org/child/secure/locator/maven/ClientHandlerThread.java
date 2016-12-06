@@ -216,9 +216,9 @@ public class ClientHandlerThread extends Thread{
 		}
 	}
 	
-	public PrintWriter getWriter(){return this.writer}
+	public PrintWriter getWriter(){return this.writer;}
 	
-	public BufferedReader getReader(){return this.reader}
+	public BufferedReader getReader(){return this.reader;}
 	
 	private boolean verifyDate(String date1){
 		try {
