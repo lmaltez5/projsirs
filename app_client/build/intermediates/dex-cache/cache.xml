@@ -3,21 +3,21 @@
 
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-appindexing/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="22031b047b12904b888549ba36c0c30d83b1aea1">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-appindexing-10.0.0_3dad2be4ae3938b8676d2f3bed2af65dae975511/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="4701f9f79c8a00564912b21b0cb0cec3f51a7d23">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-drive-10.0.0_04614acd0c81b5c041c7dbeb932d2e797422655b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-appindexing/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="22031b047b12904b888549ba36c0c30d83b1aea1">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-appindexing-10.0.0_3dad2be4ae3938b8676d2f3bed2af65dae975511/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -39,21 +39,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="fb0229499e600b485a276d4e31161a3ae31c144c">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.0_e131eb72801dc68280d2c956e199c81a071d042c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="ce6e6e59212db0893fc36e5b579cf319a84aade8">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-10.0.0_af1143fdbe2557a1c6903d467e158f544b5dee6d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="fb0229499e600b485a276d4e31161a3ae31c144c">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.0_e131eb72801dc68280d2c956e199c81a071d042c/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -147,21 +147,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="777627dcaf0eaacd4212220e8f2d0c63def91774">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-10.0.0_76e4a2b052bed4ecb42da1d2f914ebcb031161a4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="f36cf060b7f0d881ea6449c254ab8a570a3dcdbe">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-fitness-10.0.0_49ac4fc73f7b374a7a9c30d27732b38dc281df67/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-crash/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="777627dcaf0eaacd4212220e8f2d0c63def91774">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-crash-10.0.0_76e4a2b052bed4ecb42da1d2f914ebcb031161a4/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -300,21 +300,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_26fcbde68baca68a9abdf766fae78d3a63920af3/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="75dbc3537bc912d077b3db2f5ac72d5b43644b2c">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-10.0.0_be3cc7957a41355d3fb474719ce7d9c6261b98d9/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-mediarouter-v7-24.0.0_26fcbde68baca68a9abdf766fae78d3a63920af3/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -417,21 +417,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-v4-impl/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="3660967212b89195e628670db181ed86e3307569">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-v4-impl-10.0.0_56db2ba5cb7df550b541bf8fbc769d41ca7a3c34/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-auth/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="8bb364f67ec2eba2356872b2b4ddfe8aada2d5ac">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-auth-10.0.0_07741e3868c374e36e7bd8e144467a6f4191ed8c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tagmanager-v4-impl/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="3660967212b89195e628670db181ed86e3307569">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tagmanager-v4-impl-10.0.0_56db2ba5cb7df550b541bf8fbc769d41ca7a3c34/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -480,6 +480,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="91713cda3b38d77b2208a3fafcceb9da8bfe47bc">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_46a232455dd8a4c48be59b5ff5b8f4487a310654/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-config/10.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -516,21 +525,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="0e2bf5e85132c8bfed05a87b71352918815e0205">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-10.0.0_856869b212501b8caf8f17e31f674f9d8e94e928/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appinvite/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="73a2c740a76aa4ba46168ed8bcdee1966e48a589">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-appinvite-10.0.0_0984fc6fe63e303c4b41ab0b3fa5b0ab33d5f550/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="0e2bf5e85132c8bfed05a87b71352918815e0205">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-gcm-10.0.0_856869b212501b8caf8f17e31f674f9d8e94e928/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -552,30 +561,21 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="aec6a52fd86575c83e96120576622ebe65c76d9c">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_5a0f6c3984666e2104d8a0d0394fea263af530cc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.4.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
         sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.4.0_92582c3896566b089ed2c2b34bf00053614b5108/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="932350448ea536c5dfbc45697951f31d34e50f1f">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-10.0.0_2629b716a4879b5942dc507ac4eca7a884907a28/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/10.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="8ca4ffc4d90754f1f2438dfc3e94006cfcc6be98">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-10.0.0_6f29686d85d375ab0213c9752e96e8b9a99dde31/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -597,12 +597,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.0/jars/classes.jar"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/10.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.1"
-        sha1="985be85104f6d0c5c5e51e7b7e60d8883a98ac64">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.0_edd6bef13bcaa7fb78d29273846e25f7aa676564/classes.dex" />
+        sha1="932350448ea536c5dfbc45697951f31d34e50f1f">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-location-10.0.0_2629b716a4879b5942dc507ac4eca7a884907a28/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="8ca4ffc4d90754f1f2438dfc3e94006cfcc6be98">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-identity-10.0.0_6f29686d85d375ab0213c9752e96e8b9a99dde31/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -612,6 +621,15 @@
         revision="23.0.1"
         sha1="8e2fd2b87dc79fc6c8d70fda1247ac6f4a878a28">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-cast-framework-10.0.0_8d1863f6091c1d0610ea5442f27ba8ef19bd06d3/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/10.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="985be85104f6d0c5c5e51e7b7e60d8883a98ac64">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-10.0.0_edd6bef13bcaa7fb78d29273846e25f7aa676564/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -768,21 +786,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.0.0_c90a15994a38e46a589bf40fced6ea5a5b2a8739/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="a61005619e43f203768ff3f224137def6f029e50">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-10.0.0_6bf92ebae2d599cadee49608028db59a95f11bfc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.0.0_c90a15994a38e46a589bf40fced6ea5a5b2a8739/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -948,6 +966,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.1"
+        sha1="fb0229499e600b485a276d4e31161a3ae31c144c">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.0_e131eb72801dc68280d2c956e199c81a071d042c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/10.0.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -963,15 +990,6 @@
         revision="23.0.1"
         sha1="b7518f2d3fce2ebec6a0bb8d2cd97eebc9f119df">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-games-10.0.0_1ed7aef719ef4ca866f10a46868bb596cdf87467/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-clearcut/10.0.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.1"
-        sha1="fb0229499e600b485a276d4e31161a3ae31c144c">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-clearcut-10.0.0_e131eb72801dc68280d2c956e199c81a071d042c/classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1065,21 +1083,21 @@
     </item>
     <item
         is-multidex="true"
-        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.1"
-        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
-        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_3b9c5a4d9c1765a465c7df1c7c57e7c558507279/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-auth-base/10.0.0/jars/classes.jar"
         jumboMode="true"
         optimize="true"
         revision="23.0.1"
         sha1="c2376d0ec8dbe85d3446cad64905c0395fbe220e">
         <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-auth-base-10.0.0_558265e59920102a0bce8394b86d8f635af21b34/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/exploded-aar/com.android.support/palette-v7/24.0.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.1"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="/Users/oliveira/Desktop/Sirs/projsirs/app_client/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-palette-v7-24.0.0_3b9c5a4d9c1765a465c7df1c7c57e7c558507279/classes.dex" />
     </item>
 
 </items>

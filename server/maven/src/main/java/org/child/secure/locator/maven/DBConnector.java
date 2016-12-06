@@ -122,15 +122,15 @@ public class DBConnector {
 		   PreparedStatement stmt=null;
 		   if (verifyKey(clientKey, email, phoneID)){
 				 stmt =con.prepareStatement("UPDATE sessionTable set ckey = ? where email = ? AND phone_id = ?;");
-			   stmt.setString(1, email);
-				 stmt.setString(2, phoneID);
-				 stmt.setString(3, clientKey);
+			   stmt.setString(1, clientKey);
+				 stmt.setString(2, email);
+				 stmt.setString(3, phoneID);
 		   }
 		   else {
 		  	stmt =con.prepareStatement("INSERT INTO sessionTable (email, phone_id, ckey) VALUES (?,?,?);");
-			  stmt.setString(1,clientKey);
-		   	stmt.setString(2,email);
-			  stmt.setString(3,phoneID);
+			  stmt.setString(1, email);
+		   	stmt.setString(2, phoneID);
+			  stmt.setString(3, clientKey);
 		   }
 		System.err.println(stmt.toString());
 		int i = stmt.executeUpdate();
@@ -225,16 +225,16 @@ public class DBConnector {
 		PreparedStatement stmt=null;
 		try {
 			if (parent=="parent"){
-				stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES (?,?,?);");
+				stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id, phone_name ) VALUES (?,?,?);");
 			}
 			else{
-				stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name,thread_index) VALUES (?,?,?,?);");
+				stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id, phone_name, thread_index) VALUES (?,?,?,?);");
 				stmt.setString(4, Integer.toString(index));
 			}
 
 		 	stmt.setString(1, email);
-		    	stmt.setString(2, phoneID);
-		    	stmt.setString(3, phone_name);
+		  stmt.setString(2, phoneID);
+		  stmt.setString(3, phone_name);
 			System.err.println(stmt.toString());
 			int i = stmt.executeUpdate();
 			return i >= 0;
