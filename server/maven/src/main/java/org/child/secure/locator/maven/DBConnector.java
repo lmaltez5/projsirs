@@ -223,18 +223,18 @@ public class DBConnector {
 	public boolean insertID(String email, String phoneID , String phone_name,int index,String parent){
 		String table;
 		PreparedStatement stmt=null;
-
-		if (parent=="parent"){
-			stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES (?,?,?);");
-		}
-		else{
-			stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name,thread_index) VALUES (?,?,?,?);");
-			stmt.setString(4, Integer.toString(index));
-		}	
 		try {
-		   stmt.setString(1, email);
-		    stmt.setString(2, phoneID);
-		    stmt.setString(3, phone_name);
+			if (parent=="parent"){
+				stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES (?,?,?);");
+			}
+			else{
+				stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name,thread_index) VALUES (?,?,?,?);");
+				stmt.setString(4, Integer.toString(index));
+			}	
+		
+		 	stmt.setString(1, email);
+		    	stmt.setString(2, phoneID);
+		    	stmt.setString(3, phone_name);
 			System.err.println(stmt.toString());
 			int i = stmt.executeUpdate();
 			return i >= 0;
