@@ -119,7 +119,7 @@ public class ClientHandlerThread extends Thread{
 						 phoneName=tokens[4];
 						 timeStamp=tokens[5];
 						 if(verifyDate(timeStamp)&& dbconnector.verifyKey(clientKey,email,phoneID)){
-							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,"parent"),"Parent ID");
+							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,vectorIndex,"parent"),"Parent ID");
 					     }
 					 break;
 					 case 5:
