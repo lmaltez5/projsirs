@@ -35,10 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         ButterKnife.inject(this);
 
         final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
-
-         phoneID = Utils.SHA256(deviceId).replace("\n","");
-
-
+        phoneID = Utils.SHA256(deviceId).replace("\n","");
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,27 +77,19 @@ public class SignUpActivity extends AppCompatActivity {
             //check if email is unique
             String result="0;" +sessionEmail+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            ssl.writeToServer(result);
-            String read=ssl.readFromServer();
-            if(read.contains("Error")) {
-                Utils.errorHandling(read, getApplicationContext(),_signupButton);
-                ssl.closeSocket();
+            String read=Utils.readWriteSSL(getApplicationContext(),result,ssl,_signupButton);
+            if(read==("Error")) {
                 return;
             }
 
             else{
                 result = "1;" + username + ";" + sessionEmail + ";" + password +";"+ phoneID + ";" + Utils.getTime();
-                ssl.writeToServer(result);
-                read=ssl.readFromServer();
-                System.err.println(read);
-                if(read.contains("Error")) {
-                    Utils.errorHandling(read, getApplicationContext(),_signupButton);
-                    ssl.closeSocket();
+                read=Utils.readWriteSSL(getApplicationContext(),result,ssl,_signupButton);
+                if(read==("Error")) {
                     return;
                 }
                 String tokens[]=read.split(",");
                 sessionKey= tokens[1];
-                System.err.println(sessionKey);
                 if(sessionKey == null){
                     Utils.errorHandling("Something went wrong, plase try again", getApplicationContext(),_signupButton);
                     ssl.closeSocket();

@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void getKidLocation() {
         String result="9;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" + kidName + ";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
+        String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
         ssl.closeSocket();
         if (!read.isEmpty()) {
             String[] location = read.split(",");

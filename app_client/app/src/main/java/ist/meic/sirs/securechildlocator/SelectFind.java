@@ -3,7 +3,6 @@ package ist.meic.sirs.securechildlocator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,30 +27,31 @@ public class SelectFind extends Activity {
         //FAZ GET DOS NOMES
         String result="7;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
+        String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
+        if(read=="ERROR")
+            return;
         ssl.closeSocket();
-        String[] phonesNames = read.split(",");
-
 
         if (!read.isEmpty()) {
-                final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, phonesNames);
-                ListView listView = (ListView) findViewById(R.id.mobile_list);
-                listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                       // String item = adapter.getItem(position).toString();
-                        Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-                        //send session varables
-                        intent.putExtra("EMAIL",sessionEmail);
-                        intent.putExtra("SESSIONKEY", sessionKey);
-                        intent.putExtra("ID", sessionPhoneID);
-                        intent.putExtra("KIDNAME", adapter.getItem(position).toString());
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-            }
+            String[] phonesNames = read.split(",");
+            final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, phonesNames);
+            ListView listView = (ListView) findViewById(R.id.mobile_list);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                   // String item = adapter.getItem(position).toString();
+                    Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                    //send session varables
+                    intent.putExtra("EMAIL",sessionEmail);
+                    intent.putExtra("SESSIONKEY", sessionKey);
+                    intent.putExtra("ID", sessionPhoneID);
+                    intent.putExtra("KIDNAME", adapter.getItem(position).toString());
+                    startActivity(intent);
+                    finish();
+                }
+            });
+        }
         else {
             // got to Home
             Toast.makeText(getBaseContext(), "No child added", Toast.LENGTH_LONG).show();

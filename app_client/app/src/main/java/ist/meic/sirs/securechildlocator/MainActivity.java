@@ -14,8 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.UUID;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             String password= Utils.SHA256(_passwordText.getText().toString()).replace("\n","");
             String result="2;" + email + ";" + password+";"+ phoneID + ";" + Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            String read=Utils.connectSSL(getApplicationContext(),result,ssl,_loginButton);
+            String read=Utils.readWriteSSL(getApplicationContext(),result,ssl,_loginButton);
             if(!read.equals("ERROR")){
                 String tokens[]=read.split(",");
                 sessionKey= tokens[1];
@@ -105,19 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 }, 3000);
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
-            if (resultCode == RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
-            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         // disable going back to the MainActivity
@@ -130,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             String email = Utils.SHA256(_emailText.getText().toString()).replace("\n","");
             String result = "5;" +sessionKey +";"+ phoneID + ";" + email + ";" + Utils.getTime();
             SSLClient ssl = new SSLClient(getApplicationContext());
-            String read=Utils.connectSSL(getApplicationContext(), result, ssl, _loginButton);
+            String read=Utils.readWriteSSL(getApplicationContext(), result, ssl, _loginButton);
             Intent intent=null;
             if(read.contains("ERROR")){
                 return;
@@ -151,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-            } catch (Exception e) {
+        } catch (Exception e) {
                 e.printStackTrace();
             }
     }

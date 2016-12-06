@@ -1,10 +1,5 @@
 package ist.meic.sirs.securechildlocator;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -100,10 +94,10 @@ public class HomeKidActivity extends AppCompatActivity {
             }
             String result="2;" + sessionEmail + ";" + sessionPhoneID + ";" + input_password+";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
-            Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
+            Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
 
             result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
-            Utils.connectSSL(getApplicationContext(),result,ssl,_button_logout);
+            Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
             ssl.closeSocket();
 
             finish();

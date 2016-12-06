@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,7 +36,10 @@ public class HomeActivity extends AppCompatActivity {
         
         String result="6;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" +Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
-        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
+        String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
+        if(read=="ERROR"){
+            return;
+        }
         ssl.closeSocket();
         _greetingText.setText("Hello " + read ); //add username
 
@@ -72,9 +74,11 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SSLClient ssl =new SSLClient(getApplicationContext());
                 String result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
-                Utils.connectSSL(getApplicationContext(),result,ssl,_buttonLogout);
+                String read=Utils.readWriteSSL(getApplicationContext(),result,ssl,_buttonLogout);
+                if(read=="ERROR"){
+                    return;
+                }
                 ssl.closeSocket();
-
                 finish();
             }
         });

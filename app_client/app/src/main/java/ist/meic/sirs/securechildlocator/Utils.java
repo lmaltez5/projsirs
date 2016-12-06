@@ -55,7 +55,7 @@ public class Utils {
         UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
         return deviceUuid.toString();
     }
-    public static String connectSSL(Context context, String result, SSLClient ssl, Button button){
+    public static String readWriteSSL(Context context, String result, SSLClient ssl, Button button){
         ssl.writeToServer(result);
         String read=ssl.readFromServer();
         if(read.contains("Error")) {
