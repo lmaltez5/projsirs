@@ -46,7 +46,7 @@ public class ClientHandlerThread extends Thread{
 	{
 	    try
 	    {
-	        String fromClient,username,email,password,timeStamp,phoneID,phoneName,clientKey;
+	        String fromClient,username,email,password,timeStamp,phoneID,phoneName,clientKey,phoneKidName;
 	        boolean temp;
 	        dbconnector = new DBConnector();
 			dbconnector.connect();
