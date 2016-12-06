@@ -45,9 +45,9 @@ public class HomeKidActivity extends AppCompatActivity {
 
     private void sendLocation(){
         gps = new GPSTracker(this);
-        while(true){
+        /*while(true){
             waitForRequest();
-        }
+        }*/
     }
 
     private void waitForRequest() {
