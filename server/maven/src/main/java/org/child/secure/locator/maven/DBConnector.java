@@ -220,16 +220,19 @@ public class DBConnector {
 		}
 	}
 
-	public boolean insertID(String email, String phoneID , String phone_name,String parent){
+	public boolean insertID(String email, String phoneID , String phone_name,String parent, int index){
 		String table;
-		if (parent=="parent")
-			table="phonesIDParent";
-		else
-			table="phonesIDChild";
-		
+		PreparedStatement stmt=null;
+
+		if (parent=="parent"){
+			stmt = con.prepareStatement("INSERT INTO phonesIDParent (email, phone_id , phone_name ) VALUES (?,?,?);");
+		}
+		else{
+			stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name,thread_index) VALUES (?,?,?,?);");
+			stmt.setString(4, index);
+		}	
 		try {
-			PreparedStatement stmt = con.prepareStatement("INSERT INTO "+ table +" (email, phone_id , phone_name ) VALUES (?,?,?);");
-			stmt.setString(1, email);
+		   stmt.setString(1, email);
 		    stmt.setString(2, phoneID);
 		    stmt.setString(3, phone_name);
 			System.err.println(stmt.toString());
