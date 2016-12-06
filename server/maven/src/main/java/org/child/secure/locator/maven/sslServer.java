@@ -9,12 +9,13 @@ import java.security.Security;
 import java.util.Vector;
 
 
-public static class sslServer extends Thread
+public class sslServer extends Thread
 {
     private static Vector<ClientHandlerThread> connectedClients = new Vector<ClientHandlerThread>(20, 5);
     private static int dataPort=9999;
     private static boolean running=true;
     public static void  main(String[] arstring) {
+    	    sslServer s = new sslServer();
 	    SSLServerSocket sslDataTraffic = null;
 	    SSLServerSocketFactory sslFac = null;
 	
@@ -42,13 +43,14 @@ public static class sslServer extends Thread
 	        System.out.println(e.toString() + " ::: " + e.getCause());
 	        System.exit(-1);
 	    }
+	    
 	    while (running) {
 		try {
 			SSLSocket sslDataTrafficSocketInstance = (SSLSocket) sslDataTraffic.accept();
 			sslDataTrafficSocketInstance.setEnabledCipherSuites(new String[] {"TLS_DHE_RSA_WITH_AES_128_CBC_SHA256"});
-			ClientHandlerThread c = new ClientHandlerThread(sslDataTrafficSocketInstance,this,connectedClients.size());
+			ClientHandlerThread c = new ClientHandlerThread(sslDataTrafficSocketInstance,s,s.connectedClients.size());
 			c.start();
-			connectedClients.add(c);
+			s.connectedClients.add(c);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
