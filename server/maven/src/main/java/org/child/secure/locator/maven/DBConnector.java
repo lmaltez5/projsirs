@@ -229,7 +229,7 @@ public class DBConnector {
 		}
 		else{
 			stmt = con.prepareStatement("INSERT INTO phonesIDChild (email, phone_id , phone_name,thread_index) VALUES (?,?,?,?);");
-			stmt.setString(4, index.toString());
+			stmt.setString(4, Integer.toString(index));
 		}	
 		try {
 		   stmt.setString(1, email);
