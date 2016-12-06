@@ -38,16 +38,13 @@ public class HomeKidActivity extends AppCompatActivity {
             }
         });
 
-
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-
-        }
+        waitForRequest();
     }
+
+    private void waitForRequest() {
+
+    }
+
     public boolean validate() {
         boolean valid = true;
 

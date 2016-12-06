@@ -40,7 +40,15 @@ public class SelectFind extends Activity {
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        String item = adapter.getItem(position).toString();
+                       // String item = adapter.getItem(position).toString();
+                        Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+                        //send session varables
+                        intent.putExtra("EMAIL",sessionEmail);
+                        intent.putExtra("SESSIONKEY", sessionKey);
+                        intent.putExtra("ID", sessionPhoneID);
+                        intent.putExtra("KIDNAME", adapter.getItem(position).toString());
+                        startActivity(intent);
+                        finish();
                     }
                 });
             }

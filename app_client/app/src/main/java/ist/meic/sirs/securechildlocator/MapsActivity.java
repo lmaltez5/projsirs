@@ -2,7 +2,6 @@ package ist.meic.sirs.securechildlocator;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -13,17 +12,42 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private String kidName;
+    private String sessionEmail;
+    private String sessionKey;
+    private String sessionPhoneID;
+    GPSTracker gps;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
+        sessionKey=getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
+        sessionPhoneID = getIntent().getStringExtra("ID").replace( "\n", "" );
+        kidName = getIntent().getStringExtra("KIDNAME").replace( "\n", "" );
+        getKidLocation();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    public void getKidLocation() {
+        String result="9;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" + kidName + ";"+Utils.getTime();
+        SSLClient ssl =new SSLClient(getApplicationContext());
+        String read= Utils.connectSSL(getApplicationContext(), result, ssl, null);
+        ssl.closeSocket();
+        if (!read.isEmpty()) {
+            String[] location = read.split(",");
+            latitude = Double.parseDouble(location[0]);
+            longitude = Double.parseDouble(location[1]);
+        }
+        ssl.closeSocket();
+    }
 
     /**
      * Manipulates the map once available.
@@ -38,10 +62,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //Ir buscar coordenadas do puto
-
-        LatLng kid = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(kid).title("Your kid"));
+        LatLng kid = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(kid).title(kidName));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(kid));
     }
 }
