@@ -22,11 +22,13 @@ public class ClientHandlerThread extends Thread{
 	private BufferedReader reader;
 	private String ip;
 	private DBConnector dbconnector;
+	private sslServer server;
 
-	public ClientHandlerThread(SSLSocket dataSocket){
+	public ClientHandlerThread(SSLSocket dataSocket, sslServer server){
 	    this.dataSocket = dataSocket;
 	    try
 	    {
+		this.server=server;
 	        this.reader = new BufferedReader(new InputStreamReader(this.dataSocket.getInputStream()));
 	        this.writer = new PrintWriter(this.dataSocket.getOutputStream());
 	    }
@@ -211,6 +213,10 @@ public class ClientHandlerThread extends Thread{
 			return null;
 		}
 	}
+	
+	public PrintWriter getWriter(){return this.writer}
+	
+	public BufferedReader getReader(){return this.reader}
 	
 	private boolean verifyDate(String date1){
 		try {
