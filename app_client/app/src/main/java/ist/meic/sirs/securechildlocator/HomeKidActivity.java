@@ -40,31 +40,35 @@ public class HomeKidActivity extends AppCompatActivity {
             }
         });
 
-        // sendLocation();
+        //sendLocation();
     }
 
     private void sendLocation(){
         gps = new GPSTracker(this);
-        /*while(true){
-            waitForRequest();
-        }*/
+        SSLClient ssl =new SSLClient(getApplicationContext());
+        InputStream inputstream = ssl.getInputStream();
+        InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+        BufferedReader bufferedReader = new BufferedReader(inputstreamreader);
+        while(true){
+            waitForRequest(bufferedReader);
+        }
     }
 
-    private void waitForRequest() {
+    private void waitForRequest(BufferedReader bufferedReader) {
         try {
             String read = null;
-            SSLClient ssl =new SSLClient(getApplicationContext());
-            InputStream inputstream = ssl.getInputStream();
-            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-            BufferedReader bufferedReader = new BufferedReader(inputstreamreader);
+            System.err.println("o guilherme é burro!");
             while((read= bufferedReader.readLine()) == null){
 
             }
+            System.err.println("sou burro!");
             if(gps.canGetLocation()) {
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
             }
-            String result = "6;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" +Utils.getTime();
+            String result = "10;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" + latitude
+                            + ";" + longitude + ";" + Utils.getTime();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,7 +96,7 @@ public class HomeKidActivity extends AppCompatActivity {
             if (!validate()) {
                 return;
             }
-            String result="2;" + sessionEmail + ";" + sessionPhoneID + ";" + input_password+";"+Utils.getTime();
+            String result="2;" + sessionEmail + ";" + input_password+";" + sessionPhoneID + ";"+Utils.getTime();
             SSLClient ssl =new SSLClient(getApplicationContext());
             Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
 
