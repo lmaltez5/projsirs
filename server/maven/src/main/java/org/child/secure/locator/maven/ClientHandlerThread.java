@@ -125,7 +125,7 @@ public class ClientHandlerThread extends Thread{
 						 email=tokens[3];
 						 timeStamp=tokens[4];
 						 if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
-							 writer.println(dbconnector.queryPhoneId(email, phoneID));
+							 writer.println(dbconnector.queryPhoneId(email, phoneID,vectorIndex));
 							 writer.flush();
 					     }
 					 break;
@@ -167,6 +167,7 @@ public class ClientHandlerThread extends Thread{
 						timeStamp=tokens[5];
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
 							String test=dbconnector.searchKidName(email,phoneKidName);
+							System.out.println("OLAAA"+test);
 							if (!test.contains("Error")){
 								int i=Integer.parseInt(test);
 								connectToChild(i);
