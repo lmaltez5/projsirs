@@ -213,6 +213,7 @@ public class ClientHandlerThread extends Thread{
 						String latitude=tokens[4];
 						String longitude=tokens[5];
 						timeStamp=tokens[6];
+						System.err.println("HERE 12!!!!!");
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
 							this.latitude=Double.parseDouble(latitude);
 							this.longitude=Double.parseDouble(longitude);
