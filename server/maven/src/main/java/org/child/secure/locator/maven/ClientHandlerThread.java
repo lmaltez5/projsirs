@@ -216,7 +216,6 @@ public class ClientHandlerThread extends Thread{
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
 							this.latitude=Double.parseDouble(latitude);
 							this.longitude=Double.parseDouble(longitude);
-							System.out.println(latitude+","+ longitude);
 						}
 				 break;
 				 }
@@ -252,15 +251,13 @@ public class ClientHandlerThread extends Thread{
 	}
 	
 	private void connectToChild(int index){
-		ClientHandlerThread child=server.getThread(index);
-		PrintWriter writeToChild=child.getWriter();
+		PrintWriter writeToChild=server.getThread(index).getWriter();
 		writeToChild.println("Send Location");
 		writeToChild.flush();
 		while(server.getThread(index).getLatitude()==200.0){}
 		writer.println(server.getThread(index).getLatitude()+","+server.getThread(index).getLongitude()); 
 		writer.flush();
-		child.clearLocation();
-		System.err.println("ASDASDASDASDASDASD");
+		server.getThread(index).clearLocation();
 	}
 	private boolean verifyKey(String clientKey, String email,String phoneID,PrintWriter functionWriter){
 		if(dbconnector.verifyKey(clientKey,email,phoneID)){
