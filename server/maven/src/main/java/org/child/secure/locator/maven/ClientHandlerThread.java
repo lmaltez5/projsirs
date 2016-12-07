@@ -22,8 +22,8 @@ public class ClientHandlerThread extends Thread{
 	private String ip;
 	private DBConnector dbconnector;
 	private sslServer server;
-	private double longitude=200;
-	private double latitude=200;
+	private double longitude=200.0;
+	private double latitude=200.0;
 	
 
 	public ClientHandlerThread(SSLSocket dataSocket, sslServer server,int index){
@@ -213,10 +213,10 @@ public class ClientHandlerThread extends Thread{
 						String latitude=tokens[4];
 						String longitude=tokens[5];
 						timeStamp=tokens[6];
-						System.err.println("HERE 12!!!!!");
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
 							this.latitude=Double.parseDouble(latitude);
 							this.longitude=Double.parseDouble(longitude);
+							System.out.println(latitude+","+ longitude);
 						}
 				 break;
 				 }
@@ -256,12 +256,11 @@ public class ClientHandlerThread extends Thread{
 		PrintWriter writeToChild=child.getWriter();
 		writeToChild.println("Send Location");
 		writeToChild.flush();
-		while(child.getLatitude()==200){}
+		while(child.getLatitude()==200.0){}
 		writer.println(child.getLatitude()+","+child.getLongitude()); 
 		writer.flush();
 		child.clearLocation();
 		System.err.println("ASDASDASDASDASDASD");
-
 	}
 	private boolean verifyKey(String clientKey, String email,String phoneID,PrintWriter functionWriter){
 		if(dbconnector.verifyKey(clientKey,email,phoneID)){
@@ -295,7 +294,7 @@ public class ClientHandlerThread extends Thread{
 	
 	public double getLatitude(){return latitude;}
 	
-	public void clearLocation(){longitude=200;latitude=200;}
+	public void clearLocation(){longitude=200.0;latitude=200.0;}
 	
 	private boolean verifyDate(String date1,PrintWriter functionWriter ){
 		try {
