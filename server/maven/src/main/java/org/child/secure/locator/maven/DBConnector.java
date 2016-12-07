@@ -210,7 +210,7 @@ public class DBConnector {
 
 
 
-	public String queryPhoneId(String email, String phoneID) {
+	public String queryPhoneId(String email, String phoneID, int index) {
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM phonesIDParent WHERE email= ? AND phone_id= ? ;");
 			stmt.setString(1, email);
@@ -227,6 +227,10 @@ public class DBConnector {
 			System.err.println(stmt.toString());
 			rs = stmt.executeQuery();
 			if (rs.next()){
+				stmt = con.prepareStatement( "UPDATE phonesIDChild set thread_index = ? where email = ? AND phone_id = ?;");
+				stmt.setString(1, Integer.toString(index));
+				stmt.setString(2, email);
+				stmt.setString(3, phoneID);
 				return "child";
 			}
 			return "new";
