@@ -259,6 +259,8 @@ public class ClientHandlerThread extends Thread{
 		writer.println(child.getLatitude()+","+child.getLongitude()); 
 		writer.flush();
 		child.clearLocation();
+		System.err.println("ASDASDASDASDASDASD");
+
 	}
 	private boolean verifyKey(String clientKey, String email,String phoneID,PrintWriter functionWriter){
 		if(dbconnector.verifyKey(clientKey,email,phoneID)){
