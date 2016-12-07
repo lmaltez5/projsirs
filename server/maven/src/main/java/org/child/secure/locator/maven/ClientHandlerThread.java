@@ -256,8 +256,8 @@ public class ClientHandlerThread extends Thread{
 		PrintWriter writeToChild=child.getWriter();
 		writeToChild.println("Send Location");
 		writeToChild.flush();
-		while(child.getLatitude()==200.0){}
-		writer.println(child.getLatitude()+","+child.getLongitude()); 
+		while(server.getThread(index).getLatitude()==200.0){}
+		writer.println(server.getThread(index).getLatitude()+","+server.getThread(index).getLongitude()); 
 		writer.flush();
 		child.clearLocation();
 		System.err.println("ASDASDASDASDASDASD");
