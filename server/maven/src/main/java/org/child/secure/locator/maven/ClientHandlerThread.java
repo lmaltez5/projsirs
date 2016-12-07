@@ -192,6 +192,16 @@ public class ClientHandlerThread extends Thread{
 									verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
 								}
 						 break;
+				 
+		        	case 11:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						timeStamp=tokens[4];
+						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+								verifyDbResult(dbconnector.updateThread(email,phoneID,vectorIndex), "thread update");
+							}
+						break;
 				 }
 	        }
 	    }
@@ -244,7 +254,7 @@ public class ClientHandlerThread extends Thread{
 			int option = Integer.parseInt(tokens[0]);
 			System.out.println("4");
 			switch(option){
-				case 11:
+				case 12:
 					String clientKey=tokens[1];
 					String phoneID=tokens[2];
 					String email=tokens[3];
