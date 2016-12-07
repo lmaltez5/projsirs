@@ -29,6 +29,12 @@ public class HomeKidActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_kid);
         ButterKnife.inject(this);
+        
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                    ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
+        
+        
         sessionEmail = getIntent().getStringExtra("EMAIL").replace("\n", "");
         sessionKey = getIntent().getStringExtra("SESSIONKEY").replace("\n", "");
         sessionPhoneID = getIntent().getStringExtra("ID").replace("\n", "");
