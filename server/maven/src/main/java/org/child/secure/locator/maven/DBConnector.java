@@ -231,6 +231,7 @@ public class DBConnector {
 				stmt.setString(1, Integer.toString(index));
 				stmt.setString(2, email);
 				stmt.setString(3, phoneID);
+				stmt.executeUpdate();
 				return "child";
 			}
 			return "new";
