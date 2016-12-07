@@ -1,5 +1,8 @@
 package ist.meic.sirs.securechildlocator;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,8 +34,8 @@ public class HomeKidActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         
         if ( Build.VERSION.SDK_INT >= 23 &&
-                    ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
+                    ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
         
         
         sessionEmail = getIntent().getStringExtra("EMAIL").replace("\n", "");
@@ -73,15 +76,16 @@ public class HomeKidActivity extends AppCompatActivity {
             if (!validate()) {
                 return;
             }
-            String result="2;" + sessionEmail + ";" + input_password+";" + sessionPhoneID + ";"+Utils.getTime();
-            SSLClient ssl =new SSLClient(getApplicationContext());
-            Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
 
-            result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
-            Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
+            String result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+ input_password+";" +Utils.getTime();
+            SSLClient ssl =new SSLClient(getApplicationContext());
+            String read = Utils.readWriteSSL(getApplicationContext(),result,ssl,_button_logout);
+            if (!read.contains("ERROR")) {
+                finish();
+                return;
+            }
             ssl.closeSocket();
 
-            finish();
         } catch (Exception e) {
             e.printStackTrace();
         }

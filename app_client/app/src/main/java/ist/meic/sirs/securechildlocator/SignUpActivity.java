@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
 
-        final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver());
+        final String deviceId = Utils.getPhoneID((TelephonyManager) getBaseContext().getSystemService(this.TELEPHONY_SERVICE),getContentResolver(),getApplicationContext());
         phoneID = Utils.SHA256(deviceId).replace("\n","");
 
         _signupButton.setOnClickListener(new View.OnClickListener() {

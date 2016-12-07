@@ -78,22 +78,7 @@ public class SSLClient {
         }
     }
 
-    public InputStream getInputStream() {
-        try {
-            if (sslsocket != null )
-                return sslsocket.getInputStream();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void setSoTimeout() {
-        try {
-            System.err.println(sslsocket.getSoTimeout());
-            sslsocket.setSoTimeout(0);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+    public void setTimeout(int timeout) throws SocketException {
+        sslsocket.setSoTimeout(timeout);
     }
 }

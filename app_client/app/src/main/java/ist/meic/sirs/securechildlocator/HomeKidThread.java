@@ -26,33 +26,38 @@ public class HomeKidThread implements Runnable {
 
     public void run() {
         SSLClient ssl = new SSLClient(context);
-        ssl.setSoTimeout();
-        InputStream inputstream = ssl.getInputStream();
-        InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-        BufferedReader bufferedReader = new BufferedReader(inputstreamreader);
+        String result = "11;" + sessionKey + ";" + sessionPhoneID + ";" + sessionEmail + ";" + Utils.getTime();
+        String read = Utils.readWriteSSL(context,result,ssl,null);
+        if (!read.contains("ERROR")) {
+            //TODO
+        }
+
         while (true) {
-            waitForRequest(bufferedReader);
+            waitForRequest(ssl);
         }
     }
 
-    private void waitForRequest(BufferedReader bufferedReader) {
+    private void waitForRequest(SSLClient ssl) {
         try {
             String read = null;
-            read = bufferedReader.readLine();
-
+            read =ssl.readFromServer();
+            System.err.println(read);
+            String result;
             if (gps.canGetLocation()) {
                 latitude = gps.getLatitude();
                 longitude = gps.getLongitude();
-                String result = "10;" + sessionKey + ";" + sessionPhoneID + ";" + sessionEmail + ";" + latitude
+                result = "12;" + sessionKey + ";" + sessionPhoneID + ";" + sessionEmail + ";" + latitude
                         + ";" + longitude + ";" + Utils.getTime();
             }
-            if ((latitude != 200.0) && (longitude != 200.0)) {
-                String result = "10;" + sessionKey + ";" + sessionPhoneID + ";" + sessionEmail + ";" + latitude
+            else if ((latitude != 200.0) && (longitude != 200.0)) {
+                result = "12;" + sessionKey + ";" + sessionPhoneID + ";" + sessionEmail + ";" + latitude
                         + ";" + longitude + ";" + Utils.getTime();
             }
             else {
-                String result = "error";
+                result = "error";
             }
+            System.err.println(result);
+            ssl.writeToServer(result);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -73,9 +73,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SSLClient ssl =new SSLClient(getApplicationContext());
-                String result="8;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
+                String result="10;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
                 String read=Utils.readWriteSSL(getApplicationContext(),result,ssl,_buttonLogout);
-                if(read=="ERROR"){
+                        if(read=="ERROR"){
                     return;
                 }
                 ssl.closeSocket();

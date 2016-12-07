@@ -1,5 +1,6 @@
 package ist.meic.sirs.securechildlocator;
 
+import java.net.SocketException;
 import java.security.NoSuchAlgorithmException;
 
 import java.security.MessageDigest;
@@ -50,7 +51,7 @@ public class Utils {
     public static String getPhoneID(TelephonyManager tm, ContentResolver contentResolver, Context context){
         //get android unique id
         if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( context, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {}
+                ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {}
         
         
         final String tmDevice, tmSerial, androidId;
@@ -63,6 +64,11 @@ public class Utils {
     }
     public static String readWriteSSL(Context context, String result, SSLClient ssl, Button button){
         ssl.writeToServer(result);
+        try {
+            ssl.setTimeout(2000);
+        } catch (SocketException e) {
+            return "ERROR";
+        }
         String read=ssl.readFromServer();
         if(read.contains("Error")) {
             if(button!=null)
