@@ -1,5 +1,6 @@
 package org.child.secure.locator.maven;
 
+
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
@@ -11,11 +12,11 @@ import java.util.Vector;
 
 public class sslServer extends Thread
 {
-    private static Vector<ClientHandlerThread> connectedClients = new Vector<ClientHandlerThread>(20, 5);
+    private Vector<ClientHandlerThread> connectedClients = new Vector<ClientHandlerThread>(20, 5);
     private static int dataPort=9999;
     private static boolean running=true;
     public static void  main(String[] arstring) {
-    	    sslServer s = new sslServer();
+    	sslServer s = new sslServer();
 	    SSLServerSocket sslDataTraffic = null;
 	    SSLServerSocketFactory sslFac = null;
 	
@@ -57,5 +58,5 @@ public class sslServer extends Thread
 	            
           }
    }
-   public Vector<ClientHandlerThread> getThread() {return connectedClients;}
+   public ClientHandlerThread getThread(int index) {return connectedClients.get(index);}
 }
