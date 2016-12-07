@@ -216,7 +216,6 @@ public class DBConnector {
 			stmt.setString(1, email);
 			stmt.setString(2, phoneID);
 			System.err.println(stmt.toString());
-
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()){
 				return "legal";
@@ -227,11 +226,6 @@ public class DBConnector {
 			System.err.println(stmt.toString());
 			rs = stmt.executeQuery();
 			if (rs.next()){
-				stmt = con.prepareStatement( "UPDATE phonesIDChild set thread_index = ? where email = ? AND phone_id = ?;");
-				stmt.setString(1, Integer.toString(index));
-				stmt.setString(2, email);
-				stmt.setString(3, phoneID);
-				stmt.executeUpdate();
 				return "child";
 			}
 			return "new";
@@ -241,7 +235,21 @@ public class DBConnector {
 			return "Error, something went wrong";
 		}
 	}
-
+	public boolean updateThread(String email,String phoneID,int index){
+		PreparedStatement stmt;
+		try {
+			stmt = con.prepareStatement( "UPDATE phonesIDChild set thread_index = ? where email = ? AND phone_id = ?;");
+			stmt.setString(1, Integer.toString(index));
+			stmt.setString(2, email);
+			stmt.setString(3, phoneID);
+			stmt.executeUpdate();
+			System.err.println(stmt.toString());
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 	public boolean insertID(String email, String phoneID , String phone_name,int index,String parent){
 		PreparedStatement stmt=null;
 		try {
@@ -254,8 +262,8 @@ public class DBConnector {
 			}
 
 		 	stmt.setString(1, email);
-		  stmt.setString(2, phoneID);
-		  stmt.setString(3, phone_name);
+		 	stmt.setString(2, phoneID);
+		 	stmt.setString(3, phone_name);
 			System.err.println(stmt.toString());
 			int i = stmt.executeUpdate();
 			return i >= 0;
