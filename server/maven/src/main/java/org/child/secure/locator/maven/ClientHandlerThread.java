@@ -22,6 +22,9 @@ public class ClientHandlerThread extends Thread{
 	private String ip;
 	private DBConnector dbconnector;
 	private sslServer server;
+	private double longitude=200;
+	private double latitude=200;
+	
 
 	public ClientHandlerThread(SSLSocket dataSocket, sslServer server,int index){
 		this.dataSocket = dataSocket;
@@ -202,6 +205,19 @@ public class ClientHandlerThread extends Thread{
 								verifyDbResult(dbconnector.updateThread(email,phoneID,vectorIndex), "thread update");
 							}
 						break;
+				 
+		        	case 12:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						String latitude=tokens[4];
+						String longitude=tokens[5];
+						timeStamp=tokens[6];
+						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+							this.latitude=Double.parseDouble(latitude);
+							this.longitude=Double.parseDouble(longitude);
+						}
+				 break;
 				 }
 	        }
 	    }
@@ -237,39 +253,13 @@ public class ClientHandlerThread extends Thread{
 	private void connectToChild(int index){
 		ClientHandlerThread child=server.getThread(index);
 		PrintWriter writeToChild=child.getWriter();
-		BufferedReader readFromChild=child.getReader();
 		writeToChild.println("Send Location");
 		writeToChild.flush();
-		System.out.println("1");
 		try {
-			String fromChild=readFromChild.readLine();
-			System.out.println("2");
-			if(fromChild.contains("error")){
-				writeToChild.println("Error,Send Location");
-				writeToChild.flush();
-				return;
-			}
-			System.out.println("3");
-			String delims = "[;]";
-			String[] tokens = fromChild.split(delims);
-			int option = Integer.parseInt(tokens[0]);
-			System.out.println("4");
-			switch(option){
-				case 12:
-					String clientKey=tokens[1];
-					String phoneID=tokens[2];
-					String email=tokens[3];
-					String latitude=tokens[4];
-					String longitude=tokens[5];
-					String timeStamp=tokens[6];
-					if(verifyDate(timeStamp,writeToChild)&& verifyKey(clientKey,email,phoneID,writeToChild)){
-						writer.println(latitude+"," +longitude);
-						writer.flush();
-				    }
-				 break;
-			 }
-			 
-		} catch (IOException e) {
+			wait(1000);
+			writer.println(child.getLatitude()+","+child.getLongitude()); 
+			writer.flush();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
@@ -301,7 +291,11 @@ public class ClientHandlerThread extends Thread{
 	public PrintWriter getWriter(){return writer;}
 
 	public BufferedReader getReader(){return reader;}
-
+	
+	public double getLongitude(){return longitude;}
+	
+	public double getLatitude(){return latitude;}
+	
 	private boolean verifyDate(String date1,PrintWriter functionWriter ){
 		try {
 			Calendar c = Calendar.getInstance();
@@ -321,4 +315,5 @@ public class ClientHandlerThread extends Thread{
 		}
 		return true;
 	}
+	
 }
