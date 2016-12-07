@@ -190,6 +190,23 @@ public class DBConnector {
 		}
 
 	}
+	public String searchKidName(String email, String phoneName) {
+		try {
+			PreparedStatement stmt = con.prepareStatement("SELECT thread_index FROM phonesIDChild WHERE email= ? AND  phone_name = ?;");
+			stmt.setString(1, email);
+			stmt.setString(2, phoneName);
+			System.err.println(stmt.toString());
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+				return rs.getString("thread_index");
+			else
+				return "Error phone name not found";
+		}catch (SQLException e) {
+			System.err.print("No Query searchPhoneNames");
+			return "Error, something went wrong";
+		}
+	}
+
 
 
 
@@ -221,7 +238,6 @@ public class DBConnector {
 	}
 
 	public boolean insertID(String email, String phoneID , String phone_name,int index,String parent){
-		String table;
 		PreparedStatement stmt=null;
 		try {
 			if (parent=="parent"){
