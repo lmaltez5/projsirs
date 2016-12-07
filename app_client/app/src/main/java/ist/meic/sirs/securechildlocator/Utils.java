@@ -46,7 +46,10 @@ public class Utils {
 
     public static String getPhoneID(TelephonyManager tm, ContentResolver contentResolver){
         //get android unique id
-
+if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {}
+        
+        
         final String tmDevice, tmSerial, androidId;
         tmDevice = "" + tm.getDeviceId();
         tmSerial = "" + tm.getSimSerialNumber();
