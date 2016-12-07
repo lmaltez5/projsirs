@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.widget.Button;
@@ -44,10 +47,10 @@ public class Utils {
         button.setEnabled(true);
     }
 
-    public static String getPhoneID(TelephonyManager tm, ContentResolver contentResolver){
+    public static String getPhoneID(TelephonyManager tm, ContentResolver contentResolver, Context context){
         //get android unique id
-if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( mContext, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {}
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( context, android.Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {}
         
         
         final String tmDevice, tmSerial, androidId;
