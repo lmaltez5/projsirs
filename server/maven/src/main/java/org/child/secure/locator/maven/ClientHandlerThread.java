@@ -234,16 +234,17 @@ public class ClientHandlerThread extends Thread{
 			String fromChild=readFromChild.readLine();
 			System.out.println("2");
 			if(fromChild.contains("error")){
-				writeToChild.println("Send Location");
+				writeToChild.println("Error,Send Location");
+				writeToChild.flush();
 				return;
 			}
 			System.out.println("3");
-			 String delims = "[;]";
-			 String[] tokens = fromChild.split(delims);
-			 int option = Integer.parseInt(tokens[0]);
-			 System.out.println("4");
-			 switch(option){
-			 	case 11:
+			String delims = "[;]";
+			String[] tokens = fromChild.split(delims);
+			int option = Integer.parseInt(tokens[0]);
+			System.out.println("4");
+			switch(option){
+				case 11:
 					String clientKey=tokens[1];
 					String phoneID=tokens[2];
 					String email=tokens[3];
