@@ -153,9 +153,15 @@ public class ClientHandlerThread extends Thread{
 						clientKey=tokens[1];
 						phoneID=tokens[2];
 						email=tokens[3];
-						timeStamp=tokens[4];
+						password=tokens[4];
+						timeStamp=tokens[5];
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
-							verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
+							temp=dbconnector.login(email,password);
+							if(temp){
+								verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
+							}
+							else
+								verifyDbResult(temp,"logout");
 
 					        }
 					 break;
@@ -167,7 +173,6 @@ public class ClientHandlerThread extends Thread{
 						timeStamp=tokens[5];
 						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
 							String test=dbconnector.searchKidName(email,phoneKidName);
-							System.out.println("OLAAA"+test);
 							if (!test.contains("Error")){
 								int i=Integer.parseInt(test);
 								connectToChild(i);
@@ -178,6 +183,15 @@ public class ClientHandlerThread extends Thread{
 							}		
 					    }
 					 break;
+					 case 10:
+							clientKey=tokens[1];
+							phoneID=tokens[2];
+							email=tokens[3];
+							timeStamp=tokens[4];
+							if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+									verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
+								}
+						 break;
 				 }
 	        }
 	    }
@@ -215,17 +229,21 @@ public class ClientHandlerThread extends Thread{
 		PrintWriter writeToChild=child.getWriter();
 		BufferedReader readFromChild=child.getReader();
 		writeToChild.println("Send Location");
+		System.out.println("1");
 		try {
 			String fromChild=readFromChild.readLine();
+			System.out.println("2");
 			if(fromChild.contains("error")){
 				writeToChild.println("Send Location");
 				return;
 			}
+			System.out.println("3");
 			 String delims = "[;]";
 			 String[] tokens = fromChild.split(delims);
 			 int option = Integer.parseInt(tokens[0]);
+			 System.out.println("4");
 			 switch(option){
-			 	case 10:
+			 	case 11:
 					String clientKey=tokens[1];
 					String phoneID=tokens[2];
 					String email=tokens[3];
@@ -238,6 +256,7 @@ public class ClientHandlerThread extends Thread{
 				    }
 				 break;
 			 }
+			 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
