@@ -38,9 +38,7 @@ public class HomeKidThread implements Runnable {
     private void waitForRequest(BufferedReader bufferedReader) {
         try {
             String read = null;
-            System.err.println("o guilherme é burro!");
             read = bufferedReader.readLine();
-            System.err.println("sou burro!");
 
             if (gps.canGetLocation()) {
                 latitude = gps.getLatitude();
