@@ -14,15 +14,15 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class HomeKidActivity extends AppCompatActivity {
-    @InjectView(R.id.button_logout) Button _button_logout;
-    @InjectView(R.id.input_password) TextView _input_password;
+    @InjectView(R.id.button_logout)
+    Button _button_logout;
+    @InjectView(R.id.input_password)
+    TextView _input_password;
 
-    String sessionEmail;
-    String sessionKey;
-    String sessionPhoneID;
-    GPSTracker gps;
-    double latitude;
-    double longitude;
+    private String sessionEmail;
+    private String sessionKey;
+    private String sessionPhoneID;
+    private GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,38 +40,9 @@ public class HomeKidActivity extends AppCompatActivity {
             }
         });
 
-        //sendLocation();
-    }
-
-    private void sendLocation(){
         gps = new GPSTracker(this);
-        SSLClient ssl =new SSLClient(getApplicationContext());
-        InputStream inputstream = ssl.getInputStream();
-        InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
-        BufferedReader bufferedReader = new BufferedReader(inputstreamreader);
-        while(true){
-            waitForRequest(bufferedReader);
-        }
-    }
-
-    private void waitForRequest(BufferedReader bufferedReader) {
-        try {
-            String read = null;
-            System.err.println("o guilherme é burro!");
-            while((read= bufferedReader.readLine()) == null){
-
-            }
-            System.err.println("sou burro!");
-            if(gps.canGetLocation()) {
-                latitude = gps.getLatitude();
-                longitude = gps.getLongitude();
-            }
-            String result = "10;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" + latitude
-                            + ";" + longitude + ";" + Utils.getTime();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Thread waitRequest = new Thread(new HomeKidThread(getApplicationContext(), sessionKey, sessionPhoneID, sessionEmail, gps));
+        waitRequest.start();
     }
 
     public boolean validate() {

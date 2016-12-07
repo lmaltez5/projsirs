@@ -17,8 +17,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String sessionKey;
     private String sessionPhoneID;
     GPSTracker gps;
-    private double latitude;
-    private double longitude;
+    private double latitude = 0;
+    private double longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sessionKey=getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
         sessionPhoneID = getIntent().getStringExtra("ID").replace( "\n", "" );
         kidName = getIntent().getStringExtra("KIDNAME").replace( "\n", "" );
-        getKidLocation();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -36,17 +35,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    public void getKidLocation() {
+    public boolean getKidLocation() {
         String result="9;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+ ";" + kidName + ";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
         String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
-        ssl.closeSocket();
-        if (!read.isEmpty()) {
+        if (!read.contains("ERROR")) {
+            ssl.closeSocket();
             String[] location = read.split(",");
             latitude = Double.parseDouble(location[0]);
             longitude = Double.parseDouble(location[1]);
+            return true;
         }
-        ssl.closeSocket();
+        return false;
     }
 
     /**
@@ -61,9 +61,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        LatLng kid = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(kid).title(kidName));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(kid));
+        if(getKidLocation()) {
+            LatLng kid = new LatLng(latitude, longitude);
+            mMap.addMarker(new MarkerOptions().position(kid).title(kidName));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(kid));
+        }
     }
 }

@@ -63,7 +63,7 @@ if ( Build.VERSION.SDK_INT >= 23 &&
         String read=ssl.readFromServer();
         if(read.contains("Error")) {
             if(button!=null)
-             Utils.errorHandling(read, context,button);
+                Utils.errorHandling(read, context,button);
             ssl.closeSocket();
             return "ERROR";
         }

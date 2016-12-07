@@ -10,6 +10,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import java.io.*;
+import java.net.SocketException;
 import java.security.KeyStore;
 
 public class SSLClient {
@@ -85,5 +86,14 @@ public class SSLClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void setSoTimeout() {
+        try {
+            System.err.println(sslsocket.getSoTimeout());
+            sslsocket.setSoTimeout(0);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
 }
