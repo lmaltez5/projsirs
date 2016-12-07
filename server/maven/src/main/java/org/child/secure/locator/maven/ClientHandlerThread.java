@@ -239,6 +239,7 @@ public class ClientHandlerThread extends Thread{
 		PrintWriter writeToChild=child.getWriter();
 		BufferedReader readFromChild=child.getReader();
 		writeToChild.println("Send Location");
+		writeToChild.flush();
 		System.out.println("1");
 		try {
 			String fromChild=readFromChild.readLine();
