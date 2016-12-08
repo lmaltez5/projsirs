@@ -34,7 +34,7 @@ public class SelectLegalGuardian extends AppCompatActivity {
         if (!read.isEmpty()) {
             String[] phonesNames = read.split(",");
             final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, phonesNames);
-            ListView listView = (ListView) findViewById(R.id.mobile_list);
+            ListView listView = (ListView) findViewById(R.id.legalguardin_list);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
