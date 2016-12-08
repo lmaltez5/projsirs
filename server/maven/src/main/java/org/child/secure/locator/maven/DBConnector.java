@@ -173,10 +173,17 @@ public class DBConnector {
 		}
 	}
 
-	public String searchPhoneNames(String email) {
+	public String searchPhoneNames(String email,String phoneID,String mode) {
+		PreparedStatement stmt=null;
 		try {
+			if(mode=="parent"){
+				stmt = con.prepareStatement("SELECT phone_name FROM phonesIDParent WHERE email= ? AND phone_id = ?;");
+				stmt.setString(2,phoneID);
+			}
+			else
+				stmt= con.prepareStatement("SELECT phone_name FROM phonesIDChild WHERE email= ? ;");
+		
 			String names = "";
-			PreparedStatement stmt = con.prepareStatement("SELECT phone_name FROM phonesIDChild WHERE email= ? ;");
 			stmt.setString(1, email);
 			System.err.println(stmt.toString());
 			ResultSet rs = stmt.executeQuery();
@@ -272,6 +279,29 @@ public class DBConnector {
 			System.err.print("No Query insertID");
 			return false;
 		}
+	}
+	public boolean removeUser(String email, String phoneID, String phoneName){
+		try {
+			PreparedStatement stmt = con.prepareStatement("delete FROM phonesIDParent where email= ? AND phone_id= ? AND phone_name= ?;");
+			stmt.setString(1, email);
+			stmt.setString(2, phoneID);
+			stmt.setString(3, phoneName);
+			System.err.println(stmt.toString());
+			int rs = stmt.executeUpdate();
+			if(rs>0){
+				stmt = con.prepareStatement("delete FROM sessionTable where email= ? AND phone_id= ? ;");
+				stmt.setString(1, email);
+				stmt.setString(2, phoneID);
+				System.err.println(stmt.toString());
+				rs = stmt.executeUpdate();
+				return rs>0;
+			}
+			return false;
+		}catch (SQLException e) {
+			System.err.print("No Query removeUser");
+			return false;
+		}
+
 	}
 
 }
