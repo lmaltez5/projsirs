@@ -2,6 +2,7 @@
 
 ##SERVER
 Server is running in Ubuntu 16.04.1 x64, the server needs a certificate, and some extra libraries, all included.
+
 Running the server:
 ->cd projsirs/server/maven
 ->mvn install
