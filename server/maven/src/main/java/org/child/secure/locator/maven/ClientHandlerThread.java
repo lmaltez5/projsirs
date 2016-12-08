@@ -59,7 +59,7 @@ public class ClientHandlerThread extends Thread{
 					 case 0:
 					     email=tokens[1];
 					     timeStamp=tokens[2];
-					     if(verifyDate(timeStamp,writer)){
+					     if(verifyDate(timeStamp)){
 					    	 verifyDbResult(dbconnector.uniqueEmail(email),"Email");
 					 	}
 				    break;
@@ -69,7 +69,7 @@ public class ClientHandlerThread extends Thread{
 					     password = tokens[3];
 					     phoneID=tokens[4];
 					     timeStamp=tokens[5];
-					     if(verifyDate(timeStamp,writer)){
+					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.insertSignup(username,email,password);
 					    	 if (temp){
 							String serverKey=generateRandomSecret();
@@ -88,7 +88,7 @@ public class ClientHandlerThread extends Thread{
 					     password = tokens[2];
 					     phoneID=tokens[3];
 					     timeStamp=tokens[4];
-					     if(verifyDate(timeStamp,writer)){
+					     if(verifyDate(timeStamp)){
 					    	 temp=dbconnector.login(email,password);
 					    	 if (temp){
 						 	String serverKey=generateRandomSecret();
@@ -108,7 +108,7 @@ public class ClientHandlerThread extends Thread{
 						 email=tokens[3];
 						 phoneName=tokens[4];
 						 timeStamp=tokens[5];
-						 if(verifyDate(timeStamp,writer)&&verifyKey(clientKey,email,phoneID,writer)){
+						 if(verifyDate(timeStamp)&&verifyKey(clientKey,email,phoneID)){
 							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,vectorIndex,"child"),"Child ID");
 					     }
 					 break;
@@ -118,7 +118,7 @@ public class ClientHandlerThread extends Thread{
 						 email=tokens[3];
 						 phoneName=tokens[4];
 						 timeStamp=tokens[5];
-						 if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						 if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							 verifyDbResult(dbconnector.insertID(email, phoneID , phoneName,vectorIndex,"parent"),"Parent ID");
 					     }
 					 break;
@@ -127,7 +127,7 @@ public class ClientHandlerThread extends Thread{
 						 phoneID=tokens[2];
 						 email=tokens[3];
 						 timeStamp=tokens[4];
-						 if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						 if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							 writer.println(dbconnector.queryPhoneId(email, phoneID,vectorIndex));
 							 writer.flush();
 					     }
@@ -137,7 +137,7 @@ public class ClientHandlerThread extends Thread{
 						 phoneID=tokens[2];
 						 email=tokens[3];
 						 timeStamp=tokens[4];
-						 if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						 if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							 writer.println(dbconnector.searchUser(email));
 							 writer.flush();
 					     }
@@ -147,8 +147,8 @@ public class ClientHandlerThread extends Thread{
 						 phoneID=tokens[2];
 						 email=tokens[3];
 						 timeStamp=tokens[4];
-						 if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
-							writer.println(dbconnector.searchPhoneNames(email));
+						 if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
+							writer.println(dbconnector.searchPhoneNames(email,null,"child"));
 							writer.flush();
 					     }
 					 break;
@@ -158,7 +158,7 @@ public class ClientHandlerThread extends Thread{
 						email=tokens[3];
 						password=tokens[4];
 						timeStamp=tokens[5];
-						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							temp=dbconnector.login(email,password);
 							if(temp){
 								verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
@@ -174,7 +174,7 @@ public class ClientHandlerThread extends Thread{
 						email=tokens[3];
 						phoneKidName=tokens[4];
 						timeStamp=tokens[5];
-						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							String test=dbconnector.searchKidName(email,phoneKidName);
 							if (!test.contains("Error")){
 								int i=Integer.parseInt(test);
@@ -191,7 +191,7 @@ public class ClientHandlerThread extends Thread{
 							phoneID=tokens[2];
 							email=tokens[3];
 							timeStamp=tokens[4];
-							if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+							if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 									verifyDbResult(dbconnector.insertKey(null,email,phoneID,false), "logout");
 								}
 						 break;
@@ -201,7 +201,7 @@ public class ClientHandlerThread extends Thread{
 						phoneID=tokens[2];
 						email=tokens[3];
 						timeStamp=tokens[4];
-						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 								verifyDbResult(dbconnector.updateThread(email,phoneID,vectorIndex), "thread update");
 							}
 						break;
@@ -213,12 +213,46 @@ public class ClientHandlerThread extends Thread{
 						String latitude=tokens[4];
 						String longitude=tokens[5];
 						timeStamp=tokens[6];
-						if(verifyDate(timeStamp,writer)&& verifyKey(clientKey,email,phoneID,writer)){
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
 							this.latitude=Double.parseDouble(latitude);
 							this.longitude=Double.parseDouble(longitude);
 						}
-				 break;
+						break;
+				 
+			    	case 13:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						password=tokens[4];
+						timeStamp=tokens[5];
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
+							verifyDbResult(dbconnector.login(email,password),"password");
+						}
+						break;
+
+			    	case 14:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						timeStamp=tokens[4];
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
+							writer.println(dbconnector.searchPhoneNames(email,phoneID,"parent"));
+							writer.flush();
+						}
+						break;
+			    	case 15:
+						clientKey=tokens[1];
+						phoneID=tokens[2];
+						email=tokens[3];
+						phoneName=tokens[4];
+						timeStamp=tokens[5];
+						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
+							verifyDbResult(dbconnector.removeUser(email, phoneID, phoneName),"removing user");
+						}
+						break;
+						
 				 }
+						 
 	        }
 	    }
 	    catch (IOException e)
@@ -259,13 +293,13 @@ public class ClientHandlerThread extends Thread{
 		writer.flush();
 		server.getThread(index).clearLocation();
 	}
-	private boolean verifyKey(String clientKey, String email,String phoneID,PrintWriter functionWriter){
+	private boolean verifyKey(String clientKey, String email,String phoneID){
 		if(dbconnector.verifyKey(clientKey,email,phoneID)){
 			return true;
 		}
 		else{
-			functionWriter.println("Error in key");
-			functionWriter.flush();
+			writer.println("Error in key");
+			writer.flush();
 			return false;
 		}
 	}
@@ -293,7 +327,7 @@ public class ClientHandlerThread extends Thread{
 	
 	public void clearLocation(){longitude=200.0;latitude=200.0;}
 	
-	private boolean verifyDate(String date1,PrintWriter functionWriter ){
+	private boolean verifyDate(String date1){
 		try {
 			Calendar c = Calendar.getInstance();
 	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -303,8 +337,8 @@ public class ClientHandlerThread extends Thread{
 			long ld = sDt.getTime() /1000;
 	        long ld2 = sDt2.getTime() /1000;
 	        if(ld2>ld){
-	        	functionWriter.println("Error in TimeStamp,please try again");
-	        	functionWriter.flush();
+	        	writer.println("Error in TimeStamp,please try again");
+	        	writer.flush();
 	        	return false;
 	        }
 		} catch (ParseException e) {
