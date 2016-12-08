@@ -4,8 +4,11 @@
 Server is running in Ubuntu 16.04.1 x64, the server needs a certificate, and some extra libraries, all included.
 
 Running the server:
+
 ->cd projsirs/server/maven
+
 ->mvn install
+
 ->java -cp target/maven-0.0.1-SNAPSHOT.jar:lib/jsch-0.1.53.jar:lib/mysql-connector-java-5.1.40-bin.jar org.child.secure.locator.maven.sslServer
 
 ##APPLICATION
