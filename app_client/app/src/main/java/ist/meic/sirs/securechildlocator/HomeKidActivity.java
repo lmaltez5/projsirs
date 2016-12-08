@@ -36,8 +36,8 @@ public class HomeKidActivity extends AppCompatActivity {
         if ( Build.VERSION.SDK_INT >= 23 &&
                     ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-        
-        
+
+
         sessionEmail = getIntent().getStringExtra("EMAIL").replace("\n", "");
         sessionKey = getIntent().getStringExtra("SESSIONKEY").replace("\n", "");
         sessionPhoneID = getIntent().getStringExtra("ID").replace("\n", "");
@@ -84,6 +84,7 @@ public class HomeKidActivity extends AppCompatActivity {
                 finish();
                 return;
             }
+            _input_password.setText("");
             ssl.closeSocket();
 
         } catch (Exception e) {
