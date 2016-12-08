@@ -14,9 +14,11 @@ Running the server:
 ##APPLICATION
 
 You need to generate the APK of the project and run it in a Android device with at least the 21 SDK (Android Lollipop)
+
 Client needs a truststore(must have server public key) and a set of public and private keys, all included.
 
 ##Database
 
 The database is ruuning in the SIGMA server from IST
+
 We have a file called create tables with all the tables in the project.This file is written in mysql, so it is easy to create all the tables.
