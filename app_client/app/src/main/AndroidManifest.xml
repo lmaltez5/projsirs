@@ -38,15 +38,17 @@
 
         <activity
             android:name=".SetupActivity"
-            android:label="Setup"></activity>
+            android:label="Setup" />
         <activity
             android:name=".HomeActivity"
-            android:label="Home"></activity>
+            android:label="Home" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".HomeKidActivity"></activity>
-        <activity android:name=".SelectFind"></activity>
+        <activity android:name=".HomeKidActivity" />
+        <activity android:name=".SelectFind" />
+        <activity android:name=".RequestAuthentication" />
+        <activity android:name=".SelectLegalGuardian"></activity>
     </application>
 
 </manifest>

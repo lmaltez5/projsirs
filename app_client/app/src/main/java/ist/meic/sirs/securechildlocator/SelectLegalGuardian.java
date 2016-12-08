@@ -1,18 +1,17 @@
 package ist.meic.sirs.securechildlocator;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class SelectFind extends Activity {
 
-    // Array of strings...
-    private String[] phonesNames;
+public class SelectLegalGuardian extends AppCompatActivity {
+    private String[] LegalNames;
     private String sessionEmail;
     private String sessionKey;
     private String sessionPhoneID;
@@ -20,12 +19,12 @@ public class SelectFind extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
+        setContentView(R.layout.activity_select_legal_guardian);
         sessionEmail = getIntent().getStringExtra("EMAIL").replace( "\n", "" );
         sessionKey=getIntent().getStringExtra("SESSIONKEY").replace( "\n", "" );
         sessionPhoneID = getIntent().getStringExtra("ID").replace( "\n", "" );
-        //FAZ GET DOS NOMES
-        String result="7;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
+
+        String result="14;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+Utils.getTime();
         SSLClient ssl =new SSLClient(getApplicationContext());
         String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
         if(read=="ERROR")
@@ -41,19 +40,13 @@ public class SelectFind extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                     // String item = adapter.getItem(position).toString();
-                    Intent intent = new Intent(getBaseContext(), MapsActivity.class);
-                    intent.putExtra("EMAIL",sessionEmail);
-                    intent.putExtra("SESSIONKEY", sessionKey);
-                    intent.putExtra("ID", sessionPhoneID);
-                    intent.putExtra("KIDNAME", adapter.getItem(position).toString());
-                    startActivity(intent);
-                    finish();
+                    removeUser(adapter.getItem(position).toString());
                 }
             });
         }
         else {
             // got to Home
-            Toast.makeText(getBaseContext(), "No child added", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "No Accounts Found", Toast.LENGTH_LONG).show();
             final Intent intent = new Intent(this, HomeActivity.class);
             intent.putExtra("EMAIL", sessionEmail);
             intent.putExtra("SESSIONKEY", sessionKey);
@@ -61,5 +54,21 @@ public class SelectFind extends Activity {
             startActivity(intent);
             finish();
         }
+    }
+    public void removeUser(String legalName){
+        legalName.replace( "\n", "" );
+        String result="15;" + sessionKey +";"+sessionPhoneID+";"+sessionEmail+";"+legalName+";"+Utils.getTime();
+        SSLClient ssl =new SSLClient(getApplicationContext());
+        String read= Utils.readWriteSSL(getApplicationContext(), result, ssl, null);
+        if(read=="ERROR")
+            return;
+        ssl.closeSocket();
+        Toast.makeText(getBaseContext(), "Removed User Successfully", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+        intent.putExtra("EMAIL",sessionEmail);
+        intent.putExtra("SESSIONKEY", sessionKey);
+        intent.putExtra("ID", sessionPhoneID);
+        startActivity(intent);
+        finish();
     }
 }

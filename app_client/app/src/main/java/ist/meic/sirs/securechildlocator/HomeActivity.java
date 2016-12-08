@@ -64,7 +64,13 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getBaseContext(), SelectLegalGuardian.class);
+                //send session varables
+                intent.putExtra("EMAIL",sessionEmail);
+                intent.putExtra("SESSIONKEY", sessionKey);
+                intent.putExtra("ID", sessionPhoneID);
+                startActivity(intent);
+                finish();
             }
         });
 

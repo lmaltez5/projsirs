@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
@@ -77,5 +78,12 @@ public class Utils {
             return "ERROR";
         }
         return read;
+    }
+    public static Intent createIntent(Context context, Class c,String sessionEmail,String sessionKey,String sessionPhoneID){
+        Intent intent = new Intent(context, c);
+        intent.putExtra("EMAIL", sessionEmail);
+        intent.putExtra("SESSIONKEY", sessionKey);
+        intent.putExtra("ID", sessionPhoneID);
+        return intent;
     }
 }
