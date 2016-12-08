@@ -55,8 +55,6 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("SESSIONKEY", sessionKey);
                 intent.putExtra("ID", sessionPhoneID);
                 startActivity(intent);
-                finish();
-
             }
         });
 
@@ -70,7 +68,6 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("SESSIONKEY", sessionKey);
                 intent.putExtra("ID", sessionPhoneID);
                 startActivity(intent);
-                finish();
             }
         });
 
