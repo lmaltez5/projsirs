@@ -177,7 +177,7 @@ public class DBConnector {
 		PreparedStatement stmt=null;
 		try {
 			if(mode=="parent"){
-				stmt = con.prepareStatement("SELECT phone_name FROM phonesIDParent WHERE email= ? AND phone_id = ?;");
+				stmt = con.prepareStatement("SELECT phone_name FROM phonesIDParent WHERE email= ? NOT phone_id = ?;");
 				stmt.setString(2,phoneID);
 			}
 			else
