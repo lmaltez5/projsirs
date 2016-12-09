@@ -247,7 +247,7 @@ public class ClientHandlerThread extends Thread{
 						phoneName=tokens[4];
 						timeStamp=tokens[5];
 						if(verifyDate(timeStamp)&& verifyKey(clientKey,email,phoneID)){
-							verifyDbResult(dbconnector.removeUser(email, phoneID, phoneName),"removing user");
+							verifyDbResult(dbconnector.removeUser(email, phoneName),"removing user");
 						}
 						break;
 						
