@@ -5,7 +5,7 @@ Server is running in Ubuntu 16.04.1 x64, the server needs a certificate, and som
 
 Running the server:
 
-->cd projsirs/server/maven
+->cd server/maven
 
 ->mvn install
 
