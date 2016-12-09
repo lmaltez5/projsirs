@@ -27,12 +27,3 @@ CREATE TABLE IF NOT EXISTS sessionTable (
 );
 
 
-CREATE TRIGGER checkParentPhoneID BEFORE INSERT ON phoneIDParents
-BEGIN
-
-END
-
-CREATE TRIGGER checkChildPhoneID BEFORE INSERT ON childIDParents
-BEGIN
-
-END
