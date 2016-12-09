@@ -286,9 +286,9 @@ public class DBConnector {
 			PreparedStatement stmt = con.prepareStatement("Select phone_id FROM phonesIDParent where email= ? AND phone_name= ?;");
 			stmt.setString(1, email);
 			stmt.setString(2, phoneName);
-			ResultSet rs = stmt.executeQuery();
-			if(rs.next())
-				phoneID = rs.getString("phone_id");
+			ResultSet resultSet = stmt.executeQuery();
+			if(resultSet.next())
+				phoneID = resultSet.getString("phone_id");
 			else
 				return false;
 			
