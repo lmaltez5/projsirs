@@ -280,12 +280,21 @@ public class DBConnector {
 			return false;
 		}
 	}
-	public boolean removeUser(String email, String phoneID, String phoneName){
+	public boolean removeUser(String email, String phoneName){
 		try {
-			PreparedStatement stmt = con.prepareStatement("delete FROM phonesIDParent where email= ? AND phone_id= ? AND phone_name= ?;");
+			String phoneID;
+			PreparedStatement stmt = con.prepareStatement("Select phone_id FROM phonesIDParent where email= ? AND phone_name= ?;");
 			stmt.setString(1, email);
-			stmt.setString(2, phoneID);
-			stmt.setString(3, phoneName);
+			stmt.setString(2, phoneName);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next())
+				phoneID = rs.getString("phone_id");
+			else
+				return false;
+			
+			stmt = con.prepareStatement("delete FROM phonesIDParent where email= ? AND phone_name= ?;");
+			stmt.setString(1, email);
+			stmt.setString(2, phoneName);
 			System.err.println(stmt.toString());
 			int rs = stmt.executeUpdate();
 			if(rs>0){
