@@ -21,9 +21,9 @@ public class DBConnector {
     }
 
     private void connectSSH(){
-	    String user = "ist176249";
-	    String password = "Projsirs1";
-	    String host = "sigma.ist.utl.pt";
+	    String user = "----";
+	    String password = ""----";";
+	    String host = ""----";";
 	    try {
 	        JSch jsch = new JSch();
 	        Session session = jsch.getSession(user, host);
@@ -38,11 +38,11 @@ public class DBConnector {
 
     private void connectDB(){
     	try {
-          String driver = "com.mysql.jdbc.Driver";
+          String driver = ""----";";
           String url = "jdbc:mysql://" + rhost +"/";
-          String db = "ist176249";
-          String dbUser = "ist176249";
-          String dbPasswd = "igxg0984";
+          String db = ""----";";
+          String dbUser = ""----";";
+          String dbPasswd = ""----";";
           Class.forName(driver);
           con = DriverManager.getConnection(url+db, dbUser, dbPasswd);
     	} catch (Exception e){
